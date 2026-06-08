@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <style>
+    .check {
+      stroke-dasharray: 72;
+      stroke-dashoffset: 72;
+      animation: drawCheck 0.55s cubic-bezier(.4,0,.2,1) 0.15s forwards;
+    }
+    @keyframes drawCheck {
+      to { stroke-dashoffset: 0; }
+    }
+  </style>
+
+  <!-- Left two edges — lightest -->
+  <path
+    d="M 60 7.959 L 14.9 33.979 L 14.9 86.021 L 21.9 81.979 L 21.9 38.021 L 60 16.041 Z"
+    fill="#EAD28E"
+  />
+
+  <!-- Right two edges — mid -->
+  <path
+    d="M 60 7.959 L 105.1 33.979 L 105.1 86.021 L 98.1 81.979 L 98.1 38.021 L 60 16.041 Z"
+    fill="#C8A96E"
+  />
+
+  <!-- Bottom two edges — darkest -->
+  <path
+    d="M 14.9 86.021 L 21.9 81.979 L 60 103.959 L 98.1 81.979 L 105.1 86.021 L 60 112.041 Z"
+    fill="#976C30"
+  />
+
+  <!-- Gold checkmark — draw-on animation -->
+  <polyline class="check"
+    points="37,63 52,79 83,42"
+    fill="none" stroke="#EAD28E" stroke-width="8.5"
+    stroke-linecap="butt" stroke-linejoin="miter"
+  />
+</svg>

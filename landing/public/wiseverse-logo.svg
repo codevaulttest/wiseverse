@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 284 324" role="img" aria-label="Web app logo">
+  <defs>
+    <style>
+      .left{fill:#EAD28E;}
+      .right{fill:#C8A96E;}
+      .bottom{fill:#976C30;}
+    </style>
+  </defs>
+
+  <!-- left vertical/top face -->
+  <path class="left" d="
+    M142 0
+    L6 75
+    L6 241
+    L47 265
+    L47 113
+    L98 84
+    L98 189
+    L142 164
+    Z"/>
+
+  <!-- right vertical/top face -->
+  <path class="right" d="
+    M142 0
+    L278 75
+    L278 241
+    L237 265
+    L237 113
+    L187 84
+    L187 189
+    L142 164
+    Z"/>
+
+  <!-- bottom face -->
+  <path class="bottom" d="
+    M6 241
+    L47 217
+    L142 272
+    L237 217
+    L278 241
+    L142 324
+    Z"/>
+</svg>

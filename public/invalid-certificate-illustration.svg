@@ -1,0 +1,12 @@
+<svg width="96" height="108" viewBox="0 0 96 108" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Invalid certificate">
+  <mask id="mark-cutout" maskUnits="userSpaceOnUse" x="0" y="0" width="96" height="108">
+    <rect width="96" height="108" fill="white"/>
+    <path d="M34 30L18 40V73L48 92L78 73V40L62 30V64L48 56L34 64V30Z" fill="black"/>
+  </mask>
+  <g mask="url(#mark-cutout)">
+    <path d="M48 2L4 27V81L18 89V40L34 30V64L48 56V2Z" fill="#C04040" fill-opacity=".13" stroke="#C04040" stroke-opacity=".38"/>
+    <path d="M48 2L92 27V81L78 89V40L62 30V64L48 56V2Z" fill="#C04040" fill-opacity=".09" stroke="#C04040" stroke-opacity=".30"/>
+    <path d="M4 81L18 73L48 92L78 73L92 81L48 106L4 81Z" fill="#C04040" fill-opacity=".18" stroke="#C04040" stroke-opacity=".44"/>
+  </g>
+  <path d="M24 88L72 20" stroke="#C04040" stroke-opacity=".58" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="7 5"/>
+</svg>
