@@ -73,7 +73,7 @@ export default function ResultScreen({ result, onReset }: Props) {
             </button>
             <a
               className="result-btn-ghost"
-              href="mailto:support@wiseverse.net"
+              href="mailto:contact@wiseverse.net"
             >
               {t.pay_fail_contact}
             </a>

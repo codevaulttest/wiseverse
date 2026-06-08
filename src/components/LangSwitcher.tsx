@@ -6,9 +6,9 @@ const LANGS: { code: string; label: string }[] = [
   { code: 'en',      label: 'English' },
   { code: 'zh',      label: '简体中文' },
   { code: 'zh-hant', label: '繁體中文' },
+  { code: 'ko',      label: '한국어' },
   { code: 'ja',      label: '日本語' },
   { code: 'ru',      label: 'Русский' },
-  { code: 'ar',      label: 'العربية' },
   { code: 'es',      label: 'Español' },
   { code: 'fr',      label: 'Français' },
   { code: 'pt',      label: 'Português' },
@@ -17,8 +17,8 @@ const LANGS: { code: string; label: string }[] = [
 ]
 
 const LANG_SHORT: Record<string, string> = {
-  en: 'EN', zh: 'ZH', 'zh-hant': 'ZH', ja: 'JA', ru: 'RU',
-  ar: 'AR', es: 'ES', fr: 'FR', pt: 'PT', th: 'TH', vi: 'VI',
+  en: 'EN', zh: 'ZH', 'zh-hant': 'ZH', ko: 'KO', ja: 'JA', ru: 'RU',
+  es: 'ES', fr: 'FR', pt: 'PT', th: 'TH', vi: 'VI',
 }
 
 export default function LangSwitcher() {

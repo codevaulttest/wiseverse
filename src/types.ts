@@ -1,5 +1,5 @@
 export type VerifyState = 'verified' | 'onchain' | 'invalid';
-export type Lang = 'en' | 'zh' | 'zh-hant' | 'ja' | 'ru' | 'ar' | 'es' | 'fr' | 'pt' | 'th' | 'vi';
+export type Lang = 'en' | 'zh' | 'zh-hant' | 'ko' | 'ja' | 'ru' | 'es' | 'fr' | 'pt' | 'th' | 'vi';
 export type Theme = 'dark' | 'light';
 
 export interface TransferRecord {

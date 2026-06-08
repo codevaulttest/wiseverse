@@ -5,7 +5,7 @@ import { zh } from '../i18n/zh';
 import { zhHant } from '../i18n/zh-hant';
 import { ja } from '../i18n/ja';
 import { ru } from '../i18n/ru';
-import { ar } from '../i18n/ar';
+import { ko } from '../i18n/ko';
 import { es } from '../i18n/es';
 import { fr } from '../i18n/fr';
 import { pt } from '../i18n/pt';
@@ -13,7 +13,7 @@ import { th } from '../i18n/th';
 import { vi } from '../i18n/vi';
 
 const translations: Record<Lang, Record<TranslationKey, string>> = {
-  en, zh, 'zh-hant': zhHant, ja, ru, ar, es, fr, pt, th, vi,
+  en, zh, 'zh-hant': zhHant, ko, ja, ru, es, fr, pt, th, vi,
 };
 
 interface AppCtx {
@@ -44,10 +44,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const langMap: Record<string, string> = {
       en: 'en', zh: 'zh-CN', 'zh-hant': 'zh-TW',
-      ja: 'ja', ru: 'ru', ar: 'ar', es: 'es', fr: 'fr', pt: 'pt', th: 'th', vi: 'vi',
+      ko: 'ko', ja: 'ja', ru: 'ru', es: 'es', fr: 'fr', pt: 'pt', th: 'th', vi: 'vi',
     };
     document.documentElement.lang = langMap[lang] ?? lang;
-    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    document.documentElement.dir = 'ltr';
   }, [lang]);
 
   const toggleTheme = () => setTheme(t => (t === 'dark' ? 'light' : 'dark'));

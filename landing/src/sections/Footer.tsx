@@ -19,10 +19,10 @@ export default function Footer() {
 
         <nav className="footer-links" aria-label="Footer links">
           <a
-            href="mailto:support@wiseverse.net"
+            href="mailto:contact@wiseverse.net"
             className="footer-link"
           >
-            support@wiseverse.net
+            contact@wiseverse.net
           </a>
         </nav>
       </div>
