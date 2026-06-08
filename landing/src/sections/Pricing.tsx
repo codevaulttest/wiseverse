@@ -5,6 +5,7 @@ import type { ResultState } from '../screens/ResultScreen'
 
 interface Props {
   onResult: (r: ResultState) => void
+  onShowTerms: () => void
 }
 
 interface FormValues {
@@ -44,7 +45,7 @@ function CheckIcon() {
   )
 }
 
-export default function Pricing({ onResult }: Props) {
+export default function Pricing({ onResult, onShowTerms }: Props) {
   const [ref, inView] = useInView(0.05)
   const { t } = useLang()
   const [qty, setQty] = useState(1)
@@ -285,6 +286,14 @@ export default function Pricing({ onResult }: Props) {
                   <span>USD {total.toLocaleString('en-US', { minimumFractionDigits: 2 })}</span>
                 </div>
               </div>
+
+              <p className="order-terms-notice">
+                {t.terms_notice_pre}
+                <button type="button" className="terms-link" onClick={onShowTerms}>
+                  {t.terms_notice_link}
+                </button>
+                {t.terms_notice_post}
+              </p>
 
               <button type="submit" className="submit-btn">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">

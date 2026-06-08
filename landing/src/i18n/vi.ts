@@ -80,6 +80,9 @@ export const vi: Record<TranslationKey, string> = {
   summary_works:   'Số lượng tác phẩm',
   summary_total:   'Tổng cộng (chưa thuế)',
   btn_submit:      'Gửi yêu cầu đặt hàng',
+  terms_notice_pre:  'By submitting this order and completing payment, you confirm that you have read, understood, and agree to be bound by the ',
+  terms_notice_link: 'Terms and Conditions of Service',
+  terms_notice_post: ', which shall constitute the binding service agreement between you and WISEVERSE PTE. LTD. with effect from the date payment is confirmed. No separate physical contract will be issued.',
   secure_note:     'Thanh toán được xử lý an toàn qua Stripe. WISEVERSE không lưu trữ hoặc có quyền truy cập thông tin thẻ đầy đủ của bạn. Tất cả dữ liệu truyền tải được mã hóa TLS.',
 
   comp_eyebrow: 'Rõ ràng về quy định',

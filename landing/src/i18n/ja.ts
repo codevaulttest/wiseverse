@@ -80,6 +80,9 @@ export const ja: Record<TranslationKey, string> = {
   summary_works:   '作品数',
   summary_total:   '合計（税抜）',
   btn_submit:      '見積もりを送信する',
+  terms_notice_pre:  'By submitting this order and completing payment, you confirm that you have read, understood, and agree to be bound by the ',
+  terms_notice_link: 'Terms and Conditions of Service',
+  terms_notice_post: ', which shall constitute the binding service agreement between you and WISEVERSE PTE. LTD. with effect from the date payment is confirmed. No separate physical contract will be issued.',
   secure_note:     '支払いはStripeを通じて安全に処理されます。WISEVERSEはカード情報を保存・閲覧しません。すべての通信はTLS暗号化されています。',
 
   comp_eyebrow: '規制上の明確性',

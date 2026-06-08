@@ -10,10 +10,12 @@ import Compliance from './sections/Compliance'
 import FAQ from './sections/FAQ'
 import Footer from './sections/Footer'
 import ResultScreen, { type ResultState } from './screens/ResultScreen'
+import TermsScreen from './screens/TermsScreen'
 import DevPanel from './components/DevPanel'
 
 export default function App() {
   const [result, setResult] = useState<ResultState | null>(null)
+  const [showTerms, setShowTerms] = useState(false)
 
   const handleReset = () => {
     setResult(null)
@@ -23,7 +25,9 @@ export default function App() {
   return (
     <ThemeProvider>
       <LangProvider>
-        {result ? (
+        {showTerms ? (
+          <TermsScreen onBack={() => setShowTerms(false)} />
+        ) : result ? (
           <ResultScreen result={result} onReset={handleReset} />
         ) : (
           <>
@@ -32,7 +36,7 @@ export default function App() {
               <Hero />
               <WhatWeProvide />
               <HowItWorks />
-              <Pricing onResult={setResult} />
+              <Pricing onResult={setResult} onShowTerms={() => setShowTerms(true)} />
               <Compliance />
               <FAQ />
             </main>

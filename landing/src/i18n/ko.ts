@@ -80,6 +80,9 @@ export const ko: Record<TranslationKey, string> = {
   summary_works:   '작품 수',
   summary_total:   '합계 (세금 제외)',
   btn_submit:      '주문 문의 제출',
+  terms_notice_pre:  'By submitting this order and completing payment, you confirm that you have read, understood, and agree to be bound by the ',
+  terms_notice_link: 'Terms and Conditions of Service',
+  terms_notice_post: ', which shall constitute the binding service agreement between you and WISEVERSE PTE. LTD. with effect from the date payment is confirmed. No separate physical contract will be issued.',
   secure_note:     '결제는 Stripe를 통해 안전하게 처리됩니다. WISEVERSE는 카드 전체 정보를 저장하거나 열람하지 않습니다. 모든 통신은 TLS 암호화됩니다.',
 
   comp_eyebrow: '규제 명확성',

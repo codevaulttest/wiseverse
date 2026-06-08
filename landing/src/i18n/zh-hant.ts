@@ -80,6 +80,9 @@ export const zhHant: Record<TranslationKey, string> = {
   summary_works:   '作品數量',
   summary_total:   '合計（未稅）',
   btn_submit:      '提交詢價',
+  terms_notice_pre:  'By submitting this order and completing payment, you confirm that you have read, understood, and agree to be bound by the ',
+  terms_notice_link: 'Terms and Conditions of Service',
+  terms_notice_post: ', which shall constitute the binding service agreement between you and WISEVERSE PTE. LTD. with effect from the date payment is confirmed. No separate physical contract will be issued.',
   secure_note:     '付款透過 Stripe 安全處理。WISEVERSE 不儲存或取得您的完整信用卡資訊。所有傳輸均採用 TLS 加密。',
 
   comp_eyebrow: '合規聲明',

@@ -80,6 +80,9 @@ export const ar: Record<TranslationKey, string> = {
   summary_works:   'عدد الأعمال',
   summary_total:   'الإجمالي (قبل الضريبة)',
   btn_submit:      'إرسال استفسار الطلب',
+  terms_notice_pre:  'By submitting this order and completing payment, you confirm that you have read, understood, and agree to be bound by the ',
+  terms_notice_link: 'Terms and Conditions of Service',
+  terms_notice_post: ', which shall constitute the binding service agreement between you and WISEVERSE PTE. LTD. with effect from the date payment is confirmed. No separate physical contract will be issued.',
   secure_note:     'تتم معالجة الدفع بأمان عبر Stripe. لا تخزّن WISEVERSE بيانات بطاقتك الكاملة ولا يمكنها الوصول إليها. جميع البيانات المنقولة مشفرة بـ TLS.',
 
   comp_eyebrow: 'الوضوح التنظيمي',

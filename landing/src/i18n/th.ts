@@ -80,6 +80,9 @@ export const th: Record<TranslationKey, string> = {
   summary_works:   'จำนวนผลงาน',
   summary_total:   'รวม (ก่อนภาษี)',
   btn_submit:      'ส่งคำขอสั่งซื้อ',
+  terms_notice_pre:  'By submitting this order and completing payment, you confirm that you have read, understood, and agree to be bound by the ',
+  terms_notice_link: 'Terms and Conditions of Service',
+  terms_notice_post: ', which shall constitute the binding service agreement between you and WISEVERSE PTE. LTD. with effect from the date payment is confirmed. No separate physical contract will be issued.',
   secure_note:     'การชำระเงินดำเนินการอย่างปลอดภัยผ่าน Stripe WISEVERSE ไม่เก็บหรือเข้าถึงข้อมูลบัตรเต็มรูปแบบของคุณ การส่งข้อมูลทั้งหมดเข้ารหัสด้วย TLS',
 
   comp_eyebrow: 'ความชัดเจนด้านกฎระเบียบ',

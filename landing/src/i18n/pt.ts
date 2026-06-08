@@ -80,6 +80,9 @@ export const pt: Record<TranslationKey, string> = {
   summary_works:   'Número de obras',
   summary_total:   'Total (sem impostos)',
   btn_submit:      'Submeter consulta de encomenda',
+  terms_notice_pre:  'By submitting this order and completing payment, you confirm that you have read, understood, and agree to be bound by the ',
+  terms_notice_link: 'Terms and Conditions of Service',
+  terms_notice_post: ', which shall constitute the binding service agreement between you and WISEVERSE PTE. LTD. with effect from the date payment is confirmed. No separate physical contract will be issued.',
   secure_note:     'O pagamento é processado de forma segura através do Stripe. A WISEVERSE não armazena nem tem acesso aos seus dados bancários completos. Toda a transmissão é encriptada com TLS.',
 
   comp_eyebrow: 'Clareza regulatória',
