@@ -37,7 +37,7 @@ function BulletList({ items }: { items: string[] }) {
 }
 
 export default function TermsScreen({ onBack }: Props) {
-  const { t, lang } = useLang()
+  const { t } = useLang()
   return (
     <div className="result-page terms-page">
       <div className="result-inner terms-inner">
@@ -67,9 +67,6 @@ export default function TermsScreen({ onBack }: Props) {
         </div>
 
         <div className="terms-body">
-          {lang !== 'en' && t.terms_lang_note && (
-            <div className="terms-lang-note">{t.terms_lang_note}</div>
-          )}
 
           {/* How these terms become binding */}
           <div className="terms-section terms-section-intro">
