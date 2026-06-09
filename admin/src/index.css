@@ -66,20 +66,20 @@ body {
 .sidebar-logo {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   padding: 0 20px 24px;
   border-bottom: 1px solid var(--text-12);
   margin-bottom: 12px;
 }
 
 .sidebar-logo img {
-  width: 22px;
-  height: 22px;
+  width: 26px;
+  height: 26px;
 }
 
 .sidebar-logo-text {
   font-family: var(--serif);
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 500;
   letter-spacing: .06em;
   color: var(--gold);
@@ -211,11 +211,13 @@ body {
 .status-badge.printing {
   background: rgba(242,237,227,.06);
   color: var(--text-60);
+  border: 1px solid var(--text-28);
 }
 
 .status-badge.shipped {
   background: rgba(242,237,227,.06);
   color: var(--text-60);
+  border: 1px solid var(--text-28);
 }
 
 .status-badge.completed {
@@ -351,6 +353,46 @@ tbody tr:hover td {
   color: var(--text-28);
   text-align: right;
   padding-right: 20px;
+}
+
+/* ─── Search ─── */
+
+.search-wrap {
+  position: relative;
+  width: 280px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 15px;
+  height: 15px;
+  color: var(--text-60);
+  pointer-events: none;
+}
+
+.search-input {
+  background: var(--card);
+  border: 1.5px solid var(--text-60);
+  border-radius: 6px;
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 300;
+  padding: 7px 14px 7px 34px;
+  width: 100%;
+  outline: none;
+  transition: border-color .15s;
+}
+
+.search-input::placeholder {
+  color: var(--text-28);
+}
+
+.search-input:focus {
+  border-color: var(--gold);
 }
 
 /* ─── Filter Bar ─── */

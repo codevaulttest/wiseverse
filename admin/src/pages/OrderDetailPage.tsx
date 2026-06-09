@@ -48,10 +48,6 @@ export default function OrderDetailPage({ orders }: Props) {
             <span className="detail-field-value">{order.customerName}</span>
           </div>
           <div className="detail-field">
-            <span className="detail-field-label">Company</span>
-            <span className="detail-field-value">{order.companyName}</span>
-          </div>
-          <div className="detail-field">
             <span className="detail-field-label">Email</span>
             <span className="detail-field-value">{order.customerEmail}</span>
           </div>
