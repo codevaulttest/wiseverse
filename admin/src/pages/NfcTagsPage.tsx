@@ -30,7 +30,7 @@ export default function NfcTagsPage({ nfcTags, setNfcTags }: Props) {
     setImportSuccess(null)
     const lines = csvInput.trim().split('\n').filter(l => l.trim())
     if (lines.length === 0) {
-      setImportError('请输入至少一行数据')
+      setImportError('Enter at least one line')
       return
     }
 
@@ -38,12 +38,12 @@ export default function NfcTagsPage({ nfcTags, setNfcTags }: Props) {
     for (const [i, line] of lines.entries()) {
       const parts = line.split(',').map(p => p.trim())
       if (parts.length < 3) {
-        setImportError(`第 ${i + 1} 行格式错误，需要三列：序号,TagID,加密密钥`)
+        setImportError(`Row ${i + 1}: invalid format — expected 3 columns: Sequence,TagID,EncryptionKey`)
         return
       }
       const [sequenceNumber, tagId, encryptionKey] = parts
       if (nfcTags.some(t => t.sequenceNumber === sequenceNumber)) {
-        setImportError(`第 ${i + 1} 行：序号 ${sequenceNumber} 已存在`)
+        setImportError(`Row ${i + 1}: sequence ${sequenceNumber} already exists`)
         return
       }
       newTags.push({
@@ -56,7 +56,7 @@ export default function NfcTagsPage({ nfcTags, setNfcTags }: Props) {
     }
 
     setNfcTags(prev => [...prev, ...newTags])
-    setImportSuccess(`成功导入 ${newTags.length} 枚 NFC 芯片`)
+    setImportSuccess(`Successfully imported ${newTags.length} NFC chip(s)`)
     setCsvInput('')
   }
 
@@ -65,15 +65,15 @@ export default function NfcTagsPage({ nfcTags, setNfcTags }: Props) {
       <div className="page-header">
         <h1 className="page-title">NFC Tags</h1>
         <div style={{ display: 'flex', gap: 10 }}>
-          <span className="stat-chip">可用 <span className="count">{available}</span></span>
-          <span className="stat-chip">已分配 <span className="count">{assigned}</span></span>
-          <span className="stat-chip">合计 <span className="count">{nfcTags.length}</span></span>
+          <span className="stat-chip">Available <span className="count">{available}</span></span>
+          <span className="stat-chip">Assigned <span className="count">{assigned}</span></span>
+          <span className="stat-chip">Total <span className="count">{nfcTags.length}</span></span>
         </div>
       </div>
 
       <div className="import-area">
-        <div className="import-title">导入 NFC 芯片库存</div>
-        <div className="import-hint">格式：序号,TagID,加密密钥（每行一枚，来自供应商提供的文件）</div>
+        <div className="import-title">Import NFC Chips</div>
+        <div className="import-hint">Format: Sequence,TagID,EncryptionKey — one per line, from supplier file</div>
 
         {importError && (
           <div style={{
@@ -82,7 +82,7 @@ export default function NfcTagsPage({ nfcTags, setNfcTags }: Props) {
             background: 'var(--error-10)',
             border: '1px solid var(--error-32)',
             color: 'var(--error)',
-            fontSize: 13,
+            fontSize: 14,
             marginBottom: 10,
           }}>
             {importError}
@@ -104,7 +104,7 @@ export default function NfcTagsPage({ nfcTags, setNfcTags }: Props) {
           onClick={handleImport}
           disabled={!csvInput.trim()}
         >
-          导入芯片
+          Import
         </button>
       </div>
 
@@ -112,18 +112,18 @@ export default function NfcTagsPage({ nfcTags, setNfcTags }: Props) {
         <table>
           <thead>
             <tr>
-              <th>序号</th>
+              <th>Sequence</th>
               <th>Tag ID</th>
-              <th>状态</th>
-              <th>已分配证书</th>
-              <th>分配时间</th>
+              <th>Status</th>
+              <th>Assigned Cert</th>
+              <th>Assigned At</th>
             </tr>
           </thead>
           <tbody>
             {nfcTags.length === 0 ? (
               <tr>
                 <td colSpan={5}>
-                  <div className="empty-state">暂无芯片记录</div>
+                  <div className="empty-state">No NFC chips on record</div>
                 </td>
               </tr>
             ) : (
@@ -133,20 +133,20 @@ export default function NfcTagsPage({ nfcTags, setNfcTags }: Props) {
                     <span className="td-ref">{tag.sequenceNumber}</span>
                   </td>
                   <td>
-                    <span style={{ fontFamily: 'monospace', fontSize: 12, color: 'var(--text-60)' }}>
+                    <span style={{ fontFamily: 'monospace', fontSize: 14, color: 'var(--text-60)' }}>
                       {tag.tagId}
                     </span>
                   </td>
                   <td>
                     <StatusBadge
                       status={tag.status}
-                      label={tag.status === 'available' ? '可用' : '已分配'}
+                      label={tag.status === 'available' ? 'Available' : 'Assigned'}
                     />
                   </td>
                   <td>
                     {tag.assignedToCertNumber
-                      ? <span style={{ fontFamily: 'monospace', fontSize: 12, color: 'var(--gold)' }}>{tag.assignedToCertNumber}</span>
-                      : <span style={{ color: 'var(--text-28)', fontSize: 12 }}>—</span>
+                      ? <span style={{ fontFamily: 'monospace', fontSize: 14, color: 'var(--gold)' }}>{tag.assignedToCertNumber}</span>
+                      : <span style={{ color: 'var(--text-28)', fontSize: 14 }}>—</span>
                     }
                   </td>
                   <td className="td-date">

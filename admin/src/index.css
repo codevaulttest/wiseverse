@@ -86,7 +86,7 @@ body {
 }
 
 .sidebar-label {
-  font-size: 10px;
+  font-size: 14px;
   font-weight: 500;
   letter-spacing: .12em;
   text-transform: uppercase;
@@ -108,7 +108,7 @@ body {
   gap: 9px;
   padding: 9px 12px;
   border-radius: 6px;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 400;
   color: var(--text-60);
   text-decoration: none;
@@ -139,12 +139,12 @@ body {
 .sidebar-footer {
   padding: 12px 20px 0;
   border-top: 1px solid var(--text-12);
-  font-size: 12px;
+  font-size: 14px;
   color: var(--text-28);
 }
 
 .sidebar-user-email {
-  font-size: 12px;
+  font-size: 14px;
   color: var(--text-60);
   margin-top: 2px;
   word-break: break-all;
@@ -168,7 +168,7 @@ body {
 }
 
 .page-title {
-  font-family: var(--serif);
+  font-family: var(--sans);
   font-size: 22px;
   font-weight: 500;
   letter-spacing: .02em;
@@ -183,16 +183,12 @@ body {
   gap: 5px;
   padding: 3px 10px;
   border-radius: 100px;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 500;
   letter-spacing: .02em;
   white-space: nowrap;
 }
 
-.status-badge.pending_payment {
-  background: rgba(242,237,227,.07);
-  color: var(--text-28);
-}
 
 .status-badge.paid {
   background: var(--gold-10);
@@ -207,9 +203,9 @@ body {
 }
 
 .status-badge.on_chain {
-  background: var(--gold-12);
+  background: var(--gold-30);
   color: var(--gold);
-  border: 1px solid var(--gold-30);
+  border: 1px solid var(--gold-60);
 }
 
 .status-badge.printing {
@@ -250,7 +246,7 @@ body {
 .stat-chip {
   padding: 6px 16px;
   border-radius: 100px;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 400;
   border: 1px solid var(--text-12);
   color: var(--text-60);
@@ -290,7 +286,7 @@ table {
 
 th {
   text-align: left;
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 500;
   letter-spacing: .08em;
   text-transform: uppercase;
@@ -302,7 +298,7 @@ th {
 
 td {
   padding: 13px 16px;
-  font-size: 13px;
+  font-size: 14px;
   color: var(--text-60);
   border-bottom: 1px solid rgba(242,237,227,.05);
   vertical-align: middle;
@@ -324,7 +320,7 @@ tbody tr:hover td {
 
 .td-ref {
   font-family: 'Jost', monospace;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 400;
   letter-spacing: .06em;
   color: var(--text);
@@ -336,7 +332,7 @@ tbody tr:hover td {
 }
 
 .td-company {
-  font-size: 12px;
+  font-size: 14px;
   color: var(--text-60);
   margin-top: 2px;
 }
@@ -347,7 +343,7 @@ tbody tr:hover td {
 }
 
 .td-date {
-  font-size: 12px;
+  font-size: 14px;
   white-space: nowrap;
 }
 
@@ -372,7 +368,7 @@ tbody tr:hover td {
   border-radius: 6px;
   color: var(--text-60);
   font-family: var(--sans);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 300;
   padding: 7px 12px;
   appearance: none;
@@ -425,7 +421,7 @@ tbody tr:hover td {
 }
 
 .login-logo-wrap .sub {
-  font-size: 12px;
+  font-size: 14px;
   color: var(--text-28);
   letter-spacing: .06em;
   text-transform: uppercase;
@@ -437,7 +433,7 @@ tbody tr:hover td {
 
 .form-label {
   display: block;
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 500;
   letter-spacing: .08em;
   text-transform: uppercase;
@@ -472,7 +468,7 @@ tbody tr:hover td {
   padding: 9px 18px;
   border-radius: 6px;
   font-family: var(--sans);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
   cursor: pointer;
   border: none;
@@ -507,7 +503,7 @@ tbody tr:hover td {
 
 .btn-sm {
   padding: 6px 12px;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .btn-full {
@@ -541,11 +537,11 @@ tbody tr:hover td {
 }
 
 .detail-card-title {
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 500;
   letter-spacing: .10em;
   text-transform: uppercase;
-  color: var(--text-28);
+  color: var(--text-60);
   margin-bottom: 14px;
 }
 
@@ -561,20 +557,20 @@ tbody tr:hover td {
 }
 
 .detail-field-label {
-  font-size: 11px;
-  color: var(--text-28);
+  font-size: 14px;
+  color: var(--text-60);
   letter-spacing: .04em;
 }
 
 .detail-field-value {
-  font-size: 13px;
+  font-size: 14px;
   color: var(--text);
   font-weight: 400;
 }
 
 .detail-field-value.mono {
   font-family: 'Jost', monospace;
-  font-size: 12px;
+  font-size: 14px;
   letter-spacing: .05em;
   color: var(--gold);
 }
@@ -586,11 +582,11 @@ tbody tr:hover td {
 }
 
 .section-title {
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 500;
   letter-spacing: .10em;
   text-transform: uppercase;
-  color: var(--text-28);
+  color: var(--text-60);
   margin-bottom: 12px;
 }
 
@@ -618,17 +614,18 @@ tbody tr:hover td {
 
 .work-hash {
   font-family: 'Jost', monospace;
-  font-size: 11px;
-  color: var(--text-28);
+  font-size: 14px;
+  color: var(--text-60);
   letter-spacing: .04em;
   margin-top: 3px;
+  word-break: break-all;
 }
 
 .work-meta {
   display: flex;
   gap: 16px;
-  font-size: 12px;
-  color: var(--text-28);
+  font-size: 14px;
+  color: var(--text-60);
   margin-bottom: 12px;
 }
 
@@ -715,24 +712,24 @@ tbody tr:hover td {
 }
 
 .timeline-time {
-  font-size: 11px;
+  font-size: 14px;
   color: var(--text-28);
   white-space: nowrap;
 }
 
 .timeline-action {
-  font-size: 13px;
+  font-size: 14px;
   color: var(--text);
   font-weight: 400;
 }
 
 .timeline-actor {
-  font-size: 12px;
+  font-size: 14px;
   color: var(--text-28);
 }
 
 .timeline-detail {
-  font-size: 12px;
+  font-size: 14px;
   color: var(--text-60);
   margin-top: 2px;
 }
@@ -748,14 +745,14 @@ tbody tr:hover td {
 }
 
 .import-title {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
   color: var(--text);
   margin-bottom: 8px;
 }
 
 .import-hint {
-  font-size: 12px;
+  font-size: 14px;
   color: var(--text-28);
   margin-bottom: 12px;
   font-family: 'Jost', monospace;
@@ -768,7 +765,7 @@ tbody tr:hover td {
   border-radius: 6px;
   color: var(--text);
   font-family: 'Jost', monospace;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 300;
   padding: 10px 12px;
   resize: vertical;
@@ -792,7 +789,7 @@ tbody tr:hover td {
 
 .email-tab {
   padding: 10px 20px;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 400;
   color: var(--text-60);
   cursor: pointer;
@@ -820,14 +817,14 @@ tbody tr:hover td {
 }
 
 .email-subject {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
   color: var(--text);
   margin-bottom: 4px;
 }
 
 .email-meta {
-  font-size: 12px;
+  font-size: 14px;
   color: var(--text-28);
   margin-bottom: 20px;
   border-bottom: 1px solid var(--text-12);
@@ -835,7 +832,7 @@ tbody tr:hover td {
 }
 
 .email-body {
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.7;
   color: var(--text-60);
   white-space: pre-wrap;
@@ -854,7 +851,7 @@ tbody tr:hover td {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 13px;
+  font-size: 14px;
   color: var(--text-60);
   cursor: pointer;
   background: none;
@@ -875,6 +872,21 @@ tbody tr:hover td {
   padding: 60px 20px;
   color: var(--text-28);
   font-size: 14px;
+}
+
+/* ─── Pagination ─── */
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 16px;
+  padding: 16px 24px;
+}
+
+.pagination-info {
+  font-size: 13px;
+  color: var(--text-60);
 }
 
 /* ─── Inline Form ─── */
@@ -930,7 +942,7 @@ tbody tr:hover td {
   gap: 8px;
   padding: 10px 14px;
   border-radius: 6px;
-  font-size: 13px;
+  font-size: 14px;
   margin-bottom: 12px;
 }
 
@@ -958,7 +970,7 @@ tbody tr:hover td {
   border: 1px solid #2d7a40;
   color: #4ade80;
   font-family: var(--sans);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 500;
   padding: 6px 14px;
   border-radius: 100px;
@@ -978,7 +990,7 @@ tbody tr:hover td {
 }
 
 .dev-section-label {
-  font-size: 10px;
+  font-size: 14px;
   font-weight: 500;
   letter-spacing: .10em;
   text-transform: uppercase;
@@ -996,7 +1008,7 @@ tbody tr:hover td {
   border: 1px solid #2d7a40;
   color: #4ade80;
   font-family: var(--sans);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 400;
   padding: 5px 10px;
   border-radius: 5px;

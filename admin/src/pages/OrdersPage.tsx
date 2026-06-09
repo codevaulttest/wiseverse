@@ -8,47 +8,32 @@ interface Props {
   orders: Order[]
 }
 
-const STATUS_FILTERS: Array<{ key: OrderStatus | 'all'; label: string }> = [
-  { key: 'all', label: '全部' },
-  { key: 'paid', label: '待处理' },
-  { key: 'processing', label: '处理中' },
-  { key: 'completed', label: '已完成' },
+const STATUS_FILTER_KEYS: Array<OrderStatus | 'all'> = [
+  'all', 'paid', 'processing', 'on_chain', 'printing', 'shipped', 'completed',
 ]
 
-function formatDate(iso: string) {
-  return new Date(iso).toLocaleDateString('en-GB', {
-    day: '2-digit',
-    month: 'short',
-    year: 'numeric',
-  })
-}
-
-function countByFilter(orders: Order[], key: OrderStatus | 'all') {
-  if (key === 'all') return orders.length
-  if (key === 'paid') return orders.filter(o => o.status === 'paid' || o.status === 'pending_payment').length
-  if (key === 'processing') return orders.filter(o => ['processing', 'on_chain', 'printing', 'shipped'].includes(o.status)).length
-  if (key === 'completed') return orders.filter(o => o.status === 'completed').length
-  return 0
-}
-
 function filterOrders(orders: Order[], key: OrderStatus | 'all') {
-  const filtered = (() => {
-    if (key === 'all') return orders
-    if (key === 'paid') return orders.filter(o => o.status === 'paid' || o.status === 'pending_payment')
-    if (key === 'processing') return orders.filter(o => ['processing', 'on_chain', 'printing', 'shipped'].includes(o.status))
-    if (key === 'completed') return orders.filter(o => o.status === 'completed')
-    return orders
-  })()
+  const filtered = key === 'all' ? orders : orders.filter(o => o.status === key)
   return [...filtered].sort((a, b) =>
     new Date(b.submittedAt).getTime() - new Date(a.submittedAt).getTime()
   )
 }
 
+const PAGE_SIZE = 10
+
 export default function OrdersPage({ orders }: Props) {
   const navigate = useNavigate()
   const [activeFilter, setActiveFilter] = useState<OrderStatus | 'all'>('all')
+  const [page, setPage] = useState(1)
 
-  const visible = filterOrders(orders, activeFilter)
+  const filtered = filterOrders(orders, activeFilter)
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE))
+  const visible = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE)
+
+  function handleFilter(key: OrderStatus | 'all') {
+    setActiveFilter(key)
+    setPage(1)
+  }
 
   return (
     <>
@@ -57,29 +42,18 @@ export default function OrdersPage({ orders }: Props) {
       </div>
 
       <div className="stats-row">
-        {STATUS_FILTERS.map(({ key, label }) => (
+        {STATUS_FILTER_KEYS.map(key => (
           <button
             key={key}
             className={`stat-chip ${activeFilter === key ? 'active' : ''}`}
-            onClick={() => setActiveFilter(key)}
+            onClick={() => handleFilter(key)}
           >
-            {label}
-            <span className="count">{countByFilter(orders, key)}</span>
+            {key === 'all' ? 'All' : STATUS_LABELS[key]}
+            <span className="count">
+              {key === 'all' ? orders.length : orders.filter(o => o.status === key).length}
+            </span>
           </button>
         ))}
-      </div>
-
-      <div className="filter-bar">
-        <select
-          className="filter-select"
-          value={activeFilter}
-          onChange={e => setActiveFilter(e.target.value as OrderStatus | 'all')}
-        >
-          <option value="all">所有状态</option>
-          {Object.entries(STATUS_LABELS).map(([key, label]) => (
-            <option key={key} value={key}>{label}</option>
-          ))}
-        </select>
       </div>
 
       <div className="table-wrap">
@@ -91,7 +65,7 @@ export default function OrdersPage({ orders }: Props) {
               <th>Address</th>
               <th>Email address</th>
               <th>Video file name</th>
-              <th>状态</th>
+              <th>Status</th>
               <th></th>
             </tr>
           </thead>
@@ -99,7 +73,7 @@ export default function OrdersPage({ orders }: Props) {
             {visible.length === 0 ? (
               <tr>
                 <td colSpan={7}>
-                  <div className="empty-state">暂无订单</div>
+                  <div className="empty-state">No orders</div>
                 </td>
               </tr>
             ) : (
@@ -115,7 +89,7 @@ export default function OrdersPage({ orders }: Props) {
                   <td className="td-date">{order.address}, {order.country}</td>
                   <td className="td-date">{order.customerEmail}</td>
                   <td style={{ maxWidth: 220 }}>
-                    <div style={{ fontSize: 13, color: 'var(--text)', fontWeight: 400 }}>{order.works[0].title}</div>
+                    <div style={{ fontSize: 14, color: 'var(--text)', fontWeight: 400 }}>{order.works[0].title}</div>
                   </td>
                   <td>
                     <StatusBadge status={order.status} />
@@ -127,6 +101,28 @@ export default function OrdersPage({ orders }: Props) {
           </tbody>
         </table>
       </div>
+
+      {totalPages > 1 && (
+        <div className="pagination">
+          <button
+            className="btn btn-ghost btn-sm"
+            onClick={() => setPage(p => p - 1)}
+            disabled={page === 1}
+          >
+            ← Prev
+          </button>
+          <span className="pagination-info">
+            Page {page} / {totalPages}
+          </span>
+          <button
+            className="btn btn-ghost btn-sm"
+            onClick={() => setPage(p => p + 1)}
+            disabled={page === totalPages}
+          >
+            Next →
+          </button>
+        </div>
+      )}
     </>
   )
 }

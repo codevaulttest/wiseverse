@@ -4,14 +4,13 @@ import { useNavigate, useLocation } from 'react-router-dom'
 const DISMISSED_KEY = 'wv-admin-dev-dismissed'
 
 const PAGES = [
-  { label: '登录页', path: '/login' },
-  { label: '订单列表', path: '/orders' },
-  { label: '订单详情 (paid)', path: '/orders/ord-007' },
-  { label: '订单详情 (processing)', path: '/orders/ord-005' },
-  { label: '订单详情 (on_chain)', path: '/orders/ord-004' },
-  { label: '订单详情 (completed)', path: '/orders/ord-001' },
+  { label: 'Login', path: '/login' },
+  { label: 'Order list', path: '/orders' },
+  { label: 'Order detail (paid)', path: '/orders/ord-007' },
+  { label: 'Order detail (processing)', path: '/orders/ord-005' },
+  { label: 'Order detail (on_chain)', path: '/orders/ord-004' },
+  { label: 'Order detail (completed)', path: '/orders/ord-001' },
   { label: 'NFC Tags', path: '/nfc-tags' },
-  { label: '邮件模板', path: '/email-preview' },
 ]
 
 export default function DevPanel() {
@@ -32,7 +31,7 @@ export default function DevPanel() {
     <div className="dev-capsule">
       {open && (
         <div className="dev-menu">
-          <div className="dev-section-label">页面跳转</div>
+          <div className="dev-section-label">Navigate to</div>
           {PAGES.map(({ label, path }) => (
             <button
               key={path}
@@ -42,12 +41,12 @@ export default function DevPanel() {
               {label}
             </button>
           ))}
-          <div className="dev-section-label">操作</div>
+          <div className="dev-section-label">Actions</div>
           <button
             className="dev-btn dev-dismiss"
             onClick={() => { setDismissed(true); setOpen(false) }}
           >
-            ✕ 关闭（刷新后重现）
+            ✕ Dismiss (reappears on reload)
           </button>
         </div>
       )}

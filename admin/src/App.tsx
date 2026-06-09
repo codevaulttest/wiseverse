@@ -45,12 +45,7 @@ export default function App() {
         <Route path="/orders/:id" element={
           isLoggedIn ? (
             <AdminLayout onLogout={handleLogout}>
-              <OrderDetailPage
-                orders={orders}
-                setOrders={setOrders}
-                nfcTags={nfcTags}
-                setNfcTags={setNfcTags}
-              />
+              <OrderDetailPage orders={orders} />
             </AdminLayout>
           ) : <Navigate to="/login" replace />
         } />
