@@ -932,7 +932,7 @@ export const STATUS_LABELS: Record<string, string> = {
   paid: 'Paid',
   processing: 'Processing',
   on_chain: 'On-chain',
-  printing: 'Printing',
+  printing: 'Printed',
   shipped: 'Shipped',
   completed: 'Completed',
 };
