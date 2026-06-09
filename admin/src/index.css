@@ -566,6 +566,12 @@ tbody tr.row-selected td {
   font-size: 14px;
 }
 
+.btn-xs {
+  padding: 4px 10px;
+  font-size: 13px;
+  border-radius: 6px;
+}
+
 .btn-full {
   width: 100%;
   justify-content: center;
