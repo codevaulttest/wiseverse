@@ -48,14 +48,11 @@ function CheckIcon() {
 export default function Pricing({ onResult, onShowTerms }: Props) {
   const [ref, inView] = useInView(0.05)
   const { t } = useLang()
-  const [qty, setQty] = useState(1)
   const [values, setValues] = useState<FormValues>({
     company: '', name: '', address: '', email: '', country: '', video: null,
   })
   const [errors, setErrors] = useState<FormErrors>({})
   const [touched, setTouched] = useState<Record<string, boolean>>({})
-
-  const total = qty * 500
 
   const validate = (v: FormValues): FormErrors => {
     const e: FormErrors = {}
@@ -77,8 +74,6 @@ export default function Pricing({ onResult, onShowTerms }: Props) {
     }
     return e
   }
-
-  const changeQty = (d: number) => setQty(q => Math.max(1, Math.min(99, q + d)))
 
   const set = (field: keyof FormValues) => (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -216,25 +211,6 @@ export default function Pricing({ onResult, onShowTerms }: Props) {
               </div>
 
               <div className="form-group">
-                <label className="form-label">{t.label_qty} *</label>
-                <div className="qty-row">
-                  <button
-                    type="button"
-                    className="qty-btn"
-                    onClick={() => changeQty(-1)}
-                    aria-label="Decrease quantity"
-                  >−</button>
-                  <span className="qty-display" aria-live="polite">{qty}</span>
-                  <button
-                    type="button"
-                    className="qty-btn"
-                    onClick={() => changeQty(1)}
-                    aria-label="Increase quantity"
-                  >+</button>
-                </div>
-              </div>
-
-              <div className="form-group">
                 <label className="form-label" htmlFor="f-video">{t.label_video} *</label>
                 <label
                   htmlFor="f-video"
@@ -278,12 +254,9 @@ export default function Pricing({ onResult, onShowTerms }: Props) {
                 <div className="summary-row">
                   <span>{t.summary_unit}</span><span>USD 500.00</span>
                 </div>
-                <div className="summary-row">
-                  <span>{t.summary_works}</span><span>{qty}</span>
-                </div>
                 <div className="summary-total">
                   <span>{t.summary_total}</span>
-                  <span>USD {total.toLocaleString('en-US', { minimumFractionDigits: 2 })}</span>
+                  <span>USD 500.00</span>
                 </div>
               </div>
 
