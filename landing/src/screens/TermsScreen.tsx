@@ -1,3 +1,5 @@
+import { useLang } from '../context/LangContext'
+
 interface Props {
   onBack: () => void
 }
@@ -35,6 +37,7 @@ function BulletList({ items }: { items: string[] }) {
 }
 
 export default function TermsScreen({ onBack }: Props) {
+  const { t, lang } = useLang()
   return (
     <div className="result-page terms-page">
       <div className="result-inner terms-inner">
@@ -43,14 +46,14 @@ export default function TermsScreen({ onBack }: Props) {
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true" width="16" height="16">
             <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
           </svg>
-          Back
+          {t.terms_back}
         </button>
 
         {/* Header */}
         <div className="terms-header">
           <p className="terms-entity">WISEVERSE PTE. LTD.</p>
           <h1 className="terms-heading">Terms and Conditions of Service</h1>
-          <p className="terms-subtitle">数字视频作品国际辅助认证服务条款</p>
+          <p className="terms-subtitle">{t.terms_subtitle}</p>
           <div className="terms-meta">
             <span>Version: 1.0</span>
             <span>Effective Date: 1 June 2026</span>
@@ -64,6 +67,9 @@ export default function TermsScreen({ onBack }: Props) {
         </div>
 
         <div className="terms-body">
+          {lang !== 'en' && t.terms_lang_note && (
+            <div className="terms-lang-note">{t.terms_lang_note}</div>
+          )}
 
           {/* How these terms become binding */}
           <div className="terms-section terms-section-intro">

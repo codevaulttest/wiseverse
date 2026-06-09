@@ -13,11 +13,12 @@ const LANGS: { code: Lang; label: string }[] = [
   { code: 'pt',      label: 'Português' },
   { code: 'th',      label: 'ไทย' },
   { code: 'vi',      label: 'Tiếng Việt' },
+  { code: 'ar',      label: 'العربية' },
 ]
 
 const LANG_SHORT: Record<Lang, string> = {
   en: 'EN', zh: 'ZH', 'zh-hant': 'ZH', ko: 'KO', ja: 'JA', ru: 'RU',
-  es: 'ES', fr: 'FR', pt: 'PT', th: 'TH', vi: 'VI',
+  es: 'ES', fr: 'FR', pt: 'PT', th: 'TH', vi: 'VI', ar: 'AR',
 }
 
 export default function LangSwitcher() {

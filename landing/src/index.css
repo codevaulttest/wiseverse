@@ -2159,3 +2159,12 @@ body.light .qty-btn {
   padding-top: 28px;
   border-top: 1px solid var(--text-12);
 }
+
+.terms-lang-note {
+  font-size: 12px;
+  color: var(--gold);
+  background: rgba(200,169,110,.06);
+  border: 1px solid var(--gold-20);
+  padding: 10px 14px;
+  line-height: 1.6;
+}

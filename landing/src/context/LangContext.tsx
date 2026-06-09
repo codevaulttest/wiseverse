@@ -10,11 +10,12 @@ import { fr } from '../i18n/fr'
 import { pt } from '../i18n/pt'
 import { th } from '../i18n/th'
 import { vi } from '../i18n/vi'
+import { ar } from '../i18n/ar'
 
-export type Lang = 'en' | 'zh' | 'zh-hant' | 'ko' | 'ja' | 'ru' | 'es' | 'fr' | 'pt' | 'th' | 'vi'
+export type Lang = 'en' | 'zh' | 'zh-hant' | 'ko' | 'ja' | 'ru' | 'es' | 'fr' | 'pt' | 'th' | 'vi' | 'ar'
 
 const translations: Record<Lang, Record<TranslationKey, string>> = {
-  en, zh, 'zh-hant': zhHant, ko, ja, ru, es, fr, pt, th, vi,
+  en, zh, 'zh-hant': zhHant, ko, ja, ru, es, fr, pt, th, vi, ar,
 }
 
 interface LangCtx {
@@ -32,10 +33,10 @@ export function LangProvider({ children }: { children: ReactNode }) {
     setLangState(l)
     const langMap: Record<Lang, string> = {
       en: 'en', zh: 'zh-CN', 'zh-hant': 'zh-TW',
-      ko: 'ko', ja: 'ja', ru: 'ru', es: 'es', fr: 'fr', pt: 'pt', th: 'th', vi: 'vi',
+      ko: 'ko', ja: 'ja', ru: 'ru', es: 'es', fr: 'fr', pt: 'pt', th: 'th', vi: 'vi', ar: 'ar',
     }
     document.documentElement.lang = langMap[l]
-    document.documentElement.dir = 'ltr'
+    document.documentElement.dir = l === 'ar' ? 'rtl' : 'ltr'
   }
 
   useEffect(() => {
