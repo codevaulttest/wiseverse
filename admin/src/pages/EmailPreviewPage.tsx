@@ -132,7 +132,6 @@ export default function EmailPreviewPage() {
 
       <p style={{ fontSize: 13, color: 'var(--text-60)', marginBottom: 20 }}>
         以下为填入 mock 数据后的邮件预览。Merge 变量由系统在发送时自动替换。
-        模板来源：<code style={{ fontSize: 12, color: 'var(--gold)' }}>raw_context/email autoresponse_1.txt</code> &amp; <code style={{ fontSize: 12, color: 'var(--gold)' }}>_2.txt</code>
       </p>
 
       <div className="email-tabs">

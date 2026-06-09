@@ -129,8 +129,12 @@ export default function OrderDetailPage({ orders, setOrders }: Props) {
             {actionLabel}
           </button>
         )}
-        <button className="btn btn-ghost btn-sm" onClick={() => setModal('email')}>
-          ✉ Resend email notification
+        <button className="btn btn-ghost btn-sm" onClick={() => setModal('email')} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6">
+            <rect x="1" y="3" width="14" height="10" rx="1.5" />
+            <polyline points="1,3 8,9.5 15,3" />
+          </svg>
+          Resend email notification
         </button>
       </div>
 

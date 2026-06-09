@@ -6,6 +6,7 @@ import LoginPage from './pages/LoginPage'
 import OrdersPage from './pages/OrdersPage'
 import OrderDetailPage from './pages/OrderDetailPage'
 import NfcTagsPage from './pages/NfcTagsPage'
+import EmailPreviewPage from './pages/EmailPreviewPage'
 import type { NfcTag, Order } from './types'
 import { MOCK_ORDERS, MOCK_NFC_TAGS } from './mock/data'
 
@@ -52,6 +53,13 @@ export default function App() {
           isLoggedIn ? (
             <AdminLayout onLogout={handleLogout}>
               <NfcTagsPage nfcTags={nfcTags} setNfcTags={setNfcTags} />
+            </AdminLayout>
+          ) : <Navigate to="/login" replace />
+        } />
+        <Route path="/email-preview" element={
+          isLoggedIn ? (
+            <AdminLayout onLogout={handleLogout}>
+              <EmailPreviewPage />
             </AdminLayout>
           ) : <Navigate to="/login" replace />
         } />

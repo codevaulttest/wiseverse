@@ -259,8 +259,12 @@ export default function OrdersPage({ orders, setOrders }: Props) {
                         className="btn btn-ghost btn-xs"
                         onClick={e => handleEmailAction(order, e)}
                         title="Resend email notification"
+                        style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '4px 8px' }}
                       >
-                        ✉
+                        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6">
+                          <rect x="1" y="3" width="14" height="10" rx="1.5" />
+                          <polyline points="1,3 8,9.5 15,3" />
+                        </svg>
                       </button>
                     </div>
                   </td>
