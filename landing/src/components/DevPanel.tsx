@@ -4,6 +4,7 @@ import type { ResultState } from '../screens/ResultScreen'
 interface Props {
   current: ResultState | null
   onSelect: (r: ResultState) => void
+  onReset: () => void
 }
 
 
@@ -13,7 +14,7 @@ const OPTIONS: { state: ResultState; label: string }[] = [
   { state: 'already-certified',  label: '◈ Duplicate' },
 ]
 
-export default function DevPanel({ current, onSelect }: Props) {
+export default function DevPanel({ current, onSelect, onReset }: Props) {
   const [open, setOpen] = useState(false)
   const [visible, setVisible] = useState(true)
 
@@ -22,6 +23,12 @@ export default function DevPanel({ current, onSelect }: Props) {
   return (
     <div className={`dev-toggle${open ? ' open' : ''}`}>
       <div className="dev-menu">
+        <button
+          className={`demo-btn${current === null ? ' active' : ''}`}
+          onClick={() => { onReset(); setOpen(false) }}
+        >
+          ⌂ Home
+        </button>
         {OPTIONS.map(({ state, label }) => (
           <button
             key={state}

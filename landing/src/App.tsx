@@ -43,7 +43,7 @@ export default function App() {
             <Footer />
           </>
         )}
-        <DevPanel current={result} onSelect={setResult} />
+        <DevPanel current={result} onSelect={setResult} onReset={handleReset} />
       </LangProvider>
     </ThemeProvider>
   )
