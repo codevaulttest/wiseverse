@@ -167,7 +167,8 @@ export default function OrderDetailPage({ orders, setOrders, nfcTags, setNfcTags
   }
 
   const availableTags = nfcTags.filter(t => t.status === 'available')
-  const allCompleted = order.works.every(w => w.status === 'completed')
+  const work = order.works[0]
+  const allCompleted = work.status === 'completed'
 
   return (
     <>
@@ -230,116 +231,106 @@ export default function OrderDetailPage({ orders, setOrders, nfcTags, setNfcTags
             <span className="detail-field-value">USD {order.totalAmount.toLocaleString()}</span>
           </div>
           <div className="detail-field">
-            <span className="detail-field-label">作品数量</span>
-            <span className="detail-field-value">{order.works.length}</span>
-          </div>
-          <div className="detail-field">
             <span className="detail-field-label">提交时间</span>
             <span className="detail-field-value">{formatDatetime(order.submittedAt)}</span>
           </div>
         </div>
       </div>
 
-      <div className="works-section">
-        <div className="section-title">作品列表</div>
+      <div className="work-item" style={{ marginBottom: 24 }}>
+        <div className="work-item-header">
+          <div>
+            <div className="work-title">{work.title}</div>
+            <div className="work-hash">{work.videoHash.slice(0, 32)}…</div>
+          </div>
+          <StatusBadge status={work.status} />
+        </div>
 
-        {order.works.map((work, idx) => (
-          <div key={work.id} className="work-item">
-            <div className="work-item-header">
-              <div>
-                <div className="work-title">#{idx + 1} {work.title}</div>
-                <div className="work-hash">{work.videoHash.slice(0, 32)}…</div>
-              </div>
-              <StatusBadge status={work.status} />
-            </div>
+        <div className="work-meta">
+          <span>{work.videoDuration}</span>
+          <span>{work.videoSize}</span>
+          <span>{work.videoCodec}</span>
+          {work.certNumber && <span className="mono" style={{ color: 'var(--gold)', fontSize: 12 }}>{work.certNumber}</span>}
+        </div>
 
-            <div className="work-meta">
-              <span>{work.videoDuration}</span>
-              <span>{work.videoSize}</span>
-              <span>{work.videoCodec}</span>
-              {work.certNumber && <span className="mono" style={{ color: 'var(--gold)', fontSize: 12 }}>{work.certNumber}</span>}
-            </div>
-
-            {(work.onChainTokenId || work.nfcTagId || work.trackingNumber) && (
-              <div style={{ display: 'flex', gap: 16, marginBottom: 10, flexWrap: 'wrap' }}>
-                {work.onChainTokenId && (
-                  <div style={{ fontSize: 12 }}>
-                    <span style={{ color: 'var(--text-28)' }}>Token ID: </span>
-                    <span style={{ color: 'var(--text-60)', fontFamily: 'monospace' }}>{work.onChainTokenId.slice(0, 20)}…</span>
-                  </div>
-                )}
-                {work.nfcTagId && (
-                  <div style={{ fontSize: 12 }}>
-                    <span style={{ color: 'var(--text-28)' }}>NFC: </span>
-                    <span style={{ color: 'var(--text-60)' }}>{work.nfcTagId}</span>
-                  </div>
-                )}
-                {work.trackingNumber && (
-                  <div style={{ fontSize: 12 }}>
-                    <span style={{ color: 'var(--text-28)' }}>快递: </span>
-                    <span style={{ color: 'var(--text-60)' }}>{work.trackingNumber}</span>
-                  </div>
-                )}
+        {(work.onChainTokenId || work.nfcTagId || work.trackingNumber) && (
+          <div style={{ display: 'flex', gap: 16, marginBottom: 10, flexWrap: 'wrap' }}>
+            {work.onChainTokenId && (
+              <div style={{ fontSize: 12 }}>
+                <span style={{ color: 'var(--text-28)' }}>Token ID: </span>
+                <span style={{ color: 'var(--text-60)', fontFamily: 'monospace' }}>{work.onChainTokenId.slice(0, 20)}…</span>
               </div>
             )}
-
-            <div className="work-actions">
-              {work.status === 'paid' && (
-                <button
-                  className="btn btn-primary btn-sm"
-                  onClick={() => handleStartProcessing(work.id)}
-                >
-                  开始处理
-                </button>
-              )}
-
-              {work.status === 'processing' && (
-                <button
-                  className="btn btn-primary btn-sm"
-                  onClick={() => { setTokenId(''); setIssuerAddress(''); setModal({ type: 'onchain', workId: work.id }) }}
-                >
-                  标记已上链
-                </button>
-              )}
-
-              {work.status === 'on_chain' && (
-                <button
-                  className="btn btn-primary btn-sm"
-                  onClick={() => { setSelectedNfc(null); setModal({ type: 'assign_nfc', workId: work.id }) }}
-                  disabled={availableTags.length === 0}
-                  title={availableTags.length === 0 ? '无可用 NFC 芯片' : ''}
-                >
-                  分配 NFC 芯片 {availableTags.length === 0 && '(库存不足)'}
-                </button>
-              )}
-
-              {work.status === 'printing' && (
-                <button
-                  className="btn btn-primary btn-sm"
-                  onClick={() => { setTrackingNumber(''); setModal({ type: 'ship', workId: work.id }) }}
-                >
-                  标记已寄出
-                </button>
-              )}
-
-              {work.status === 'shipped' && (
-                <button
-                  className="btn btn-success btn-sm"
-                  onClick={() => handleComplete(work.id)}
-                >
-                  标记已完成
-                </button>
-              )}
-
-              {canAdvance(work.status) && (
-                <span style={{ fontSize: 12, color: 'var(--text-28)', marginLeft: 4 }}>
-                  {STATUS_LABELS[work.status]}
-                  {nextStatus(work.status) && ` → ${STATUS_LABELS[nextStatus(work.status)!]}`}
-                </span>
-              )}
-            </div>
+            {work.nfcTagId && (
+              <div style={{ fontSize: 12 }}>
+                <span style={{ color: 'var(--text-28)' }}>NFC: </span>
+                <span style={{ color: 'var(--text-60)' }}>{work.nfcTagId}</span>
+              </div>
+            )}
+            {work.trackingNumber && (
+              <div style={{ fontSize: 12 }}>
+                <span style={{ color: 'var(--text-28)' }}>快递: </span>
+                <span style={{ color: 'var(--text-60)' }}>{work.trackingNumber}</span>
+              </div>
+            )}
           </div>
-        ))}
+        )}
+
+        <div className="work-actions">
+          {work.status === 'paid' && (
+            <button
+              className="btn btn-primary btn-sm"
+              onClick={() => handleStartProcessing(work.id)}
+            >
+              开始处理
+            </button>
+          )}
+
+          {work.status === 'processing' && (
+            <button
+              className="btn btn-primary btn-sm"
+              onClick={() => { setTokenId(''); setIssuerAddress(''); setModal({ type: 'onchain', workId: work.id }) }}
+            >
+              标记已上链
+            </button>
+          )}
+
+          {work.status === 'on_chain' && (
+            <button
+              className="btn btn-primary btn-sm"
+              onClick={() => { setSelectedNfc(null); setModal({ type: 'assign_nfc', workId: work.id }) }}
+              disabled={availableTags.length === 0}
+              title={availableTags.length === 0 ? '无可用 NFC 芯片' : ''}
+            >
+              分配 NFC 芯片 {availableTags.length === 0 && '(库存不足)'}
+            </button>
+          )}
+
+          {work.status === 'printing' && (
+            <button
+              className="btn btn-primary btn-sm"
+              onClick={() => { setTrackingNumber(''); setModal({ type: 'ship', workId: work.id }) }}
+            >
+              标记已寄出
+            </button>
+          )}
+
+          {work.status === 'shipped' && (
+            <button
+              className="btn btn-success btn-sm"
+              onClick={() => handleComplete(work.id)}
+            >
+              标记已完成
+            </button>
+          )}
+
+          {canAdvance(work.status) && (
+            <span style={{ fontSize: 12, color: 'var(--text-28)', marginLeft: 4 }}>
+              {STATUS_LABELS[work.status]}
+              {nextStatus(work.status) && ` → ${STATUS_LABELS[nextStatus(work.status)!]}`}
+            </span>
+          )}
+        </div>
       </div>
 
       <div className="detail-card">

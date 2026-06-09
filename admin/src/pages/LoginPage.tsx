@@ -1,13 +1,14 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-export default function LoginPage() {
+export default function LoginPage({ onLogin }: { onLogin: () => void }) {
   const [email, setEmail] = useState('admin@wiseverse.net')
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
+    onLogin()
     navigate('/orders')
   }
 

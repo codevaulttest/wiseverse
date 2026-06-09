@@ -1,4 +1,4 @@
-import { NavLink, useLocation } from 'react-router-dom'
+import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { useTheme } from '../context/ThemeContext'
 
 const NAV = [
@@ -13,32 +13,17 @@ const NAV = [
       </svg>
     ),
   },
-  {
-    to: '/nfc-tags',
-    label: 'NFC Tags',
-    icon: (
-      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.4">
-        <circle cx="8" cy="8" r="5.5" />
-        <circle cx="8" cy="8" r="2" />
-        <path d="M8 2.5 A5.5 5.5 0 0 1 13.5 8" />
-      </svg>
-    ),
-  },
-  {
-    to: '/email-preview',
-    label: 'Email Templates',
-    icon: (
-      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.4">
-        <rect x="2" y="4" width="12" height="9" rx="1.5" />
-        <path d="M2 5.5 L8 9.5 L14 5.5" />
-      </svg>
-    ),
-  },
 ]
 
-export default function Sidebar() {
+export default function Sidebar({ onLogout }: { onLogout: () => void }) {
   const location = useLocation()
+  const navigate = useNavigate()
   const { theme, toggle } = useTheme()
+
+  function handleLogout() {
+    onLogout()
+    navigate('/login')
+  }
 
   return (
     <aside className="sidebar">
@@ -78,6 +63,13 @@ export default function Sidebar() {
             {theme === 'dark' ? '☀' : '☾'}
           </button>
         </div>
+        <button
+          className="btn btn-ghost btn-sm btn-full"
+          onClick={handleLogout}
+          style={{ marginTop: 10 }}
+        >
+          Sign out
+        </button>
       </div>
     </aside>
   )
