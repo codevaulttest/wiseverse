@@ -21,6 +21,10 @@
   --success:      #22c55e;
   --success-12:   rgba(34,197,94,.12);
   --success-50:   rgba(34,197,94,.50);
+  --blue:         #6499E8;
+  --blue-60:      rgba(100,153,232,.60);
+  --blue-30:      rgba(100,153,232,.30);
+  --blue-12:      rgba(100,153,232,.12);
   --sidebar-w:    220px;
   --serif:        'Cormorant Garamond', Georgia, serif;
   --sans:         'Jost', system-ui, sans-serif;
@@ -192,32 +196,32 @@ body {
 
 .status-badge.paid {
   background: var(--gold-10);
-  color: var(--gold-60);
-  border: 1px solid var(--gold-18);
-}
-
-.status-badge.processing {
-  background: var(--gold-12);
   color: var(--gold);
   border: 1px solid var(--gold-30);
 }
 
-.status-badge.on_chain {
-  background: var(--gold-30);
+.status-badge.processing {
+  background: var(--gold-18);
   color: var(--gold);
   border: 1px solid var(--gold-60);
 }
 
+.status-badge.on_chain {
+  background: var(--blue-12);
+  color: var(--blue);
+  border: 1px solid var(--blue-30);
+}
+
 .status-badge.printing {
-  background: rgba(242,237,227,.06);
+  background: var(--text-12);
   color: var(--text-60);
   border: 1px solid var(--text-28);
 }
 
 .status-badge.shipped {
-  background: rgba(242,237,227,.06);
-  color: var(--text-60);
-  border: 1px solid var(--text-28);
+  background: var(--blue-12);
+  color: var(--blue-60);
+  border: 1px solid var(--blue-30);
 }
 
 .status-badge.completed {
@@ -1124,6 +1128,10 @@ tbody tr:hover td {
   --success:      #1a8a42;
   --success-12:   rgba(26,138,66,.12);
   --success-50:   rgba(26,138,66,.50);
+  --blue:         #2E64C8;
+  --blue-60:      rgba(46,100,200,.60);
+  --blue-30:      rgba(46,100,200,.30);
+  --blue-12:      rgba(46,100,200,.12);
 }
 
 [data-theme="light"] .sidebar {
