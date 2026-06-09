@@ -734,6 +734,84 @@ tbody tr.row-selected td {
   margin-top: 20px;
 }
 
+.modal-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.modal-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-60);
+  letter-spacing: .04em;
+}
+
+.modal-required {
+  color: var(--error);
+}
+
+.modal-input {
+  background: var(--card-hi);
+  border: 1px solid var(--text-12);
+  border-radius: 6px;
+  padding: 9px 12px;
+  font-size: 14px;
+  color: var(--text);
+  font-family: var(--sans);
+  outline: none;
+  transition: border-color .15s;
+}
+
+.modal-input:focus {
+  border-color: var(--gold-60);
+}
+
+.modal-radio-row {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  cursor: pointer;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--text-12);
+  transition: border-color .12s, background .12s;
+}
+
+.modal-radio-row:hover {
+  border-color: var(--text-28);
+  background: var(--card-hi);
+}
+
+/* ─── Action bar ─── */
+
+.action-bar {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+/* ─── Toast ─── */
+
+.toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--card-hi);
+  border: 1px solid var(--text-12);
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 14px;
+  color: var(--text);
+  z-index: 200;
+  box-shadow: 0 4px 20px rgba(0,0,0,.4);
+  white-space: nowrap;
+}
+
 /* ─── Activity Timeline ─── */
 
 .timeline {
