@@ -103,17 +103,17 @@ WHAT HAPPENS NEXT
 const TEMPLATES = [
   {
     id: 1,
-    label: '模板 1 — 标准确认',
+    label: 'Template 1 — Physical delivery only',
     subject: '[{{CERT_REF}}] Your Authentication Service is Confirmed — WISEVERSE PTE. LTD.',
     body: TEMPLATE_1_BODY,
-    desc: '不含数码证书，仅实体快递交付',
+    desc: 'Trigger: payment confirmed + video received. Physical certificate dispatched by courier only.',
   },
   {
     id: 2,
-    label: '模板 2 — 含数码证书',
+    label: 'Template 2 — Physical + digital delivery',
     subject: '[{{CERT_REF}}] Your Authentication Service is Confirmed — WISEVERSE PTE. LTD.',
     body: TEMPLATE_2_BODY,
-    desc: 'Step 2 增加数码证书交付说明',
+    desc: 'Same as Template 1, but Step 2 adds: digital deliverables (on-chain ID, auth report, verification materials) sent to client email.',
   },
 ]
 
@@ -131,7 +131,7 @@ export default function EmailPreviewPage() {
       </div>
 
       <p style={{ fontSize: 13, color: 'var(--text-60)', marginBottom: 20 }}>
-        以下为填入 mock 数据后的邮件预览。Merge 变量由系统在发送时自动替换。
+        Preview with mock data filled in. Merge variables are substituted automatically at send time.
       </p>
 
       <div className="email-tabs">
@@ -157,22 +157,22 @@ export default function EmailPreviewPage() {
       </div>
 
       <div style={{ marginTop: 20 }}>
-        <div className="detail-card-title" style={{ marginBottom: 10, fontSize: 11 }}>MERGE 变量参考</div>
+        <div className="detail-card-title" style={{ marginBottom: 10, fontSize: 11 }}>MERGE VARIABLES</div>
         <div className="table-wrap">
           <table>
             <thead>
               <tr>
-                <th>变量</th>
-                <th>当前 Mock 值</th>
-                <th>来源</th>
+                <th>Variable</th>
+                <th>Mock value</th>
+                <th>Source</th>
               </tr>
             </thead>
             <tbody>
               {Object.entries(MOCK_VARS).map(([key, val]) => (
                 <tr key={key} style={{ cursor: 'default' }}>
                   <td><code style={{ fontFamily: 'monospace', fontSize: 12, color: 'var(--gold)' }}>{`{{${key}}}`}</code></td>
-                  <td style={{ fontSize: 12, color: 'var(--text)' }}>{val.includes('\n') ? '(多行)' : val}</td>
-                  <td style={{ fontSize: 12, color: 'var(--text-28)' }}>订单数据</td>
+                  <td style={{ fontSize: 12, color: 'var(--text)' }}>{val.includes('\n') ? '(multi-line)' : val}</td>
+                  <td style={{ fontSize: 12, color: 'var(--text-28)' }}>Order data</td>
                 </tr>
               ))}
             </tbody>
