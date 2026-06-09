@@ -215,7 +215,6 @@ export default function OrdersPage({ orders, setOrders }: Props) {
               </th>
               <th>Order ID</th>
               <th>Name</th>
-              <th>Email address</th>
               <th>Video file name</th>
               <th>Status</th>
               <th>Actions</th>
@@ -224,7 +223,7 @@ export default function OrdersPage({ orders, setOrders }: Props) {
           </thead>
           <tbody>
             {visible.length === 0 ? (
-              <tr><td colSpan={8}><div className="empty-state">No orders</div></td></tr>
+              <tr><td colSpan={6}><div className="empty-state">No orders</div></td></tr>
             ) : (
               visible.map(order => (
                 <tr
@@ -239,8 +238,10 @@ export default function OrdersPage({ orders, setOrders }: Props) {
                     <div className="td-ref">{order.referenceNumber}</div>
                     <div style={{ fontSize: 13, color: 'var(--text-28)', marginTop: 2 }}>{formatDate(order.submittedAt)}</div>
                   </td>
-                  <td><div className="td-name">{order.customerName}</div></td>
-                  <td className="td-date">{order.customerEmail}</td>
+                  <td>
+                    <div className="td-name">{order.customerName}</div>
+                    <div style={{ fontSize: 13, color: 'var(--text-28)', marginTop: 2 }}>{order.customerEmail}</div>
+                  </td>
                   <td style={{ maxWidth: 200 }}>
                     <div style={{ fontSize: 14, color: 'var(--text)', fontWeight: 400 }}>{order.works[0].title}</div>
                   </td>
