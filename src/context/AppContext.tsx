@@ -11,9 +11,10 @@ import { fr } from '../i18n/fr';
 import { pt } from '../i18n/pt';
 import { th } from '../i18n/th';
 import { vi } from '../i18n/vi';
+import { ar } from '../i18n/ar';
 
 const translations: Record<Lang, Record<TranslationKey, string>> = {
-  en, zh, 'zh-hant': zhHant, ko, ja, ru, es, fr, pt, th, vi,
+  en, zh, 'zh-hant': zhHant, ko, ja, ru, es, fr, pt, th, vi, ar,
 };
 
 interface AppCtx {
