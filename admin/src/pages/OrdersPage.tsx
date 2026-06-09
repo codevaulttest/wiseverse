@@ -12,6 +12,23 @@ const STATUS_FILTER_KEYS: Array<OrderStatus | 'all'> = [
   'all', 'paid', 'processing', 'on_chain', 'printing', 'shipped', 'completed',
 ]
 
+const EXPORT_FIELDS = [
+  'Certificate No.',
+  'Order Reference',
+  'Customer Name',
+  'Delivery Address',
+  'Country',
+  'Work Title',
+  'SHA-256 Hash',
+  'Video Duration',
+  'Video Size',
+  'Video Codec',
+  'On-chain Token ID',
+  'NFC Chip Sequence No.',
+  'NFC Tag ID',
+  'Submitted At',
+]
+
 function formatDate(iso: string) {
   return new Date(iso).toLocaleString('en-GB', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })
 }
@@ -42,20 +59,50 @@ export default function OrdersPage({ orders }: Props) {
   const [activeFilter, setActiveFilter] = useState<OrderStatus | 'all'>('all')
   const [query, setQuery] = useState('')
   const [page, setPage] = useState(1)
+  const [selected, setSelected] = useState<Set<string>>(new Set())
+  const [showExportModal, setShowExportModal] = useState(false)
 
   const filtered = filterOrders(orders, activeFilter, query)
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE))
   const visible = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE)
 
+  const visibleIds = visible.map(o => o.id)
+  const allVisibleSelected = visibleIds.length > 0 && visibleIds.every(id => selected.has(id))
+  const someVisibleSelected = visibleIds.some(id => selected.has(id))
+
   function handleFilter(key: OrderStatus | 'all') {
     setActiveFilter(key)
     setPage(1)
+    setSelected(new Set())
   }
 
   function handleSearch(q: string) {
     setQuery(q)
     setPage(1)
+    setSelected(new Set())
   }
+
+  function toggleRow(id: string) {
+    setSelected(prev => {
+      const next = new Set(prev)
+      next.has(id) ? next.delete(id) : next.add(id)
+      return next
+    })
+  }
+
+  function toggleAll() {
+    if (allVisibleSelected) {
+      setSelected(prev => {
+        const next = new Set(prev)
+        visibleIds.forEach(id => next.delete(id))
+        return next
+      })
+    } else {
+      setSelected(prev => new Set([...prev, ...visibleIds]))
+    }
+  }
+
+  const selectedOrders = orders.filter(o => selected.has(o.id))
 
   return (
     <>
@@ -89,15 +136,33 @@ export default function OrdersPage({ orders }: Props) {
             </span>
           </button>
         ))}
+        <div style={{ marginLeft: 'auto' }}>
+          {selected.size > 0 && (
+            <button
+              className="btn btn-primary btn-sm"
+              onClick={() => setShowExportModal(true)}
+            >
+              Export selected ({selected.size})
+            </button>
+          )}
+        </div>
       </div>
 
       <div className="table-wrap">
         <table>
           <thead>
             <tr>
+              <th style={{ width: 40, paddingRight: 0 }}>
+                <input
+                  type="checkbox"
+                  className="row-checkbox"
+                  checked={allVisibleSelected}
+                  ref={el => { if (el) el.indeterminate = someVisibleSelected && !allVisibleSelected }}
+                  onChange={toggleAll}
+                />
+              </th>
               <th>Order ID</th>
               <th>Name</th>
-              <th>Address</th>
               <th>Email address</th>
               <th>Video file name</th>
               <th>Status</th>
@@ -113,7 +178,22 @@ export default function OrdersPage({ orders }: Props) {
               </tr>
             ) : (
               visible.map(order => (
-                <tr key={order.id} onClick={() => navigate(`/orders/${order.id}`)}>
+                <tr
+                  key={order.id}
+                  className={selected.has(order.id) ? 'row-selected' : ''}
+                  onClick={() => navigate(`/orders/${order.id}`)}
+                >
+                  <td
+                    style={{ paddingRight: 0 }}
+                    onClick={e => { e.stopPropagation(); toggleRow(order.id) }}
+                  >
+                    <input
+                      type="checkbox"
+                      className="row-checkbox"
+                      checked={selected.has(order.id)}
+                      onChange={() => toggleRow(order.id)}
+                    />
+                  </td>
                   <td>
                     <div className="td-ref">{order.referenceNumber}</div>
                     <div style={{ fontSize: 14, color: 'var(--text-28)', marginTop: 2 }}>{formatDate(order.submittedAt)}</div>
@@ -121,7 +201,6 @@ export default function OrdersPage({ orders }: Props) {
                   <td>
                     <div className="td-name">{order.customerName}</div>
                   </td>
-                  <td className="td-date">{order.address}, {order.country}</td>
                   <td className="td-date">{order.customerEmail}</td>
                   <td style={{ maxWidth: 220 }}>
                     <div style={{ fontSize: 14, color: 'var(--text)', fontWeight: 400 }}>{order.works[0].title}</div>
@@ -156,6 +235,42 @@ export default function OrdersPage({ orders }: Props) {
           >
             Next →
           </button>
+        </div>
+      )}
+
+      {showExportModal && (
+        <div className="modal-backdrop" onClick={() => setShowExportModal(false)}>
+          <div className="modal" onClick={e => e.stopPropagation()}>
+            <div className="modal-title">Export for Printing</div>
+
+            <div style={{ fontSize: 14, color: 'var(--text-60)', marginBottom: 16 }}>
+              {selectedOrders.length} order{selectedOrders.length !== 1 ? 's' : ''} selected — the following fields will be included in the Excel file:
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 7, marginBottom: 20 }}>
+              {EXPORT_FIELDS.map(field => (
+                <div key={field} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 14 }}>
+                  <span style={{ color: 'var(--success)', fontSize: 12, lineHeight: 1 }}>✓</span>
+                  <span style={{ color: 'var(--text-60)' }}>{field}</span>
+                </div>
+              ))}
+            </div>
+
+            <div style={{ borderTop: '1px solid var(--text-12)', paddingTop: 12, marginBottom: 4 }}>
+              <div style={{ fontSize: 13, color: 'var(--text-28)', lineHeight: 1.6 }}>
+                {selectedOrders.map(o => o.referenceNumber).join(' · ')}
+              </div>
+            </div>
+
+            <div className="modal-footer">
+              <button className="btn btn-ghost btn-sm" onClick={() => setShowExportModal(false)}>
+                Cancel
+              </button>
+              <button className="btn btn-primary btn-sm" onClick={() => setShowExportModal(false)}>
+                Download Excel
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </>

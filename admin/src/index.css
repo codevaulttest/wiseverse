@@ -247,6 +247,7 @@ body {
   gap: 10px;
   margin-bottom: 20px;
   flex-wrap: wrap;
+  align-items: center;
 }
 
 .stat-chip {
@@ -357,6 +358,19 @@ tbody tr:hover td {
   color: var(--text-28);
   text-align: right;
   padding-right: 20px;
+}
+
+.row-checkbox {
+  width: 15px;
+  height: 15px;
+  accent-color: var(--gold);
+  cursor: pointer;
+  display: block;
+  margin: 0 auto;
+}
+
+tbody tr.row-selected td {
+  background: var(--gold-06);
 }
 
 /* ─── Search ─── */

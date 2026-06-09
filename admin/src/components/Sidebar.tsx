@@ -13,6 +13,18 @@ const NAV = [
       </svg>
     ),
   },
+  {
+    to: '/nfc-tags',
+    label: 'NFC Tags',
+    icon: (
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.4">
+        <rect x="2" y="4" width="12" height="8" rx="1.5" />
+        <circle cx="8" cy="8" r="1.5" />
+        <path d="M5.5 5.5 A3.5 3.5 0 0 0 5.5 10.5" />
+        <path d="M10.5 5.5 A3.5 3.5 0 0 1 10.5 10.5" />
+      </svg>
+    ),
+  },
 ]
 
 export default function Sidebar({ onLogout }: { onLogout: () => void }) {
