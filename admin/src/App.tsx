@@ -2,7 +2,6 @@ import { HashRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { useState } from 'react'
 import { ThemeProvider } from './context/ThemeContext'
 import Sidebar from './components/Sidebar'
-import DevPanel from './components/DevPanel'
 import LoginPage from './pages/LoginPage'
 import OrdersPage from './pages/OrdersPage'
 import OrderDetailPage from './pages/OrderDetailPage'
@@ -57,7 +56,6 @@ export default function App() {
           ) : <Navigate to="/login" replace />
         } />
       </Routes>
-      <DevPanel />
     </HashRouter>
     </ThemeProvider>
   )
