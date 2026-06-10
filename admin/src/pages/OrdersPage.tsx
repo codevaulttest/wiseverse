@@ -237,11 +237,11 @@ export default function OrdersPage({ orders, setOrders }: Props) {
                   </td>
                   <td>
                     <div className="td-ref">{order.referenceNumber}</div>
-                    <div style={{ fontSize: 13, color: 'var(--text-60)', marginTop: 2 }}>{formatDate(order.submittedAt)}</div>
+                    <div style={{ fontSize: 13, color: 'var(--text-50)', marginTop: 2 }}>{formatDate(order.submittedAt)}</div>
                   </td>
                   <td>
                     <div className="td-name">{order.customerName}</div>
-                    <div style={{ fontSize: 13, color: 'var(--text-60)', marginTop: 2 }}>{order.customerEmail}</div>
+                    <div style={{ fontSize: 13, color: 'var(--text-50)', marginTop: 2 }}>{order.customerEmail}</div>
                   </td>
                   <td style={{ maxWidth: 200 }}>
                     <div style={{ fontSize: 14, color: 'var(--text)', fontWeight: 400 }}>{order.works[0].title}</div>
@@ -291,19 +291,19 @@ export default function OrdersPage({ orders, setOrders }: Props) {
         <div className="modal-backdrop" onClick={() => setShowExportModal(false)}>
           <div className="modal" onClick={e => e.stopPropagation()}>
             <div className="modal-title">Export for Printing</div>
-            <div style={{ fontSize: 14, color: 'var(--text-60)', marginBottom: 16 }}>
+            <div style={{ fontSize: 14, color: 'var(--text-50)', marginBottom: 16 }}>
               {selectedOrders.length} order{selectedOrders.length !== 1 ? 's' : ''} selected — the following fields will be included in the Excel file:
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 7, marginBottom: 20 }}>
               {EXPORT_FIELDS.map(field => (
                 <div key={field} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 14 }}>
                   <span style={{ color: 'var(--success)', fontSize: 12, lineHeight: 1 }}>✓</span>
-                  <span style={{ color: 'var(--text-60)' }}>{field}</span>
+                  <span style={{ color: 'var(--text-50)' }}>{field}</span>
                 </div>
               ))}
             </div>
             <div style={{ borderTop: '1px solid var(--text-12)', paddingTop: 12, marginBottom: 4 }}>
-              <div style={{ fontSize: 13, color: 'var(--text-60)', lineHeight: 1.6 }}>
+              <div style={{ fontSize: 13, color: 'var(--text-50)', lineHeight: 1.6 }}>
                 {selectedOrders.map(o => o.referenceNumber).join(' · ')}
               </div>
             </div>
@@ -370,7 +370,7 @@ export default function OrdersPage({ orders, setOrders }: Props) {
         <div className="modal-backdrop" onClick={closeModal}>
           <div className="modal" onClick={e => e.stopPropagation()}>
             <div className="modal-title">Resend Email Notification</div>
-            <p style={{ fontSize: 14, color: 'var(--text-60)', marginBottom: 16 }}>
+            <p style={{ fontSize: 14, color: 'var(--text-50)', marginBottom: 16 }}>
               Send to: <span style={{ color: 'var(--text)' }}>{actionOrder?.customerEmail}</span>
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 20 }}>
@@ -381,7 +381,7 @@ export default function OrdersPage({ orders, setOrders }: Props) {
                     <div style={{ fontSize: 14, color: 'var(--text)', fontWeight: 400 }}>
                       {n === 1 ? 'Template 1 — Payment & submission confirmation' : 'Template 2 — Delivery & digital certificate'}
                     </div>
-                    <div style={{ fontSize: 13, color: 'var(--text-60)', marginTop: 2 }}>
+                    <div style={{ fontSize: 13, color: 'var(--text-50)', marginTop: 2 }}>
                       {n === 1 ? 'Sent after payment confirmed + video received' : 'Sent when physical + digital package is dispatched'}
                     </div>
                   </div>

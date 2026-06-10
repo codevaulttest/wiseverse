@@ -133,7 +133,7 @@ export default function NfcTagsPage({ nfcTags, setNfcTags }: Props) {
                     <span className="td-ref">{tag.sequenceNumber}</span>
                   </td>
                   <td>
-                    <span style={{ fontFamily: 'monospace', fontSize: 14, color: 'var(--text-60)' }}>
+                    <span style={{ fontFamily: 'monospace', fontSize: 14, color: 'var(--text-50)' }}>
                       {tag.tagId}
                     </span>
                   </td>

@@ -13,7 +13,7 @@
   --gold-10:      rgba(154,111,46,.10);
   --gold-18:      rgba(154,111,46,.18);
   --text:         #1A140E;
-  --text-60:      rgba(26,20,14,.60);
+  --text-50:      rgba(26,20,14,.50);
   --text-28:      rgba(26,20,14,.28);
   --text-12:      rgba(26,20,14,.12);
   --error:        #b03030;
@@ -94,7 +94,7 @@ body {
   font-weight: 500;
   letter-spacing: .12em;
   text-transform: uppercase;
-  color: var(--text-60);
+  color: var(--text-50);
   padding: 0 20px 8px;
 }
 
@@ -114,7 +114,7 @@ body {
   border-radius: 6px;
   font-size: 14px;
   font-weight: 400;
-  color: var(--text-60);
+  color: var(--text-50);
   text-decoration: none;
   transition: background .15s, color .15s;
   cursor: pointer;
@@ -144,7 +144,7 @@ body {
   padding: 12px 20px 0;
   border-top: 1px solid var(--text-12);
   font-size: 14px;
-  color: var(--text-60);
+  color: var(--text-50);
 }
 
 .sidebar-user-email {
@@ -214,7 +214,7 @@ body {
 
 .status-badge.printing {
   background: var(--text-12);
-  color: var(--text-60);
+  color: var(--text-50);
   border: 1px solid var(--text-28);
 }
 
@@ -237,7 +237,7 @@ body {
 
 .status-badge.assigned {
   background: var(--text-12);
-  color: var(--text-60);
+  color: var(--text-50);
 }
 
 /* ─── Stats Chips ─── */
@@ -256,7 +256,7 @@ body {
   font-size: 14px;
   font-weight: 400;
   border: 1px solid var(--text-12);
-  color: var(--text-60);
+  color: var(--text-50);
   cursor: pointer;
   background: none;
   transition: border-color .15s, color .15s;
@@ -269,7 +269,7 @@ body {
 
 .stat-chip .count {
   font-weight: 500;
-  color: var(--text-60);
+  color: var(--text-50);
   margin-left: 4px;
 }
 
@@ -297,7 +297,7 @@ th {
   font-weight: 500;
   letter-spacing: .08em;
   text-transform: uppercase;
-  color: var(--text-60);
+  color: var(--text-50);
   padding: 12px 16px;
   border-bottom: 1px solid var(--text-12);
   white-space: nowrap;
@@ -306,7 +306,7 @@ th {
 td {
   padding: 13px 16px;
   font-size: 14px;
-  color: var(--text-60);
+  color: var(--text-50);
   border-bottom: 1px solid var(--text-12);
   vertical-align: middle;
 }
@@ -340,7 +340,7 @@ tbody tr:hover td {
 
 .td-company {
   font-size: 14px;
-  color: var(--text-60);
+  color: var(--text-50);
   margin-top: 2px;
 }
 
@@ -355,7 +355,7 @@ tbody tr:hover td {
 }
 
 .td-arrow {
-  color: var(--text-60);
+  color: var(--text-50);
   text-align: right;
   padding-right: 20px;
 }
@@ -387,13 +387,13 @@ tbody tr.row-selected td {
   transform: translateY(-50%);
   width: 15px;
   height: 15px;
-  color: var(--text-60);
+  color: var(--text-50);
   pointer-events: none;
 }
 
 .search-input {
   background: var(--card);
-  border: 1.5px solid var(--text-60);
+  border: 1.5px solid var(--text-50);
   border-radius: 6px;
   color: var(--text);
   font-family: var(--sans);
@@ -406,7 +406,7 @@ tbody tr.row-selected td {
 }
 
 .search-input::placeholder {
-  color: var(--text-60);
+  color: var(--text-50);
 }
 
 .search-input:focus {
@@ -426,7 +426,7 @@ tbody tr.row-selected td {
   background: var(--card);
   border: 1px solid var(--text-12);
   border-radius: 6px;
-  color: var(--text-60);
+  color: var(--text-50);
   font-family: var(--sans);
   font-size: 14px;
   font-weight: 400;
@@ -482,7 +482,7 @@ tbody tr.row-selected td {
 
 .login-logo-wrap .sub {
   font-size: 14px;
-  color: var(--text-28);
+  color: var(--text-50);
   letter-spacing: .06em;
   text-transform: uppercase;
 }
@@ -497,7 +497,7 @@ tbody tr.row-selected td {
   font-weight: 500;
   letter-spacing: .08em;
   text-transform: uppercase;
-  color: var(--text-60);
+  color: var(--text-50);
   margin-bottom: 6px;
 }
 
@@ -553,7 +553,7 @@ tbody tr.row-selected td {
 .btn-ghost {
   background: none;
   border: 1px solid var(--text-28);
-  color: var(--text-60);
+  color: var(--text-50);
 }
 
 .btn-ghost:hover:not(:disabled) {
@@ -607,7 +607,7 @@ tbody tr.row-selected td {
   font-weight: 500;
   letter-spacing: .10em;
   text-transform: uppercase;
-  color: var(--text-60);
+  color: var(--text-50);
   margin-bottom: 14px;
 }
 
@@ -624,7 +624,7 @@ tbody tr.row-selected td {
 
 .detail-field-label {
   font-size: 14px;
-  color: var(--text-60);
+  color: var(--text-50);
   letter-spacing: .04em;
 }
 
@@ -652,7 +652,7 @@ tbody tr.row-selected td {
   font-weight: 500;
   letter-spacing: .10em;
   text-transform: uppercase;
-  color: var(--text-60);
+  color: var(--text-50);
   margin-bottom: 12px;
 }
 
@@ -681,7 +681,7 @@ tbody tr.row-selected td {
 .work-hash {
   font-family: 'Jost', monospace;
   font-size: 14px;
-  color: var(--text-60);
+  color: var(--text-50);
   letter-spacing: .04em;
   margin-top: 3px;
   word-break: break-all;
@@ -691,7 +691,7 @@ tbody tr.row-selected td {
   display: flex;
   gap: 16px;
   font-size: 14px;
-  color: var(--text-60);
+  color: var(--text-50);
   margin-bottom: 12px;
 }
 
@@ -750,7 +750,7 @@ tbody tr.row-selected td {
 .modal-label {
   font-size: 13px;
   font-weight: 500;
-  color: var(--text-60);
+  color: var(--text-50);
   letter-spacing: .04em;
 }
 
@@ -862,7 +862,7 @@ select.modal-input {
 
 .timeline-time {
   font-size: 14px;
-  color: var(--text-60);
+  color: var(--text-50);
   white-space: nowrap;
 }
 
@@ -874,7 +874,7 @@ select.modal-input {
 
 .timeline-actor {
   font-size: 14px;
-  color: var(--text-60);
+  color: var(--text-50);
 }
 
 .timeline-detail {
@@ -902,7 +902,7 @@ select.modal-input {
 
 .import-hint {
   font-size: 14px;
-  color: var(--text-60);
+  color: var(--text-50);
   margin-bottom: 12px;
   font-family: 'Jost', monospace;
 }
@@ -940,7 +940,7 @@ select.modal-input {
   padding: 10px 20px;
   font-size: 14px;
   font-weight: 400;
-  color: var(--text-60);
+  color: var(--text-50);
   cursor: pointer;
   border: none;
   background: none;
@@ -974,7 +974,7 @@ select.modal-input {
 
 .email-meta {
   font-size: 14px;
-  color: var(--text-60);
+  color: var(--text-50);
   margin-bottom: 20px;
   border-bottom: 1px solid var(--text-12);
   padding-bottom: 12px;
@@ -983,7 +983,7 @@ select.modal-input {
 .email-body {
   font-size: 14px;
   line-height: 1.7;
-  color: var(--text-60);
+  color: var(--text-50);
   white-space: pre-wrap;
   font-family: 'Jost', monospace;
   font-weight: 400;
@@ -1001,7 +1001,7 @@ select.modal-input {
   align-items: center;
   gap: 6px;
   font-size: 14px;
-  color: var(--text-60);
+  color: var(--text-50);
   cursor: pointer;
   background: none;
   border: none;
@@ -1019,7 +1019,7 @@ select.modal-input {
 .empty-state {
   text-align: center;
   padding: 60px 20px;
-  color: var(--text-60);
+  color: var(--text-50);
   font-size: 14px;
 }
 
@@ -1035,7 +1035,7 @@ select.modal-input {
 
 .pagination-info {
   font-size: 13px;
-  color: var(--text-60);
+  color: var(--text-50);
 }
 
 /* ─── Inline Form ─── */

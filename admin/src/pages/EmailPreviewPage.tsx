@@ -130,7 +130,7 @@ export default function EmailPreviewPage() {
         <h1 className="page-title">Email Templates</h1>
       </div>
 
-      <p style={{ fontSize: 13, color: 'var(--text-60)', marginBottom: 20 }}>
+      <p style={{ fontSize: 13, color: 'var(--text-50)', marginBottom: 20 }}>
         Preview with mock data filled in. Merge variables are substituted automatically at send time.
       </p>
 
@@ -146,7 +146,7 @@ export default function EmailPreviewPage() {
         ))}
       </div>
 
-      <p style={{ fontSize: 12, color: 'var(--text-60)', marginBottom: 14 }}>{tpl.desc}</p>
+      <p style={{ fontSize: 12, color: 'var(--text-50)', marginBottom: 14 }}>{tpl.desc}</p>
 
       <div className="email-preview-wrap">
         <div className="email-subject">{filledSubject}</div>
@@ -172,7 +172,7 @@ export default function EmailPreviewPage() {
                 <tr key={key} style={{ cursor: 'default' }}>
                   <td><code style={{ fontFamily: 'monospace', fontSize: 12, color: 'var(--gold)' }}>{`{{${key}}}`}</code></td>
                   <td style={{ fontSize: 12, color: 'var(--text)' }}>{val.includes('\n') ? '(multi-line)' : val}</td>
-                  <td style={{ fontSize: 12, color: 'var(--text-60)' }}>Order data</td>
+                  <td style={{ fontSize: 12, color: 'var(--text-50)' }}>Order data</td>
                 </tr>
               ))}
             </tbody>

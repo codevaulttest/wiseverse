@@ -49,7 +49,7 @@ export default function OrderDetailPage({ orders, setOrders }: Props) {
   if (!order) return (
     <div>
       <button className="back-link" onClick={() => navigate('/orders')}>← Back to orders</button>
-      <p style={{ color: 'var(--text-60)' }}>Order not found.</p>
+      <p style={{ color: 'var(--text-50)' }}>Order not found.</p>
     </div>
   )
 
@@ -303,7 +303,7 @@ export default function OrderDetailPage({ orders, setOrders }: Props) {
         <div className="modal-backdrop" onClick={() => setModal(null)}>
           <div className="modal" onClick={e => e.stopPropagation()}>
             <div className="modal-title">{actionLabel}</div>
-            <p style={{ fontSize: 14, color: 'var(--text-60)', marginBottom: 20 }}>
+            <p style={{ fontSize: 14, color: 'var(--text-50)', marginBottom: 20 }}>
               Move this order from <strong style={{ color: 'var(--text)' }}>{order.status.replace('_', '-')}</strong> to <strong style={{ color: 'var(--text)' }}>{nextStatus?.replace('_', '-')}</strong>?
             </p>
             <div className="modal-footer">
@@ -319,7 +319,7 @@ export default function OrderDetailPage({ orders, setOrders }: Props) {
         <div className="modal-backdrop" onClick={() => setModal(null)}>
           <div className="modal" onClick={e => e.stopPropagation()}>
             <div className="modal-title">Resend Email Notification</div>
-            <p style={{ fontSize: 14, color: 'var(--text-60)', marginBottom: 16 }}>
+            <p style={{ fontSize: 14, color: 'var(--text-50)', marginBottom: 16 }}>
               Send to: <span style={{ color: 'var(--text)' }}>{order.customerEmail}</span>
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 20 }}>
@@ -330,7 +330,7 @@ export default function OrderDetailPage({ orders, setOrders }: Props) {
                     <div style={{ fontSize: 14, color: 'var(--text)', fontWeight: 400 }}>
                       {n === 1 ? 'Template 1 — Payment & submission confirmation' : 'Template 2 — Delivery & digital certificate'}
                     </div>
-                    <div style={{ fontSize: 13, color: 'var(--text-60)', marginTop: 2 }}>
+                    <div style={{ fontSize: 13, color: 'var(--text-50)', marginTop: 2 }}>
                       {n === 1 ? 'Sent after payment confirmed + video received' : 'Sent when physical + digital package is dispatched'}
                     </div>
                   </div>
