@@ -28,6 +28,7 @@ export const MOCK_ORDERS: Order[] = [
         rightsHolder: 'zhang.wei@futureworks.cn',
         issuedAt: '2026-05-18T14:00:00Z',
         shippedAt: '2026-05-20T10:30:00Z',
+        shippingMethod: 'DHL',
         trackingNumber: 'DHL-4829301827',
       },
     ],

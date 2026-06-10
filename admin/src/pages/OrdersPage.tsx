@@ -69,6 +69,7 @@ export default function OrdersPage({ orders, setOrders }: Props) {
   const [tokenId, setTokenId] = useState('')
   const [issuerAddress, setIssuerAddress] = useState('')
   const [trackingNumber, setTrackingNumber] = useState('')
+  const [shippingMethod, setShippingMethod] = useState('DHL')
   const [emailTemplate, setEmailTemplate] = useState<1 | 2>(1)
   const [toastMsg, setToastMsg] = useState<string | null>(null)
 
@@ -134,7 +135,7 @@ export default function OrdersPage({ orders, setOrders }: Props) {
 
   function closeModal() {
     setActiveModal(null); setActionOrder(null)
-    setTokenId(''); setIssuerAddress(''); setTrackingNumber('')
+    setTokenId(''); setIssuerAddress(''); setTrackingNumber(''); setShippingMethod('DHL')
   }
 
   function confirmOnChain() {
@@ -146,7 +147,7 @@ export default function OrdersPage({ orders, setOrders }: Props) {
 
   function confirmShipping() {
     if (!actionOrder) return
-    advance(actionOrder, { trackingNumber })
+    advance(actionOrder, { trackingNumber, shippingMethod })
     showToast(`${actionOrder.referenceNumber} marked shipped`)
     closeModal()
   }
@@ -340,6 +341,18 @@ export default function OrdersPage({ orders, setOrders }: Props) {
         <div className="modal-backdrop" onClick={closeModal}>
           <div className="modal" onClick={e => e.stopPropagation()}>
             <div className="modal-title">Mark Shipped — {actionOrder?.referenceNumber}</div>
+            <div className="modal-field">
+              <label className="modal-label">Shipping Method <span className="modal-required">*</span></label>
+              <select className="modal-input" value={shippingMethod} onChange={e => setShippingMethod(e.target.value)}>
+                <option value="DHL">DHL</option>
+                <option value="FedEx">FedEx</option>
+                <option value="UPS">UPS</option>
+                <option value="SF Express">SF Express</option>
+                <option value="USPS">USPS</option>
+                <option value="EMS">EMS</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
             <div className="modal-field">
               <label className="modal-label">Tracking Number <span className="modal-required">*</span></label>
               <input className="modal-input" placeholder="e.g. SF1234567890" value={trackingNumber} onChange={e => setTrackingNumber(e.target.value)} />

@@ -24,6 +24,7 @@ export interface Work {
   issuedAt?: string;
   shippedAt?: string;
   trackingNumber?: string;
+  shippingMethod?: string;
 }
 
 export interface ActivityEntry {

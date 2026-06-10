@@ -41,6 +41,7 @@ export default function OrderDetailPage({ orders, setOrders }: Props) {
   const [tokenId, setTokenId] = useState('')
   const [issuerAddress, setIssuerAddress] = useState('')
   const [trackingNumber, setTrackingNumber] = useState('')
+  const [shippingMethod, setShippingMethod] = useState('DHL')
   const [emailTemplate, setEmailTemplate] = useState<1 | 2>(1)
   const [toastMsg, setToastMsg] = useState<string | null>(null)
 
@@ -97,8 +98,8 @@ export default function OrderDetailPage({ orders, setOrders }: Props) {
   }
 
   function confirmShipping() {
-    advanceStatus({ trackingNumber })
-    setModal(null); setTrackingNumber('')
+    advanceStatus({ trackingNumber, shippingMethod })
+    setModal(null); setTrackingNumber(''); setShippingMethod('DHL')
     showToast('Tracking number saved — order marked as shipped')
   }
 
@@ -218,7 +219,7 @@ export default function OrderDetailPage({ orders, setOrders }: Props) {
             {work.trackingNumber && (
               <div className="detail-field">
                 <span className="detail-field-label">Tracking</span>
-                <span className="detail-field-value">{work.trackingNumber}</span>
+                <span className="detail-field-value">{work.shippingMethod ? `${work.shippingMethod} — ${work.trackingNumber}` : work.trackingNumber}</span>
               </div>
             )}
           </div>
@@ -273,6 +274,18 @@ export default function OrderDetailPage({ orders, setOrders }: Props) {
         <div className="modal-backdrop" onClick={() => setModal(null)}>
           <div className="modal" onClick={e => e.stopPropagation()}>
             <div className="modal-title">Mark Shipped</div>
+            <div className="modal-field">
+              <label className="modal-label">Shipping Method <span className="modal-required">*</span></label>
+              <select className="modal-input" value={shippingMethod} onChange={e => setShippingMethod(e.target.value)}>
+                <option value="DHL">DHL</option>
+                <option value="FedEx">FedEx</option>
+                <option value="UPS">UPS</option>
+                <option value="SF Express">SF Express</option>
+                <option value="USPS">USPS</option>
+                <option value="EMS">EMS</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
             <div className="modal-field">
               <label className="modal-label">Tracking Number <span className="modal-required">*</span></label>
               <input className="modal-input" placeholder="e.g. SF1234567890" value={trackingNumber} onChange={e => setTrackingNumber(e.target.value)} />
