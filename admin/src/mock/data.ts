@@ -1,4 +1,4 @@
-import type { Order, NfcTag } from '../types';
+import type { Order, NfcTag, AdminUser } from '../types';
 
 export const MOCK_ORDERS: Order[] = [
   {
@@ -877,6 +877,27 @@ export const MOCK_ORDERS: Order[] = [
     ],
   },
 ];
+
+export const MOCK_ADMIN_USERS: AdminUser[] = [
+  {
+    id: 'admin-1',
+    email: 'admin@wiseverse.net',
+    name: '张伟',
+    permissions: ['nfc_manage', 'admin_manage', 'email_templates', 'edit_order', 'change_order_status'],
+  },
+  {
+    id: 'admin-2',
+    email: 'ops@wiseverse.net',
+    name: '李娜',
+    permissions: ['nfc_manage', 'change_order_status'],
+  },
+  {
+    id: 'admin-3',
+    email: 'support@wiseverse.net',
+    name: '王芳',
+    permissions: ['edit_order'],
+  },
+]
 
 export const MOCK_NFC_TAGS: NfcTag[] = [
   {

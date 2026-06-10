@@ -330,7 +330,7 @@ export default function OrderDetailPage({ orders, setOrders }: Props) {
                     <div style={{ fontSize: 14, color: 'var(--text)', fontWeight: 400 }}>
                       {n === 1 ? 'Template 1 — Payment & submission confirmation' : 'Template 2 — Delivery & digital certificate'}
                     </div>
-                    <div style={{ fontSize: 13, color: 'var(--text-28)', marginTop: 2 }}>
+                    <div style={{ fontSize: 13, color: 'var(--text-60)', marginTop: 2 }}>
                       {n === 1 ? 'Sent after payment confirmed + video received' : 'Sent when physical + digital package is dispatched'}
                     </div>
                   </div>

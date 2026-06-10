@@ -7,8 +7,9 @@ import OrdersPage from './pages/OrdersPage'
 import OrderDetailPage from './pages/OrderDetailPage'
 import NfcTagsPage from './pages/NfcTagsPage'
 import EmailPreviewPage from './pages/EmailPreviewPage'
-import type { NfcTag, Order } from './types'
-import { MOCK_ORDERS, MOCK_NFC_TAGS } from './mock/data'
+import AdminUsersPage from './pages/AdminUsersPage'
+import type { NfcTag, Order, AdminUser } from './types'
+import { MOCK_ORDERS, MOCK_NFC_TAGS, MOCK_ADMIN_USERS } from './mock/data'
 
 function AdminLayout({ onLogout, children }: { onLogout: () => void; children: React.ReactNode }) {
   return (
@@ -23,6 +24,7 @@ export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [orders, setOrders] = useState<Order[]>(MOCK_ORDERS)
   const [nfcTags, setNfcTags] = useState<NfcTag[]>(MOCK_NFC_TAGS)
+  const [adminUsers, setAdminUsers] = useState<AdminUser[]>(MOCK_ADMIN_USERS)
 
   function handleLogin() { setIsLoggedIn(true) }
   function handleLogout() { setIsLoggedIn(false) }
@@ -60,6 +62,13 @@ export default function App() {
           isLoggedIn ? (
             <AdminLayout onLogout={handleLogout}>
               <EmailPreviewPage />
+            </AdminLayout>
+          ) : <Navigate to="/login" replace />
+        } />
+        <Route path="/admin-users" element={
+          isLoggedIn ? (
+            <AdminLayout onLogout={handleLogout}>
+              <AdminUsersPage users={adminUsers} setUsers={setAdminUsers} />
             </AdminLayout>
           ) : <Navigate to="/login" replace />
         } />

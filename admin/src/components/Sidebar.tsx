@@ -1,5 +1,4 @@
 import { NavLink, useLocation, useNavigate } from 'react-router-dom'
-import { useTheme } from '../context/ThemeContext'
 
 const NAV = [
   {
@@ -35,12 +34,21 @@ const NAV = [
       </svg>
     ),
   },
+  {
+    to: '/admin-users',
+    label: '权限管理',
+    icon: (
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.4">
+        <circle cx="8" cy="5" r="2.5" />
+        <path d="M3 14c0-3 2.2-5 5-5s5 2 5 5" />
+      </svg>
+    ),
+  },
 ]
 
 export default function Sidebar({ onLogout }: { onLogout: () => void }) {
   const location = useLocation()
   const navigate = useNavigate()
-  const { theme, toggle } = useTheme()
 
   function handleLogout() {
     onLogout()
@@ -72,19 +80,8 @@ export default function Sidebar({ onLogout }: { onLogout: () => void }) {
       </nav>
 
       <div className="sidebar-footer">
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <div>
-            <div>Signed in as</div>
-            <div className="sidebar-user-email">admin@wiseverse.net</div>
-          </div>
-          <button
-            className="theme-toggle"
-            onClick={toggle}
-            title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-          >
-            {theme === 'dark' ? '☀' : '☾'}
-          </button>
-        </div>
+        <div>Signed in as</div>
+        <div className="sidebar-user-email">admin@wiseverse.net</div>
         <button
           className="btn btn-ghost btn-sm btn-full"
           onClick={handleLogout}

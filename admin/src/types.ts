@@ -60,9 +60,24 @@ export interface NfcTag {
   status: 'available' | 'assigned';
 }
 
+export type Permission =
+  | 'nfc_manage'
+  | 'admin_manage'
+  | 'email_templates'
+  | 'edit_order'
+  | 'change_order_status';
+
+export interface AdminUser {
+  id: string;
+  email: string;
+  name: string;
+  permissions: Permission[];
+}
+
 export type Page =
   | 'login'
   | 'orders'
   | 'order-detail'
   | 'nfc-tags'
-  | 'email-preview';
+  | 'email-preview'
+  | 'admin-users';
