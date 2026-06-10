@@ -70,7 +70,7 @@ export default function AdminUsersPage({ users, setUsers }: Props) {
         <table>
           <thead>
             <tr>
-              <th>姓名</th>
+              <th>用户名</th>
               <th>邮箱</th>
               <th>权限</th>
               <th>操作</th>
