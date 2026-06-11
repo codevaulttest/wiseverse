@@ -36,7 +36,7 @@ const NAV = [
   },
   {
     to: '/admin-users',
-    label: '权限管理',
+    label: 'Permissions',
     icon: (
       <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.4">
         <circle cx="8" cy="5" r="2.5" />

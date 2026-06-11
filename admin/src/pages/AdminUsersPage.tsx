@@ -7,11 +7,11 @@ interface Props {
 }
 
 const PERMISSION_LABELS: Record<Permission, string> = {
-  nfc_manage: 'NFC Tags 管理',
-  admin_manage: '管理员管理',
-  email_templates: 'Email Templates 管理',
-  edit_order: '修改订单资料',
-  change_order_status: '改变订单状态',
+  nfc_manage: 'NFC Tags',
+  admin_manage: 'Admin Management',
+  email_templates: 'Email Templates',
+  edit_order: 'Edit Order',
+  change_order_status: 'Change Order Status',
 }
 
 const ALL_PERMISSIONS: Permission[] = [
@@ -53,7 +53,7 @@ export default function AdminUsersPage({ users, setUsers }: Props) {
         : u
     ))
     setEditingUser(null)
-    showToast(`${editingUser.email} 权限已更新`)
+    showToast(`Permissions updated for ${editingUser.email}`)
   }
 
   function cancelEdit() {
@@ -63,17 +63,17 @@ export default function AdminUsersPage({ users, setUsers }: Props) {
   return (
     <>
       <div className="page-header">
-        <h1 className="page-title">权限管理</h1>
+        <h1 className="page-title">Permissions</h1>
       </div>
 
       <div className="table-wrap">
         <table>
           <thead>
             <tr>
-              <th>用户名</th>
-              <th>邮箱</th>
-              <th>权限</th>
-              <th>操作</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Permissions</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -100,7 +100,7 @@ export default function AdminUsersPage({ users, setUsers }: Props) {
                 </td>
                 <td onClick={e => e.stopPropagation()}>
                   <button className="btn btn-primary btn-xs" onClick={() => openEdit(user)}>
-                    编辑权限
+                    Edit Permissions
                   </button>
                 </td>
               </tr>
@@ -113,7 +113,7 @@ export default function AdminUsersPage({ users, setUsers }: Props) {
       {editingUser && (
         <div className="modal-backdrop" onClick={cancelEdit}>
           <div className="modal" onClick={e => e.stopPropagation()}>
-            <div className="modal-title">编辑权限 — {editingUser.email}</div>
+            <div className="modal-title">Edit Permissions — {editingUser.email}</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 20 }}>
               {ALL_PERMISSIONS.map(perm => (
                 <label
@@ -136,7 +136,7 @@ export default function AdminUsersPage({ users, setUsers }: Props) {
             </div>
             <div className="modal-footer">
               <button className="btn btn-ghost btn-sm" onClick={cancelEdit}>Cancel</button>
-              <button className="btn btn-primary btn-sm" onClick={savePermissions}>保存</button>
+              <button className="btn btn-primary btn-sm" onClick={savePermissions}>Save</button>
             </div>
           </div>
         </div>
