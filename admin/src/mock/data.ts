@@ -1,87 +1,72 @@
 import type { Order, NfcTag, AdminUser, EmailTemplate } from '../types';
 
-const TEMPLATE_1_BODY = `Dear {{CLIENT_NAME}},
+const TEMPLATE_1_BODY = `尊敬的 {{CLIENT_NAME}}，
 
-Thank you for your order and for submitting your video work(s) for authentication.
-We confirm that payment has been received and your file(s) have been successfully
-uploaded. Please refer to your invoice as attached. Your certification is now
-in progress.
+感谢您的订单及视频作品提交，我们已确认收款，文件亦已成功上传。请参阅随附发票。您的认证工作现已开始处理。
 
-Please retain this email as your official service confirmation. The reference
-number above should be quoted in all future correspondence regarding this order.
+请妥善保存本邮件作为官方服务确认函。如需就本订单进行后续沟通，请在来信中注明上方参考编号。
 
 ────────────────────────────────────────────────────────────────────────────────
-ORDER SUMMARY
+订单摘要
 ────────────────────────────────────────────────────────────────────────────────
 
-  Service Reference:        {{CERT_REF}}
-  Client / Entity:          {{COMPANY_NAME}}
-  Submission Date:          {{SUBMISSION_DATE}}
-  Number of Works:          {{NUM_WORKS}}
-  Total Paid:               USD {{ORDER_TOTAL}}
-  Estimated Delivery:       {{DELIVERY_DATE}}
+  服务参考编号：          {{CERT_REF}}
+  客户 / 机构：           {{COMPANY_NAME}}
+  提交日期：              {{SUBMISSION_DATE}}
+  认证作品数量：          {{NUM_WORKS}}
+  已付金额：              USD {{ORDER_TOTAL}}
+  预计交付日期：          {{DELIVERY_DATE}}
 
-  Works submitted for certification:
+  提交认证的作品：
 {{WORKS_LIST}}
 
 ────────────────────────────────────────────────────────────────────────────────
-WHAT HAPPENS NEXT
+后续流程
 ────────────────────────────────────────────────────────────────────────────────
 
-  Step 1 — Authentication processing
-  Our team will establish correspondence mapping, complete on-chain registration,
-  produce the physical chip certificate(s), and compile the authentication report(s).
+  第一步 — 认证处理
+  我们的团队将建立对应关系映射、完成链上注册、制作实体芯片证书，并编制认证报告。
 
-  Step 2 — Delivery
-  Your complete authentication package will be dispatched by the estimated
-  delivery date above. Physical certificates are sent via international courier
-  to your registered address.
+  第二步 — 实物寄送
+  完整认证套件将于上述预计交付日期前通过国际快递寄至您的注册地址。
 
-  For any queries regarding your order, please contact us at:
-  contact@wiseverse.net — quoting your reference number {{CERT_REF}}.
+  如对订单有任何疑问，请联系：
+  contact@wiseverse.net — 并注明您的参考编号 {{CERT_REF}}。
 
 © 2026  WISEVERSE PTE. LTD.  |  UEN: 202429365C`
 
-const TEMPLATE_2_BODY = `Dear {{CLIENT_NAME}},
+const TEMPLATE_2_BODY = `尊敬的 {{CLIENT_NAME}}，
 
-Thank you for your order and for submitting your video work(s) for authentication.
-We confirm that payment has been received and your file(s) have been successfully
-uploaded. Please refer to your invoice as attached. Your certification is now
-in progress.
+感谢您的订单及视频作品提交，我们已确认收款，文件亦已成功上传。请参阅随附发票。您的认证工作现已开始处理。
 
-Please retain this email as your official service confirmation. The reference
-number above should be quoted in all future correspondence regarding this order.
+请妥善保存本邮件作为官方服务确认函。如需就本订单进行后续沟通，请在来信中注明上方参考编号。
 
 ────────────────────────────────────────────────────────────────────────────────
-ORDER SUMMARY
+订单摘要
 ────────────────────────────────────────────────────────────────────────────────
 
-  Service Reference:        {{CERT_REF}}
-  Client / Entity:          {{COMPANY_NAME}}
-  Submission Date:          {{SUBMISSION_DATE}}
-  Number of Works:          {{NUM_WORKS}}
-  Total Paid:               USD {{ORDER_TOTAL}}
-  Estimated Delivery:       {{DELIVERY_DATE}}
+  服务参考编号：          {{CERT_REF}}
+  客户 / 机构：           {{COMPANY_NAME}}
+  提交日期：              {{SUBMISSION_DATE}}
+  认证作品数量：          {{NUM_WORKS}}
+  已付金额：              USD {{ORDER_TOTAL}}
+  预计交付日期：          {{DELIVERY_DATE}}
 
-  Works submitted for certification:
+  提交认证的作品：
 {{WORKS_LIST}}
 
 ────────────────────────────────────────────────────────────────────────────────
-WHAT HAPPENS NEXT
+后续流程
 ────────────────────────────────────────────────────────────────────────────────
 
-  Step 1 — Authentication processing
-  Our team will establish correspondence mapping, complete on-chain registration,
-  produce the physical chip certificate(s), and compile the authentication report(s).
+  第一步 — 认证处理
+  我们的团队将建立对应关系映射、完成链上注册、制作实体芯片证书，并编制认证报告。
 
-  Step 2 — Delivery
-  Your complete authentication package will be dispatched by the estimated
-  delivery date above. Physical certificates are sent via international courier
-  to your registered address. Digital deliverables (on-chain identifier,
-  authentication report, verification materials) are sent to this email address.
+  第二步 — 实物与数字交付
+  完整认证套件将于上述预计交付日期前通过国际快递寄至您的注册地址。数字交付物（链上标识符、认证报告、验证材料）将发送至本邮箱地址。
 
-  For any queries regarding your order, please contact us at:
-  contact@wiseverse.net — quoting your reference number {{CERT_REF}}.
+  如对订单有任何疑问，请联系：
+  contact@wiseverse.net — 并注明您的参考编号 {{CERT_REF}}。
 
 © 2026  WISEVERSE PTE. LTD.  |  UEN: 202429365C`
 
@@ -89,14 +74,14 @@ export const INITIAL_EMAIL_TEMPLATES: EmailTemplate[] = [
   {
     id: 1,
     label: 'Template 1 — Physical delivery only',
-    subject: '[{{CERT_REF}}] Your Authentication Service is Confirmed — WISEVERSE PTE. LTD.',
+    subject: '【{{CERT_REF}}】您的认证服务已确认 — WISEVERSE PTE. LTD.',
     body: TEMPLATE_1_BODY,
     desc: 'Trigger: payment confirmed + video received. Physical certificate dispatched by courier only.',
   },
   {
     id: 2,
     label: 'Template 2 — Physical + digital delivery',
-    subject: '[{{CERT_REF}}] Your Authentication Service is Confirmed — WISEVERSE PTE. LTD.',
+    subject: '【{{CERT_REF}}】您的认证服务已确认 — WISEVERSE PTE. LTD.',
     body: TEMPLATE_2_BODY,
     desc: 'Same as Template 1, but Step 2 adds: digital deliverables (on-chain ID, auth report, verification materials) sent to client email.',
   },
