@@ -37,7 +37,12 @@ export default function OrderDetailPage({ orders, setOrders, currentUser }: Prop
   const order = orders.find(o => o.id === id)
   if (!order) return (
     <div>
-      <button className="back-link" onClick={() => navigate('/orders')}>{t('detail.back')}</button>
+      <button className="back-link" onClick={() => navigate('/orders')}>
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+          <polyline points="10,3 5,8 10,13" />
+        </svg>
+        {t('detail.back')}
+      </button>
       <p style={{ color: 'var(--text-50)' }}>{t('detail.notFound')}</p>
     </div>
   )
@@ -120,7 +125,12 @@ export default function OrderDetailPage({ orders, setOrders, currentUser }: Prop
 
   return (
     <>
-      <button className="back-link" onClick={() => navigate('/orders')}>{t('detail.back')}</button>
+      <button className="back-link" onClick={() => navigate('/orders')}>
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+          <polyline points="10,3 5,8 10,13" />
+        </svg>
+        {t('detail.back')}
+      </button>
 
       <div className="page-header">
         <h1 className="page-title">{order.referenceNumber}</h1>

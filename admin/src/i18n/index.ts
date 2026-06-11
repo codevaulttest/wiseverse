@@ -78,7 +78,7 @@ export const translations = {
     'emailModal.send': 'Send',
 
     // Order detail
-    'detail.back': '← Back to orders',
+    'detail.back': 'Back to orders',
     'detail.resendEmail': 'Resend email notification',
     'detail.customer': 'Customer',
     'detail.order': 'Order',
@@ -253,7 +253,7 @@ export const translations = {
     'emailModal.send': '发送',
 
     // Order detail
-    'detail.back': '← 返回订单列表',
+    'detail.back': '返回订单列表',
     'detail.resendEmail': '重新发送邮件通知',
     'detail.customer': '客户',
     'detail.order': '订单',
