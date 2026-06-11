@@ -69,7 +69,6 @@ export type Permission =
 
 export interface AdminUser {
   id: string;
-  email: string;
   name: string;
   permissions: Permission[];
   password?: string;

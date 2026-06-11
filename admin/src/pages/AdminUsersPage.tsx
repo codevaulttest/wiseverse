@@ -24,6 +24,39 @@ const PERM_KEY: Record<Permission, TransKey> = {
   change_order_status: 'perms.changeStatus',
 }
 
+const MAX_VISIBLE = 3
+
+function PermissionSummary({
+  perms,
+  allPerms,
+  t,
+}: {
+  perms: Permission[]
+  allPerms: Permission[]
+  t: (key: TransKey) => string
+}) {
+  const active = allPerms.filter(p => perms.includes(p))
+  if (active.length === 0) {
+    return <span style={{ fontSize: 13, color: 'var(--text-muted)' }}>—</span>
+  }
+  const visible = active.slice(0, MAX_VISIBLE)
+  const overflow = active.length - MAX_VISIBLE
+  return (
+    <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap', alignItems: 'center' }}>
+      {visible.map(perm => (
+        <span key={perm} className="status-badge completed" style={{ fontSize: 12, padding: '2px 8px' }}>
+          {t(PERM_KEY[perm])}
+        </span>
+      ))}
+      {overflow > 0 && (
+        <span className="status-badge assigned" style={{ fontSize: 12, padding: '2px 8px' }}>
+          +{overflow}
+        </span>
+      )}
+    </div>
+  )
+}
+
 export default function AdminUsersPage({ users, setUsers }: Props) {
   const { t } = useLang()
   const [editingUser, setEditingUser] = useState<AdminUser | null>(null)
@@ -56,7 +89,7 @@ export default function AdminUsersPage({ users, setUsers }: Props) {
         : u
     ))
     setEditingUser(null)
-    showToast(t('perms.updated', { email: editingUser.email }))
+    showToast(t('perms.updated', { name: editingUser.name }))
   }
 
   function cancelEdit() {
@@ -74,7 +107,6 @@ export default function AdminUsersPage({ users, setUsers }: Props) {
           <thead>
             <tr>
               <th>{t('perms.col.name')}</th>
-              <th>{t('perms.col.email')}</th>
               <th>{t('perms.col.permissions')}</th>
               <th>{t('perms.col.actions')}</th>
             </tr>
@@ -86,20 +118,7 @@ export default function AdminUsersPage({ users, setUsers }: Props) {
                   <div className="td-name">{user.name}</div>
                 </td>
                 <td>
-                  <div style={{ fontSize: 14, color: 'var(--text)' }}>{user.email}</div>
-                </td>
-                <td>
-                  <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
-                    {ALL_PERMISSIONS.map(perm => (
-                      <span
-                        key={perm}
-                        className={`status-badge ${user.permissions.includes(perm) ? 'completed' : 'assigned'}`}
-                        style={{ fontSize: 12, padding: '2px 8px' }}
-                      >
-                        {t(PERM_KEY[perm])}
-                      </span>
-                    ))}
-                  </div>
+                  <PermissionSummary perms={user.permissions} allPerms={ALL_PERMISSIONS} t={t} />
                 </td>
                 <td onClick={e => e.stopPropagation()}>
                   <button className="btn btn-primary btn-xs" onClick={() => openEdit(user)}>
@@ -115,7 +134,7 @@ export default function AdminUsersPage({ users, setUsers }: Props) {
       {editingUser && (
         <div className="modal-backdrop" onClick={cancelEdit}>
           <div className="modal" onClick={e => e.stopPropagation()}>
-            <div className="modal-title">{t('perms.editTitle', { email: editingUser.email })}</div>
+            <div className="modal-title">{t('perms.editTitle', { name: editingUser.name })}</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 20 }}>
               {ALL_PERMISSIONS.map(perm => (
                 <label

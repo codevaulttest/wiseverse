@@ -2,15 +2,15 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useLang } from '../context/LangContext'
 
-export default function LoginPage({ onLogin }: { onLogin: (email: string) => void }) {
-  const [email, setEmail] = useState('admin@wiseverse.net')
+export default function LoginPage({ onLogin }: { onLogin: (username: string) => void }) {
+  const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
   const { t } = useLang()
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    onLogin(email)
+    onLogin(username)
     navigate('/orders')
   }
 
@@ -25,13 +25,14 @@ export default function LoginPage({ onLogin }: { onLogin: (email: string) => voi
 
         <form onSubmit={handleSubmit}>
           <div className="form-field">
-            <label className="form-label">{t('login.email')}</label>
+            <label className="form-label">{t('login.username')}</label>
             <input
-              type="email"
+              type="text"
               className="form-input"
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-              placeholder="admin@wiseverse.net"
+              value={username}
+              onChange={e => setUsername(e.target.value)}
+              placeholder="username"
+              autoComplete="username"
             />
           </div>
           <div className="form-field">

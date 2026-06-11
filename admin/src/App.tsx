@@ -30,11 +30,10 @@ export default function App() {
 
   const isLoggedIn = currentUser !== null
 
-  function handleLogin(email: string) {
-    const user = MOCK_ADMIN_USERS.find(u => u.email === email) ?? {
+  function handleLogin(username: string) {
+    const user = MOCK_ADMIN_USERS.find(u => u.name === username) ?? {
       id: 'unknown',
-      email,
-      name: email,
+      name: username,
       permissions: [],
     }
     setCurrentUser(user)

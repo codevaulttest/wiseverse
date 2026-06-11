@@ -32,21 +32,22 @@ export default function NfcTagsPage({ nfcTags, setNfcTags }: Props) {
     setImportSuccess(null)
     const lines = csvInput.trim().split('\n').filter(l => l.trim())
     if (lines.length === 0) {
-      setImportError('Enter at least one line')
+      setImportError(t('nfc.importErrEmpty'))
       return
     }
 
     const newTags: NfcTag[] = []
+    let skipped = 0
     for (const [i, line] of lines.entries()) {
       const parts = line.split(',').map(p => p.trim())
       if (parts.length < 3) {
-        setImportError(`Row ${i + 1}: invalid format — expected 3 columns: Sequence,TagID,EncryptionKey`)
+        setImportError(t('nfc.importErrFormat', { row: i + 1 }))
         return
       }
       const [sequenceNumber, tagId, encryptionKey] = parts
-      if (nfcTags.some(t => t.sequenceNumber === sequenceNumber)) {
-        setImportError(`Row ${i + 1}: sequence ${sequenceNumber} already exists`)
-        return
+      if (nfcTags.some(existing => existing.sequenceNumber === sequenceNumber)) {
+        skipped++
+        continue
       }
       newTags.push({
         id: `nfc-${Date.now()}-${i}`,
@@ -57,8 +58,17 @@ export default function NfcTagsPage({ nfcTags, setNfcTags }: Props) {
       })
     }
 
-    setNfcTags(prev => [...prev, ...newTags])
-    setImportSuccess(t('nfc.importSuccess', { n: newTags.length }))
+    if (newTags.length > 0) {
+      setNfcTags(prev => [...prev, ...newTags])
+    }
+
+    if (newTags.length === 0) {
+      setImportSuccess(t('nfc.importAllDuplicates', { skipped }))
+    } else if (skipped > 0) {
+      setImportSuccess(t('nfc.importResult', { n: newTags.length, skipped }))
+    } else {
+      setImportSuccess(t('nfc.importSuccess', { n: newTags.length }))
+    }
     setCsvInput('')
   }
 

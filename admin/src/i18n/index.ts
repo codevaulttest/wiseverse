@@ -32,7 +32,7 @@ export const translations = {
     'common.save': 'Save',
 
     // Login
-    'login.email': 'Email',
+    'login.username': 'Username',
     'login.password': 'Password',
     'login.submit': 'Sign in',
     'login.sub': 'Admin Console',
@@ -119,6 +119,8 @@ export const translations = {
     'nfc.importSuccess': 'Successfully imported {n} NFC chip(s)',
     'nfc.importResult': 'Import complete: {n} added, {skipped} skipped (duplicates)',
     'nfc.importAllDuplicates': 'Nothing imported — all {skipped} row(s) already exist',
+    'nfc.importErrFormat': 'Row {row}: invalid format — expected 3 columns: Sequence,TagID,EncryptionKey',
+    'nfc.importErrEmpty': 'Enter at least one line',
 
     // Email Templates page (UI chrome only — email body stays in English)
     'email.pageTitle': 'Email Templates',
@@ -151,13 +153,12 @@ export const translations = {
 
     // Permissions
     'perms.title': 'Permissions',
-    'perms.col.name': 'Name',
-    'perms.col.email': 'Email',
+    'perms.col.name': 'Username',
     'perms.col.permissions': 'Permissions',
     'perms.col.actions': 'Actions',
     'perms.editBtn': 'Edit Permissions',
-    'perms.editTitle': 'Edit Permissions — {email}',
-    'perms.updated': 'Permissions updated for {email}',
+    'perms.editTitle': 'Edit Permissions — {name}',
+    'perms.updated': 'Permissions updated for {name}',
     'perms.nfc': 'NFC Tags',
     'perms.admin': 'Admin Management',
     'perms.email': 'Email Templates',
@@ -197,7 +198,7 @@ export const translations = {
     'common.save': '保存',
 
     // Login
-    'login.email': '邮箱',
+    'login.username': '用户名',
     'login.password': '密码',
     'login.submit': '登录',
     'login.sub': '管理后台',
@@ -282,6 +283,10 @@ export const translations = {
     'nfc.col.assignedAt': '分配时间',
     'nfc.empty': '暂无 NFC 芯片记录',
     'nfc.importSuccess': '成功导入 {n} 个 NFC 芯片',
+    'nfc.importResult': '导入完成：{n} 条已添加，{skipped} 条已跳过（重复）',
+    'nfc.importAllDuplicates': '无新记录导入 — {skipped} 条全部已存在',
+    'nfc.importErrFormat': '第 {row} 行：格式错误 — 需要 3 列：序号,标签ID,加密密钥',
+    'nfc.importErrEmpty': '请至少输入一行',
 
     // Email Templates page (邮件正文保持英文，仅翻译 UI 界面文字)
     'email.pageTitle': '邮件模板',
@@ -315,12 +320,11 @@ export const translations = {
     // Permissions
     'perms.title': '权限管理',
     'perms.col.name': '用户名',
-    'perms.col.email': '邮箱',
     'perms.col.permissions': '权限',
     'perms.col.actions': '操作',
     'perms.editBtn': '编辑权限',
-    'perms.editTitle': '编辑权限 — {email}',
-    'perms.updated': '已更新 {email} 的权限',
+    'perms.editTitle': '编辑权限 — {name}',
+    'perms.updated': '已更新 {name} 的权限',
     'perms.nfc': 'NFC 标签管理',
     'perms.admin': '管理员管理',
     'perms.email': '邮件模板管理',

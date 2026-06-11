@@ -50,7 +50,7 @@ export default function Sidebar({ currentUser, onLogout, onChangePassword }: { c
   }
 
   const initials = currentUser
-    ? (currentUser.name?.trim().slice(0, 1) || currentUser.email.slice(0, 1)).toUpperCase()
+    ? currentUser.name.trim().slice(0, 1).toUpperCase()
     : '?'
 
   const NAV = [
@@ -132,7 +132,7 @@ export default function Sidebar({ currentUser, onLogout, onChangePassword }: { c
         {showPopover && (
           <div className="sidebar-popover">
             <div className="sidebar-popover-header">
-              <span className="sidebar-popover-email">{currentUser?.email ?? ''}</span>
+              <span className="sidebar-popover-email">{currentUser?.name ?? ''}</span>
             </div>
             <div className="sidebar-popover-section">
               <button className="sidebar-popover-action" onClick={openChangePwd}>
@@ -176,7 +176,7 @@ export default function Sidebar({ currentUser, onLogout, onChangePassword }: { c
         >
           <div className="sidebar-avatar">{initials}</div>
           <div className="sidebar-profile-info">
-            <span className="sidebar-user-email">{currentUser?.email ?? ''}</span>
+            <span className="sidebar-user-email">{currentUser?.name ?? ''}</span>
           </div>
           <svg className={`sidebar-chevron${showPopover ? ' open' : ''}`} width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
             <polyline points="6,4 10,8 6,12" />

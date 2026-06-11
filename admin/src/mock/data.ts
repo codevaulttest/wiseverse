@@ -983,22 +983,19 @@ export const MOCK_ORDERS: Order[] = [
 export const MOCK_ADMIN_USERS: AdminUser[] = [
   {
     id: 'admin-1',
-    email: 'admin@wiseverse.net',
-    name: '张伟',
+    name: 'Zhang Wei',
     permissions: ['nfc_manage', 'admin_manage', 'email_templates', 'edit_order', 'change_order_status'],
     password: 'admin123',
   },
   {
     id: 'admin-2',
-    email: 'ops@wiseverse.net',
-    name: '李娜',
+    name: 'Li Na',
     permissions: ['nfc_manage', 'change_order_status'],
     password: 'admin123',
   },
   {
     id: 'admin-3',
-    email: 'support@wiseverse.net',
-    name: '王芳',
+    name: 'Wang Fang',
     permissions: ['edit_order'],
     password: 'admin123',
   },
