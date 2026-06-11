@@ -131,7 +131,7 @@ export default function OrdersPage({ orders, setOrders }: Props) {
     if (order.status === 'processing') { setActionOrder(order); setActiveModal('on_chain'); return }
     if (order.status === 'printing')   { setActionOrder(order); setActiveModal('shipping'); return }
     advance(order)
-    showToast(`${order.referenceNumber} → ${NEXT_STATUS[order.status]?.replace('_', '-')}`)
+    showToast(t('detail.toastStatus', { status: t(`status.${NEXT_STATUS[order.status]}` as TransKey) }))
   }
 
   function handleEmailAction(order: Order, e: React.MouseEvent) {
@@ -148,20 +148,20 @@ export default function OrdersPage({ orders, setOrders }: Props) {
   function confirmOnChain() {
     if (!actionOrder) return
     advance(actionOrder, { onChainTokenId: tokenId, onChainIssuerAddress: issuerAddress })
-    showToast(`${actionOrder.referenceNumber} marked on-chain`)
+    showToast(t('detail.toastOnChain'))
     closeModal()
   }
 
   function confirmShipping() {
     if (!actionOrder) return
     advance(actionOrder, { trackingNumber, shippingMethod })
-    showToast(`${actionOrder.referenceNumber} marked shipped`)
+    showToast(t('detail.toastShipped'))
     closeModal()
   }
 
   function sendEmail() {
     if (!actionOrder) return
-    showToast(`Template ${emailTemplate} sent to ${actionOrder.customerEmail}`)
+    showToast(t('detail.toastEmail', { n: emailTemplate, email: actionOrder.customerEmail }))
     closeModal()
   }
 

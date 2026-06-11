@@ -103,6 +103,10 @@ export const translations = {
     'detail.country': 'Country',
     'detail.customerSaved': 'Customer info updated',
     'detail.moveTo': 'Move this order from {from} to {to}?',
+    'detail.toastOnChain': 'Order marked as on-chain',
+    'detail.toastShipped': 'Tracking number saved — order marked as shipped',
+    'detail.toastStatus': 'Status updated to {status}',
+    'detail.toastEmail': 'Template {n} sent to {email}',
     'detail.onChainTitle': 'Mark On-chain',
     'detail.shippingTitle': 'Mark Shipped',
 
@@ -273,6 +277,10 @@ export const translations = {
     'detail.country': '国家 / 地区',
     'detail.customerSaved': '客户资料已更新',
     'detail.moveTo': '将此订单从 {from} 移至 {to}？',
+    'detail.toastOnChain': '订单已标记为链上',
+    'detail.toastShipped': '追踪号已保存 — 订单已标记为已发货',
+    'detail.toastStatus': '状态已更新为 {status}',
+    'detail.toastEmail': '模板 {n} 已发送至 {email}',
     'detail.onChainTitle': '标记上链',
     'detail.shippingTitle': '标记已发货',
 

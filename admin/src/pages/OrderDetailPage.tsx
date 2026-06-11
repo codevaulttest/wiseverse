@@ -100,24 +100,24 @@ export default function OrderDetailPage({ orders, setOrders, currentUser }: Prop
   function confirmOnChain() {
     advanceStatus({ onChainTokenId: tokenId, onChainIssuerAddress: issuerAddress })
     setModal(null); setTokenId(''); setIssuerAddress('')
-    showToast('Order marked as on-chain')
+    showToast(t('detail.toastOnChain'))
   }
 
   function confirmShipping() {
     advanceStatus({ trackingNumber, shippingMethod })
     setModal(null); setTrackingNumber(''); setShippingMethod('DHL')
-    showToast('Tracking number saved — order marked as shipped')
+    showToast(t('detail.toastShipped'))
   }
 
   function confirmSimple() {
     advanceStatus()
     setModal(null)
-    showToast(`Status updated to ${nextStatus!.replace('_', '-')}`)
+    showToast(t('detail.toastStatus', { status: t(`status.${nextStatus}` as TransKey) }))
   }
 
   function sendEmail() {
     setModal(null)
-    showToast(`Template ${emailTemplate} sent to ${order!.customerEmail}`)
+    showToast(t('detail.toastEmail', { n: emailTemplate, email: order!.customerEmail }))
   }
 
   const canEditOrder = currentUser?.permissions.includes('edit_order') ?? false
