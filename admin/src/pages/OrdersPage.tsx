@@ -45,12 +45,13 @@ function matchesSearch(order: Order, q: string) {
   )
 }
 
-function filterOrders(orders: Order[], key: OrderStatus | 'all', query: string) {
+function filterOrders(orders: Order[], key: OrderStatus | 'all', query: string, sortOrder: 'asc' | 'desc') {
   let result = key === 'all' ? orders : orders.filter(o => o.status === key)
   if (query.trim()) result = result.filter(o => matchesSearch(o, query))
-  return [...result].sort((a, b) =>
-    new Date(b.submittedAt).getTime() - new Date(a.submittedAt).getTime()
-  )
+  return [...result].sort((a, b) => {
+    const cmp = a.referenceNumber.localeCompare(b.referenceNumber)
+    return sortOrder === 'asc' ? cmp : -cmp
+  })
 }
 
 const PAGE_SIZE = 10
@@ -62,6 +63,7 @@ export default function OrdersPage({ orders, setOrders }: Props) {
   const [page, setPage] = useState(1)
   const [selected, setSelected] = useState<Set<string>>(new Set())
   const [showExportModal, setShowExportModal] = useState(false)
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc')
 
   // Action modal state
   const [actionOrder, setActionOrder] = useState<Order | null>(null)
@@ -73,7 +75,7 @@ export default function OrdersPage({ orders, setOrders }: Props) {
   const [emailTemplate, setEmailTemplate] = useState<1 | 2>(1)
   const [toastMsg, setToastMsg] = useState<string | null>(null)
 
-  const filtered = filterOrders(orders, activeFilter, query)
+  const filtered = filterOrders(orders, activeFilter, query, sortOrder)
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE))
   const visible = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE)
 
@@ -214,7 +216,16 @@ export default function OrdersPage({ orders, setOrders }: Props) {
                   onChange={toggleAll}
                 />
               </th>
-              <th>Order ID</th>
+              <th
+                style={{ cursor: 'pointer', userSelect: 'none', whiteSpace: 'nowrap', verticalAlign: 'middle' }}
+                onClick={() => setSortOrder(s => s === 'asc' ? 'desc' : 'asc')}
+              >
+                Order ID
+                <span style={{ marginLeft: 8, display: 'inline-flex', flexDirection: 'column', gap: 1, verticalAlign: 'middle', lineHeight: 1, position: 'relative', top: -1 }}>
+                  <span style={{ fontSize: 8, opacity: sortOrder === 'asc' ? 1 : 0.3, lineHeight: 1 }}>▲</span>
+                  <span style={{ fontSize: 8, opacity: sortOrder === 'desc' ? 1 : 0.3, lineHeight: 1 }}>▼</span>
+                </span>
+              </th>
               <th>Name</th>
               <th>Video file name</th>
               <th>Status</th>
