@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useLang } from '../context/LangContext'
 
 export default function LoginPage({ onLogin }: { onLogin: (username: string) => void }) {
-  const [username, setUsername] = useState('')
+  const [username, setUsername] = useState('Zhang Wei')
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
   const { t } = useLang()
