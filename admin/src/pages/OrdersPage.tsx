@@ -257,7 +257,7 @@ export default function OrdersPage({ orders, setOrders }: Props) {
                     <button
                       onClick={e => handleEmailAction(order, e)}
                       title={t('detail.resendEmail')}
-                      style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '4px', display: 'flex', alignItems: 'center', color: 'var(--text-50)' }}
+                      className="icon-btn"
                     >
                       <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
                         <rect x="1" y="3" width="14" height="10" rx="1.5" />
