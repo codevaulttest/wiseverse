@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import StatusBadge from '../components/StatusBadge'
+import StatusDropdown from '../components/StatusDropdown'
 import type { Order, OrderStatus, AdminUser } from '../types'
 import { useLang } from '../context/LangContext'
 import type { TransKey } from '../i18n'
@@ -18,23 +18,7 @@ function formatDatetime(iso: string) {
   })
 }
 
-const NEXT_STATUS: Partial<Record<OrderStatus, OrderStatus>> = {
-  paid:       'processing',
-  processing: 'on_chain',
-  on_chain:   'printing',
-  printing:   'shipped',
-  shipped:    'completed',
-}
-
-const ACTION_KEY: Partial<Record<OrderStatus, TransKey>> = {
-  paid:       'action.startProcessing',
-  processing: 'action.markOnChain',
-  on_chain:   'action.markPrinted',
-  printing:   'action.markShipped',
-  shipped:    'action.markCompleted',
-}
-
-type ModalType = 'on_chain' | 'shipping' | 'confirm' | 'email' | 'customer' | null
+type ModalType = 'on_chain' | 'shipping' | 'email' | 'customer' | null
 
 export default function OrderDetailPage({ orders, setOrders, currentUser }: Props) {
   const { id } = useParams()
@@ -59,60 +43,51 @@ export default function OrderDetailPage({ orders, setOrders, currentUser }: Prop
   )
 
   const work = order.works[0]
-  const nextStatus = NEXT_STATUS[order.status]
-  const actionKey = ACTION_KEY[order.status]
-  const actionLabel = actionKey ? t(actionKey) : undefined
 
   function showToast(msg: string) {
     setToastMsg(msg)
     setTimeout(() => setToastMsg(null), 3000)
   }
 
-  function advanceStatus(extra?: Partial<Order['works'][0]>) {
-    if (!nextStatus) return
+  function setStatus(target: OrderStatus, extra?: Partial<Order['works'][0]>) {
     const now = new Date().toISOString()
     setOrders(prev => prev.map(o => {
       if (o.id !== order!.id) return o
       const updatedWork = extra ? { ...o.works[0], ...extra } : o.works[0]
       return {
         ...o,
-        status: nextStatus,
-        works: [{ ...updatedWork, status: nextStatus }],
+        status: target,
+        works: [{ ...updatedWork, status: target }],
         activityLog: [
           ...o.activityLog,
           {
             id: `log-${Date.now()}`,
             timestamp: now,
-            actor: 'admin@wiseverse.net',
-            action: `Status changed to ${nextStatus.replace('_', '-')}`,
+            actor: currentUser?.name ?? 'admin',
+            action: `Status changed to ${target.replace('_', '-')}`,
           },
         ],
       }
     }))
   }
 
-  function handlePrimaryAction() {
-    if (order!.status === 'processing') { setModal('on_chain'); return }
-    if (order!.status === 'printing')   { setModal('shipping'); return }
-    setModal('confirm')
+  function handleStatusSelect(target: OrderStatus) {
+    if (target === 'on_chain') { setModal('on_chain'); return }
+    if (target === 'shipped')  { setModal('shipping'); return }
+    setStatus(target)
+    showToast(t('detail.toastStatus', { status: t(`status.${target}` as TransKey) }))
   }
 
   function confirmOnChain() {
-    advanceStatus({ onChainTokenId: tokenId, onChainIssuerAddress: issuerAddress })
+    setStatus('on_chain', { onChainTokenId: tokenId, onChainIssuerAddress: issuerAddress })
     setModal(null); setTokenId(''); setIssuerAddress('')
     showToast(t('detail.toastOnChain'))
   }
 
   function confirmShipping() {
-    advanceStatus({ trackingNumber, shippingMethod })
+    setStatus('shipped', { trackingNumber, shippingMethod })
     setModal(null); setTrackingNumber(''); setShippingMethod('DHL')
     showToast(t('detail.toastShipped'))
-  }
-
-  function confirmSimple() {
-    advanceStatus()
-    setModal(null)
-    showToast(t('detail.toastStatus', { status: t(`status.${nextStatus}` as TransKey) }))
   }
 
   function sendEmail() {
@@ -149,16 +124,11 @@ export default function OrderDetailPage({ orders, setOrders, currentUser }: Prop
 
       <div className="page-header">
         <h1 className="page-title">{order.referenceNumber}</h1>
-        <StatusBadge status={order.status} />
       </div>
 
       {/* Action bar */}
       <div className="action-bar">
-        {actionLabel && (
-          <button className="btn btn-primary btn-sm" onClick={handlePrimaryAction}>
-            {actionLabel}
-          </button>
-        )}
+        <StatusDropdown currentStatus={order.status} onSelect={handleStatusSelect} />
         <button className="btn btn-ghost btn-sm" onClick={() => setModal('email')} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6">
             <rect x="1" y="3" width="14" height="10" rx="1.5" />
@@ -261,7 +231,7 @@ export default function OrderDetailPage({ orders, setOrders, currentUser }: Prop
       </div>
 
       <div className="detail-card">
-        <div className="detail-card-title">Activity Log</div>
+        <div className="detail-card-title">{t('detail.activityLog')}</div>
         <div className="timeline">
           {[...order.activityLog].reverse().map((entry, idx) => (
             <div key={entry.id} className="timeline-item">
@@ -286,18 +256,18 @@ export default function OrderDetailPage({ orders, setOrders, currentUser }: Prop
       {modal === 'on_chain' && (
         <div className="modal-backdrop" onClick={() => setModal(null)}>
           <div className="modal" onClick={e => e.stopPropagation()}>
-            <div className="modal-title">Mark On-chain</div>
+            <div className="modal-title">{t('detail.onChainTitle')}</div>
             <div className="modal-field">
-              <label className="modal-label">Token ID <span className="modal-required">*</span></label>
+              <label className="modal-label">{t('onChainModal.tokenId')} <span className="modal-required">*</span></label>
               <input className="modal-input" placeholder="0x000000…" value={tokenId} onChange={e => setTokenId(e.target.value)} />
             </div>
             <div className="modal-field">
-              <label className="modal-label">Issuer Address <span className="modal-required">*</span></label>
+              <label className="modal-label">{t('onChainModal.issuerAddress')} <span className="modal-required">*</span></label>
               <input className="modal-input" placeholder="0xd8dA6B…" value={issuerAddress} onChange={e => setIssuerAddress(e.target.value)} />
             </div>
             <div className="modal-footer">
-              <button className="btn btn-ghost btn-sm" onClick={() => setModal(null)}>Cancel</button>
-              <button className="btn btn-primary btn-sm" disabled={!tokenId.trim() || !issuerAddress.trim()} onClick={confirmOnChain}>Confirm</button>
+              <button className="btn btn-ghost btn-sm" onClick={() => setModal(null)}>{t('common.cancel')}</button>
+              <button className="btn btn-primary btn-sm" disabled={!tokenId.trim() || !issuerAddress.trim()} onClick={confirmOnChain}>{t('common.confirm')}</button>
             </div>
           </div>
         </div>
@@ -307,9 +277,9 @@ export default function OrderDetailPage({ orders, setOrders, currentUser }: Prop
       {modal === 'shipping' && (
         <div className="modal-backdrop" onClick={() => setModal(null)}>
           <div className="modal" onClick={e => e.stopPropagation()}>
-            <div className="modal-title">Mark Shipped</div>
+            <div className="modal-title">{t('detail.shippingTitle')}</div>
             <div className="modal-field">
-              <label className="modal-label">Shipping Method <span className="modal-required">*</span></label>
+              <label className="modal-label">{t('shippingModal.method')} <span className="modal-required">*</span></label>
               <select className="modal-input" value={shippingMethod} onChange={e => setShippingMethod(e.target.value)}>
                 <option value="DHL">DHL</option>
                 <option value="FedEx">FedEx</option>
@@ -321,31 +291,12 @@ export default function OrderDetailPage({ orders, setOrders, currentUser }: Prop
               </select>
             </div>
             <div className="modal-field">
-              <label className="modal-label">Tracking Number <span className="modal-required">*</span></label>
+              <label className="modal-label">{t('shippingModal.tracking')} <span className="modal-required">*</span></label>
               <input className="modal-input" placeholder="e.g. SF1234567890" value={trackingNumber} onChange={e => setTrackingNumber(e.target.value)} />
             </div>
             <div className="modal-footer">
-              <button className="btn btn-ghost btn-sm" onClick={() => setModal(null)}>Cancel</button>
-              <button className="btn btn-primary btn-sm" disabled={!trackingNumber.trim()} onClick={confirmShipping}>Confirm</button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* ── Simple confirm modal ── */}
-      {modal === 'confirm' && (
-        <div className="modal-backdrop" onClick={() => setModal(null)}>
-          <div className="modal" onClick={e => e.stopPropagation()}>
-            <div className="modal-title">{actionLabel}</div>
-            <p style={{ fontSize: 14, color: 'var(--text-50)', marginBottom: 20 }}>
-              {t('detail.moveTo', {
-                from: t(`status.${order.status}` as TransKey),
-                to: t(`status.${nextStatus}` as TransKey),
-              })}
-            </p>
-            <div className="modal-footer">
               <button className="btn btn-ghost btn-sm" onClick={() => setModal(null)}>{t('common.cancel')}</button>
-              <button className="btn btn-primary btn-sm" onClick={confirmSimple}>{t('common.confirm')}</button>
+              <button className="btn btn-primary btn-sm" disabled={!trackingNumber.trim()} onClick={confirmShipping}>{t('common.confirm')}</button>
             </div>
           </div>
         </div>
@@ -355,9 +306,9 @@ export default function OrderDetailPage({ orders, setOrders, currentUser }: Prop
       {modal === 'email' && (
         <div className="modal-backdrop" onClick={() => setModal(null)}>
           <div className="modal" onClick={e => e.stopPropagation()}>
-            <div className="modal-title">Resend Email Notification</div>
+            <div className="modal-title">{t('emailModal.title')}</div>
             <p style={{ fontSize: 14, color: 'var(--text-50)', marginBottom: 16 }}>
-              Send to: <span style={{ color: 'var(--text)' }}>{order.customerEmail}</span>
+              {t('emailModal.sendTo')} <span style={{ color: 'var(--text)' }}>{order.customerEmail}</span>
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 20 }}>
               {([1, 2] as const).map(n => (
@@ -365,18 +316,18 @@ export default function OrderDetailPage({ orders, setOrders, currentUser }: Prop
                   <input type="radio" name="email-template" checked={emailTemplate === n} onChange={() => setEmailTemplate(n)} style={{ accentColor: 'var(--gold)' }} />
                   <div>
                     <div style={{ fontSize: 14, color: 'var(--text)', fontWeight: 400 }}>
-                      {n === 1 ? 'Template 1 — Payment & submission confirmation' : 'Template 2 — Delivery & digital certificate'}
+                      {n === 1 ? t('emailModal.t1name') : t('emailModal.t2name')}
                     </div>
                     <div style={{ fontSize: 13, color: 'var(--text-50)', marginTop: 2 }}>
-                      {n === 1 ? 'Sent after payment confirmed + video received' : 'Sent when physical + digital package is dispatched'}
+                      {n === 1 ? t('emailModal.t1desc') : t('emailModal.t2desc')}
                     </div>
                   </div>
                 </label>
               ))}
             </div>
             <div className="modal-footer">
-              <button className="btn btn-ghost btn-sm" onClick={() => setModal(null)}>Cancel</button>
-              <button className="btn btn-primary btn-sm" onClick={sendEmail}>Send</button>
+              <button className="btn btn-ghost btn-sm" onClick={() => setModal(null)}>{t('common.cancel')}</button>
+              <button className="btn btn-primary btn-sm" onClick={sendEmail}>{t('emailModal.send')}</button>
             </div>
           </div>
         </div>

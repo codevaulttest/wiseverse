@@ -894,6 +894,49 @@ tbody tr.row-selected td {
   overflow-y: auto;
 }
 
+.status-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  background: var(--bg);
+  border: 1px solid var(--text-12);
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.10);
+  z-index: 200;
+  min-width: 200px;
+  padding: 4px;
+}
+
+.status-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  padding: 6px 8px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: 7px;
+  text-align: left;
+  transition: background .12s;
+}
+
+.status-dropdown-item:hover:not(.current) {
+  background: var(--gold-06);
+}
+
+.status-dropdown-item.current {
+  cursor: default;
+  background: var(--gold-06);
+}
+
+.status-dropdown-check {
+  font-size: 11px;
+  color: var(--gold);
+  width: 12px;
+  flex-shrink: 0;
+}
+
 .modal-title {
   font-size: 18px;
   font-weight: 500;

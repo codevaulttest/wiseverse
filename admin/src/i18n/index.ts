@@ -25,6 +25,7 @@ export const translations = {
     'action.markPrinted': 'Mark Printed',
     'action.markShipped': 'Mark Shipped',
     'action.markCompleted': 'Mark Completed',
+    'action.changeStatus': 'Change Status',
 
     // Common
     'common.cancel': 'Cancel',
@@ -199,6 +200,7 @@ export const translations = {
     'action.markPrinted': '标记已打印',
     'action.markShipped': '标记已发货',
     'action.markCompleted': '标记已完成',
+    'action.changeStatus': '更改状态',
 
     // Common
     'common.cancel': '取消',

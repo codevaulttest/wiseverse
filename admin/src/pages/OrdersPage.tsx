@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import StatusBadge from '../components/StatusBadge'
+import StatusDropdown from '../components/StatusDropdown'
 import type { Order, OrderStatus } from '../types'
 import { useLang } from '../context/LangContext'
 import type { TransKey } from '../i18n'
@@ -19,19 +20,6 @@ const EXPORT_FIELDS = [
   'Country', 'Work Title', 'SHA-256 Hash', 'Video Duration', 'Video Size',
   'Video Codec', 'On-chain Token ID', 'NFC Chip Sequence No.', 'NFC Tag ID', 'Submitted At',
 ]
-
-const NEXT_STATUS: Partial<Record<OrderStatus, OrderStatus>> = {
-  paid: 'processing', processing: 'on_chain', on_chain: 'printing',
-  printing: 'shipped', shipped: 'completed',
-}
-
-const ACTION_KEY: Partial<Record<OrderStatus, TransKey>> = {
-  paid: 'action.startProcessing',
-  processing: 'action.markOnChain',
-  on_chain: 'action.markPrinted',
-  printing: 'action.markShipped',
-  shipped: 'action.markCompleted',
-}
 
 type ActionModal = 'on_chain' | 'shipping' | 'email' | null
 
@@ -107,31 +95,28 @@ export default function OrdersPage({ orders, setOrders }: Props) {
     setTimeout(() => setToastMsg(null), 3000)
   }
 
-  function advance(order: Order, extra?: Partial<Order['works'][0]>) {
-    const next = NEXT_STATUS[order.status]
-    if (!next) return
+  function setStatus(order: Order, target: OrderStatus, extra?: Partial<Order['works'][0]>) {
     const now = new Date().toISOString()
     setOrders(prev => prev.map(o => {
       if (o.id !== order.id) return o
       const updatedWork = extra ? { ...o.works[0], ...extra } : o.works[0]
       return {
-        ...o, status: next,
-        works: [{ ...updatedWork, status: next }],
+        ...o, status: target,
+        works: [{ ...updatedWork, status: target }],
         activityLog: [...o.activityLog, {
           id: `log-${Date.now()}`, timestamp: now,
-          actor: 'admin@wiseverse.net',
-          action: `Status changed to ${next.replace('_', '-')}`,
+          actor: 'admin',
+          action: `Status changed to ${target.replace('_', '-')}`,
         }],
       }
     }))
   }
 
-  function handleAction(order: Order, e: React.MouseEvent) {
-    e.stopPropagation()
-    if (order.status === 'processing') { setActionOrder(order); setActiveModal('on_chain'); return }
-    if (order.status === 'printing')   { setActionOrder(order); setActiveModal('shipping'); return }
-    advance(order)
-    showToast(t('detail.toastStatus', { status: t(`status.${NEXT_STATUS[order.status]}` as TransKey) }))
+  function handleStatusSelect(order: Order, target: OrderStatus) {
+    if (target === 'on_chain') { setActionOrder(order); setActiveModal('on_chain'); return }
+    if (target === 'shipped')  { setActionOrder(order); setActiveModal('shipping'); return }
+    setStatus(order, target)
+    showToast(t('detail.toastStatus', { status: t(`status.${target}` as TransKey) }))
   }
 
   function handleEmailAction(order: Order, e: React.MouseEvent) {
@@ -147,14 +132,14 @@ export default function OrdersPage({ orders, setOrders }: Props) {
 
   function confirmOnChain() {
     if (!actionOrder) return
-    advance(actionOrder, { onChainTokenId: tokenId, onChainIssuerAddress: issuerAddress })
+    setStatus(actionOrder, 'on_chain', { onChainTokenId: tokenId, onChainIssuerAddress: issuerAddress })
     showToast(t('detail.toastOnChain'))
     closeModal()
   }
 
   function confirmShipping() {
     if (!actionOrder) return
-    advance(actionOrder, { trackingNumber, shippingMethod })
+    setStatus(actionOrder, 'shipped', { trackingNumber, shippingMethod })
     showToast(t('detail.toastShipped'))
     closeModal()
   }
@@ -262,29 +247,23 @@ export default function OrdersPage({ orders, setOrders }: Props) {
                   <td style={{ maxWidth: 200 }}>
                     <div style={{ fontSize: 14, color: 'var(--text)', fontWeight: 400 }}>{order.works[0].title}</div>
                   </td>
-                  <td><StatusBadge status={order.status} /></td>
+                  <td onClick={e => e.stopPropagation()} style={{ overflow: 'visible' }}>
+                    <StatusDropdown
+                      currentStatus={order.status}
+                      onSelect={target => handleStatusSelect(order, target)}
+                    />
+                  </td>
                   <td onClick={e => e.stopPropagation()}>
-                    <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
-                      {ACTION_KEY[order.status] && (
-                        <button
-                          className="btn btn-primary btn-xs"
-                          onClick={e => handleAction(order, e)}
-                        >
-                          {t(ACTION_KEY[order.status]!)}
-                        </button>
-                      )}
-                      <button
-                        className="btn btn-ghost btn-xs"
-                        onClick={e => handleEmailAction(order, e)}
-                        title={t('detail.resendEmail')}
-                        style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '4px 8px' }}
-                      >
-                        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6">
-                          <rect x="1" y="3" width="14" height="10" rx="1.5" />
-                          <polyline points="1,3 8,9.5 15,3" />
-                        </svg>
-                      </button>
-                    </div>
+                    <button
+                      onClick={e => handleEmailAction(order, e)}
+                      title={t('detail.resendEmail')}
+                      style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '4px', display: 'flex', alignItems: 'center', color: 'var(--text-50)' }}
+                    >
+                      <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
+                        <rect x="1" y="3" width="14" height="10" rx="1.5" />
+                        <polyline points="1,3 8,9.5 15,3" />
+                      </svg>
+                    </button>
                   </td>
                   <td className="td-arrow">→</td>
                 </tr>
