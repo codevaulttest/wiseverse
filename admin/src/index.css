@@ -420,6 +420,9 @@ body {
 }
 
 .stat-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
   padding: 6px 16px;
   border-radius: 100px;
   font-size: 14px;

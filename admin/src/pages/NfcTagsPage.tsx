@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Tag, Link2, Hash, FileInput } from 'lucide-react'
+import { FileInput } from 'lucide-react'
 import StatusBadge from '../components/StatusBadge'
 import type { NfcTag } from '../types'
 import { useLang } from '../context/LangContext'
@@ -78,9 +78,9 @@ export default function NfcTagsPage({ nfcTags, setNfcTags }: Props) {
       <div className="page-header">
         <h1 className="page-title">{t('nfc.title')}</h1>
         <div style={{ display: 'flex', gap: 10 }}>
-          <span className="stat-chip"><Tag size={13} />{t('nfc.available')} <span className="count">{available}</span></span>
-          <span className="stat-chip"><Link2 size={13} />{t('nfc.assigned')} <span className="count">{assigned}</span></span>
-          <span className="stat-chip"><Hash size={13} />{t('nfc.total')} <span className="count">{nfcTags.length}</span></span>
+          <span className="stat-chip">{t('nfc.available')} <span className="count">{available}</span></span>
+          <span className="stat-chip">{t('nfc.assigned')} <span className="count">{assigned}</span></span>
+          <span className="stat-chip">{t('nfc.total')} <span className="count">{nfcTags.length}</span></span>
         </div>
       </div>
 

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Mail, Download } from 'lucide-react'
+import { Mail, Download, CreditCard, Loader, Link2, Printer, Truck, CheckCircle } from 'lucide-react'
 import StatusBadge from '../components/StatusBadge'
 import StatusDropdown from '../components/StatusDropdown'
 import type { Order, OrderStatus } from '../types'
@@ -15,6 +15,15 @@ interface Props {
 const STATUS_FILTER_KEYS: Array<OrderStatus | 'all'> = [
   'all', 'paid', 'processing', 'on_chain', 'printing', 'shipped', 'completed',
 ]
+
+const STATUS_FILTER_ICON: Partial<Record<OrderStatus, React.ReactNode>> = {
+  paid:       <CreditCard size={13} />,
+  processing: <Loader size={13} />,
+  on_chain:   <Link2 size={13} />,
+  printing:   <Printer size={13} />,
+  shipped:    <Truck size={13} />,
+  completed:  <CheckCircle size={13} />,
+}
 
 const EXPORT_FIELDS = [
   'Certificate No.', 'Order Reference', 'Customer Name', 'Delivery Address',
@@ -179,6 +188,7 @@ export default function OrdersPage({ orders, setOrders }: Props) {
             className={`stat-chip ${activeFilter === key ? 'active' : ''}`}
             onClick={() => handleFilter(key)}
           >
+            {key !== 'all' && STATUS_FILTER_ICON[key as OrderStatus]}
             {key === 'all' ? t('orders.all') : t(`status.${key}` as TransKey)}
             <span className="count">
               {key === 'all' ? orders.length : orders.filter(o => o.status === key).length}
