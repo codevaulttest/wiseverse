@@ -1,13 +1,14 @@
 import { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import StatusBadge from '../components/StatusBadge'
-import type { Order, OrderStatus } from '../types'
+import type { Order, OrderStatus, AdminUser } from '../types'
 import { useLang } from '../context/LangContext'
 import type { TransKey } from '../i18n'
 
 interface Props {
   orders: Order[]
   setOrders: React.Dispatch<React.SetStateAction<Order[]>>
+  currentUser: AdminUser | null
 }
 
 function formatDatetime(iso: string) {
@@ -33,9 +34,9 @@ const ACTION_KEY: Partial<Record<OrderStatus, TransKey>> = {
   shipped:    'action.markCompleted',
 }
 
-type ModalType = 'on_chain' | 'shipping' | 'confirm' | 'email' | null
+type ModalType = 'on_chain' | 'shipping' | 'confirm' | 'email' | 'customer' | null
 
-export default function OrderDetailPage({ orders, setOrders }: Props) {
+export default function OrderDetailPage({ orders, setOrders, currentUser }: Props) {
   const { id } = useParams()
   const navigate = useNavigate()
   const { t } = useLang()
@@ -47,6 +48,7 @@ export default function OrderDetailPage({ orders, setOrders }: Props) {
   const [shippingMethod, setShippingMethod] = useState('DHL')
   const [emailTemplate, setEmailTemplate] = useState<1 | 2>(1)
   const [toastMsg, setToastMsg] = useState<string | null>(null)
+  const [draftCustomer, setDraftCustomer] = useState({ name: '', email: '', address: '', country: '', companyName: '' })
 
   const order = orders.find(o => o.id === id)
   if (!order) return (
@@ -118,6 +120,29 @@ export default function OrderDetailPage({ orders, setOrders }: Props) {
     showToast(`Template ${emailTemplate} sent to ${order!.customerEmail}`)
   }
 
+  const canEditOrder = currentUser?.permissions.includes('edit_order') ?? false
+
+  function openCustomerEdit() {
+    setDraftCustomer({
+      name: order!.customerName,
+      email: order!.customerEmail,
+      address: order!.address,
+      country: order!.country,
+      companyName: order!.companyName,
+    })
+    setModal('customer')
+  }
+
+  function saveCustomer() {
+    setOrders(prev => prev.map(o =>
+      o.id === order!.id
+        ? { ...o, customerName: draftCustomer.name, customerEmail: draftCustomer.email, address: draftCustomer.address, country: draftCustomer.country, companyName: draftCustomer.companyName }
+        : o
+    ))
+    setModal(null)
+    showToast(t('detail.customerSaved'))
+  }
+
   return (
     <>
       <button className="back-link" onClick={() => navigate('/orders')}>{t('detail.back')}</button>
@@ -145,7 +170,12 @@ export default function OrderDetailPage({ orders, setOrders }: Props) {
 
       <div className="detail-grid">
         <div className="detail-card">
-          <div className="detail-card-title">{t('detail.customer')}</div>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
+            <div className="detail-card-title" style={{ marginBottom: 0 }}>{t('detail.customer')}</div>
+            {canEditOrder && (
+              <button className="btn btn-ghost btn-xs" onClick={openCustomerEdit}>{t('detail.editCustomer')}</button>
+            )}
+          </div>
           <div className="detail-field">
             <span className="detail-field-label">{t('detail.contact')}</span>
             <span className="detail-field-value">{order.customerName}</span>
@@ -308,11 +338,14 @@ export default function OrderDetailPage({ orders, setOrders }: Props) {
           <div className="modal" onClick={e => e.stopPropagation()}>
             <div className="modal-title">{actionLabel}</div>
             <p style={{ fontSize: 14, color: 'var(--text-50)', marginBottom: 20 }}>
-              Move this order from <strong style={{ color: 'var(--text)' }}>{order.status.replace('_', '-')}</strong> to <strong style={{ color: 'var(--text)' }}>{nextStatus?.replace('_', '-')}</strong>?
+              {t('detail.moveTo', {
+                from: t(`status.${order.status}` as TransKey),
+                to: t(`status.${nextStatus}` as TransKey),
+              })}
             </p>
             <div className="modal-footer">
-              <button className="btn btn-ghost btn-sm" onClick={() => setModal(null)}>Cancel</button>
-              <button className="btn btn-primary btn-sm" onClick={confirmSimple}>Confirm</button>
+              <button className="btn btn-ghost btn-sm" onClick={() => setModal(null)}>{t('common.cancel')}</button>
+              <button className="btn btn-primary btn-sm" onClick={confirmSimple}>{t('common.confirm')}</button>
             </div>
           </div>
         </div>
@@ -344,6 +377,39 @@ export default function OrderDetailPage({ orders, setOrders }: Props) {
             <div className="modal-footer">
               <button className="btn btn-ghost btn-sm" onClick={() => setModal(null)}>Cancel</button>
               <button className="btn btn-primary btn-sm" onClick={sendEmail}>Send</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── Edit customer modal ── */}
+      {modal === 'customer' && (
+        <div className="modal-backdrop" onClick={() => setModal(null)}>
+          <div className="modal" onClick={e => e.stopPropagation()}>
+            <div className="modal-title">{t('detail.editCustomer')}</div>
+            <div className="modal-field">
+              <label className="modal-label">{t('detail.contact')}</label>
+              <input className="modal-input" value={draftCustomer.name} onChange={e => setDraftCustomer(d => ({ ...d, name: e.target.value }))} />
+            </div>
+            <div className="modal-field">
+              <label className="modal-label">{t('detail.company')}</label>
+              <input className="modal-input" value={draftCustomer.companyName} onChange={e => setDraftCustomer(d => ({ ...d, companyName: e.target.value }))} />
+            </div>
+            <div className="modal-field">
+              <label className="modal-label">{t('detail.email')}</label>
+              <input className="modal-input" value={draftCustomer.email} onChange={e => setDraftCustomer(d => ({ ...d, email: e.target.value }))} />
+            </div>
+            <div className="modal-field">
+              <label className="modal-label">{t('detail.address')}</label>
+              <input className="modal-input" value={draftCustomer.address} onChange={e => setDraftCustomer(d => ({ ...d, address: e.target.value }))} />
+            </div>
+            <div className="modal-field">
+              <label className="modal-label">{t('detail.country')}</label>
+              <input className="modal-input" value={draftCustomer.country} onChange={e => setDraftCustomer(d => ({ ...d, country: e.target.value }))} />
+            </div>
+            <div className="modal-footer">
+              <button className="btn btn-ghost btn-sm" onClick={() => setModal(null)}>{t('common.cancel')}</button>
+              <button className="btn btn-primary btn-sm" onClick={saveCustomer}>{t('common.save')}</button>
             </div>
           </div>
         </div>

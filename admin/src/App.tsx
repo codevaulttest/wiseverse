@@ -74,7 +74,7 @@ export default function App() {
         <Route path="/orders/:id" element={
           isLoggedIn ? (
             <AdminLayout currentUser={currentUser} onLogout={handleLogout} onChangePassword={handleChangePassword}>
-              <OrderDetailPage orders={orders} setOrders={setOrders} />
+              <OrderDetailPage orders={orders} setOrders={setOrders} currentUser={currentUser} />
             </AdminLayout>
           ) : <Navigate to="/login" replace />
         } />

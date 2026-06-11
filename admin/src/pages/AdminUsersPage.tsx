@@ -24,7 +24,7 @@ const PERM_KEY: Record<Permission, TransKey> = {
   change_order_status: 'perms.changeStatus',
 }
 
-const MAX_VISIBLE = 3
+const MAX_VISIBLE = 5
 
 function PermissionSummary({
   perms,

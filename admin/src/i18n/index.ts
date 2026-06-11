@@ -98,6 +98,10 @@ export const translations = {
     'detail.nfcChip': 'NFC Chip',
     'detail.tracking': 'Tracking',
     'detail.notFound': 'Order not found.',
+    'detail.editCustomer': 'Edit',
+    'detail.company': 'Company',
+    'detail.country': 'Country',
+    'detail.customerSaved': 'Customer info updated',
     'detail.moveTo': 'Move this order from {from} to {to}?',
     'detail.onChainTitle': 'Mark On-chain',
     'detail.shippingTitle': 'Mark Shipped',
@@ -230,7 +234,7 @@ export const translations = {
 
     // Shipping modal
     'shippingModal.title': '标记已发货 — {ref}',
-    'shippingModal.method': '快递方式',
+    'shippingModal.method': '寄送方式',
     'shippingModal.tracking': '追踪号',
 
     // Email modal
@@ -264,6 +268,10 @@ export const translations = {
     'detail.nfcChip': 'NFC 芯片',
     'detail.tracking': '追踪号',
     'detail.notFound': '订单不存在。',
+    'detail.editCustomer': '编辑',
+    'detail.company': '公司',
+    'detail.country': '国家 / 地区',
+    'detail.customerSaved': '客户资料已更新',
     'detail.moveTo': '将此订单从 {from} 移至 {to}？',
     'detail.onChainTitle': '标记上链',
     'detail.shippingTitle': '标记已发货',
