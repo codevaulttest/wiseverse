@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { Mail, Download } from 'lucide-react'
 import StatusBadge from '../components/StatusBadge'
 import StatusDropdown from '../components/StatusDropdown'
 import type { Order, OrderStatus } from '../types'
@@ -186,7 +187,8 @@ export default function OrdersPage({ orders, setOrders }: Props) {
         ))}
         <div style={{ marginLeft: 'auto' }}>
           {selected.size > 0 && (
-            <button className="btn btn-primary btn-sm" onClick={() => setShowExportModal(true)}>
+            <button className="btn btn-primary btn-sm" style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }} onClick={() => setShowExportModal(true)}>
+              <Download size={14} />
               {t('orders.exportSelected', { n: selected.size })}
             </button>
           )}
@@ -259,10 +261,7 @@ export default function OrdersPage({ orders, setOrders }: Props) {
                       title={t('detail.resendEmail')}
                       className="icon-btn"
                     >
-                      <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
-                        <rect x="1" y="3" width="14" height="10" rx="1.5" />
-                        <polyline points="1,3 8,9.5 15,3" />
-                      </svg>
+                      <Mail size={17} />
                     </button>
                   </td>
                   <td className="td-arrow">→</td>

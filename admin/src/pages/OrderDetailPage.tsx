@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
+import { ChevronLeft, Mail, Pencil } from 'lucide-react'
 import StatusDropdown from '../components/StatusDropdown'
 import type { Order, OrderStatus, AdminUser } from '../types'
 import { useLang } from '../context/LangContext'
@@ -38,9 +39,7 @@ export default function OrderDetailPage({ orders, setOrders, currentUser }: Prop
   if (!order) return (
     <div>
       <button className="back-link" onClick={() => navigate('/orders')}>
-        <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-          <polyline points="10,3 5,8 10,13" />
-        </svg>
+        <ChevronLeft size={15} />
         {t('detail.back')}
       </button>
       <p style={{ color: 'var(--text-50)' }}>{t('detail.notFound')}</p>
@@ -126,9 +125,7 @@ export default function OrderDetailPage({ orders, setOrders, currentUser }: Prop
   return (
     <>
       <button className="back-link" onClick={() => navigate('/orders')}>
-        <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-          <polyline points="10,3 5,8 10,13" />
-        </svg>
+        <ChevronLeft size={15} />
         {t('detail.back')}
       </button>
 
@@ -140,10 +137,7 @@ export default function OrderDetailPage({ orders, setOrders, currentUser }: Prop
       <div className="action-bar">
         <StatusDropdown currentStatus={order.status} onSelect={handleStatusSelect} />
         <button className="btn btn-ghost btn-sm" onClick={() => setModal('email')} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6">
-            <rect x="1" y="3" width="14" height="10" rx="1.5" />
-            <polyline points="1,3 8,9.5 15,3" />
-          </svg>
+          <Mail size={14} />
           {t('detail.resendEmail')}
         </button>
       </div>
@@ -153,7 +147,7 @@ export default function OrderDetailPage({ orders, setOrders, currentUser }: Prop
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
             <div className="detail-card-title" style={{ marginBottom: 0 }}>{t('detail.customer')}</div>
             {canEditOrder && (
-              <button className="btn btn-ghost btn-xs" onClick={openCustomerEdit}>{t('detail.editCustomer')}</button>
+              <button className="btn btn-ghost btn-xs" style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }} onClick={openCustomerEdit}><Pencil size={11} />{t('detail.editCustomer')}</button>
             )}
           </div>
           <div className="detail-field">

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Pencil } from 'lucide-react'
 import type { AdminUser, Permission } from '../types'
 import { useLang } from '../context/LangContext'
 import type { TransKey } from '../i18n'
@@ -121,7 +122,8 @@ export default function AdminUsersPage({ users, setUsers }: Props) {
                   <PermissionSummary perms={user.permissions} allPerms={ALL_PERMISSIONS} t={t} />
                 </td>
                 <td onClick={e => e.stopPropagation()}>
-                  <button className="btn btn-primary btn-xs" onClick={() => openEdit(user)}>
+                  <button className="btn btn-primary btn-xs" style={{ display: 'inline-flex', alignItems: 'center', gap: 5 }} onClick={() => openEdit(user)}>
+                    <Pencil size={12} />
                     {t('perms.editBtn')}
                   </button>
                 </td>

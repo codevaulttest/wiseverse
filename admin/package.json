@@ -9,6 +9,7 @@
     "deploy": "npm run build && firebase deploy --only hosting:wiseverse-admin --project lunchbuddy-fee94"
   },
   "dependencies": {
+    "lucide-react": "^1.17.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.6.2"
