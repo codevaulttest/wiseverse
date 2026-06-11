@@ -2,7 +2,8 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import StatusBadge from '../components/StatusBadge'
 import type { Order, OrderStatus } from '../types'
-import { STATUS_LABELS } from '../mock/data'
+import { useLang } from '../context/LangContext'
+import type { TransKey } from '../i18n'
 
 interface Props {
   orders: Order[]
@@ -24,9 +25,12 @@ const NEXT_STATUS: Partial<Record<OrderStatus, OrderStatus>> = {
   printing: 'shipped', shipped: 'completed',
 }
 
-const ACTION_LABEL: Partial<Record<OrderStatus, string>> = {
-  paid: 'Start Processing', processing: 'Mark On-chain', on_chain: 'Mark Printed',
-  printing: 'Mark Shipped', shipped: 'Mark Completed',
+const ACTION_KEY: Partial<Record<OrderStatus, TransKey>> = {
+  paid: 'action.startProcessing',
+  processing: 'action.markOnChain',
+  on_chain: 'action.markPrinted',
+  printing: 'action.markShipped',
+  shipped: 'action.markCompleted',
 }
 
 type ActionModal = 'on_chain' | 'shipping' | 'email' | null
@@ -58,6 +62,8 @@ const PAGE_SIZE = 10
 
 export default function OrdersPage({ orders, setOrders }: Props) {
   const navigate = useNavigate()
+  const { t } = useLang()
+
   const [activeFilter, setActiveFilter] = useState<OrderStatus | 'all'>('all')
   const [query, setQuery] = useState('')
   const [page, setPage] = useState(1)
@@ -65,7 +71,6 @@ export default function OrdersPage({ orders, setOrders }: Props) {
   const [showExportModal, setShowExportModal] = useState(false)
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc')
 
-  // Action modal state
   const [actionOrder, setActionOrder] = useState<Order | null>(null)
   const [activeModal, setActiveModal] = useState<ActionModal>(null)
   const [tokenId, setTokenId] = useState('')
@@ -165,7 +170,7 @@ export default function OrdersPage({ orders, setOrders }: Props) {
   return (
     <>
       <div className="page-header">
-        <h1 className="page-title">Orders</h1>
+        <h1 className="page-title">{t('orders.title')}</h1>
         <div className="search-wrap">
           <svg className="search-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
             <circle cx="6.5" cy="6.5" r="4.5" />
@@ -174,7 +179,7 @@ export default function OrdersPage({ orders, setOrders }: Props) {
           <input
             className="search-input"
             type="search"
-            placeholder="Search reference, name, video…"
+            placeholder={t('orders.search')}
             value={query}
             onChange={e => handleSearch(e.target.value)}
           />
@@ -188,7 +193,7 @@ export default function OrdersPage({ orders, setOrders }: Props) {
             className={`stat-chip ${activeFilter === key ? 'active' : ''}`}
             onClick={() => handleFilter(key)}
           >
-            {key === 'all' ? 'All' : STATUS_LABELS[key]}
+            {key === 'all' ? t('orders.all') : t(`status.${key}` as TransKey)}
             <span className="count">
               {key === 'all' ? orders.length : orders.filter(o => o.status === key).length}
             </span>
@@ -197,7 +202,7 @@ export default function OrdersPage({ orders, setOrders }: Props) {
         <div style={{ marginLeft: 'auto' }}>
           {selected.size > 0 && (
             <button className="btn btn-primary btn-sm" onClick={() => setShowExportModal(true)}>
-              Export selected ({selected.size})
+              {t('orders.exportSelected', { n: selected.size })}
             </button>
           )}
         </div>
@@ -220,22 +225,22 @@ export default function OrdersPage({ orders, setOrders }: Props) {
                 style={{ cursor: 'pointer', userSelect: 'none', whiteSpace: 'nowrap', verticalAlign: 'middle' }}
                 onClick={() => setSortOrder(s => s === 'asc' ? 'desc' : 'asc')}
               >
-                Order ID
+                {t('orders.col.orderId')}
                 <span style={{ marginLeft: 8, display: 'inline-flex', flexDirection: 'column', gap: 1, verticalAlign: 'middle', lineHeight: 1, position: 'relative', top: -1 }}>
                   <span style={{ fontSize: 8, opacity: sortOrder === 'asc' ? 1 : 0.3, lineHeight: 1 }}>▲</span>
                   <span style={{ fontSize: 8, opacity: sortOrder === 'desc' ? 1 : 0.3, lineHeight: 1 }}>▼</span>
                 </span>
               </th>
-              <th>Name</th>
-              <th>Video file name</th>
-              <th>Status</th>
-              <th>Actions</th>
+              <th>{t('orders.col.name')}</th>
+              <th>{t('orders.col.videoFile')}</th>
+              <th>{t('orders.col.status')}</th>
+              <th>{t('orders.col.actions')}</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
             {visible.length === 0 ? (
-              <tr><td colSpan={6}><div className="empty-state">No orders</div></td></tr>
+              <tr><td colSpan={6}><div className="empty-state">{t('orders.empty')}</div></td></tr>
             ) : (
               visible.map(order => (
                 <tr
@@ -248,11 +253,11 @@ export default function OrdersPage({ orders, setOrders }: Props) {
                   </td>
                   <td>
                     <div className="td-ref">{order.referenceNumber}</div>
-                    <div style={{ fontSize: 13, color: 'var(--text-50)', marginTop: 2 }}>{formatDate(order.submittedAt)}</div>
+                    <div style={{ fontSize: 13, color: 'var(--text-50)', marginTop: 2, fontWeight: 400 }}>{formatDate(order.submittedAt)}</div>
                   </td>
                   <td>
                     <div className="td-name">{order.customerName}</div>
-                    <div style={{ fontSize: 13, color: 'var(--text-50)', marginTop: 2 }}>{order.customerEmail}</div>
+                    <div style={{ fontSize: 13, color: 'var(--text-50)', marginTop: 2, fontWeight: 400 }}>{order.customerEmail}</div>
                   </td>
                   <td style={{ maxWidth: 200 }}>
                     <div style={{ fontSize: 14, color: 'var(--text)', fontWeight: 400 }}>{order.works[0].title}</div>
@@ -260,18 +265,18 @@ export default function OrdersPage({ orders, setOrders }: Props) {
                   <td><StatusBadge status={order.status} /></td>
                   <td onClick={e => e.stopPropagation()}>
                     <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
-                      {ACTION_LABEL[order.status] && (
+                      {ACTION_KEY[order.status] && (
                         <button
                           className="btn btn-primary btn-xs"
                           onClick={e => handleAction(order, e)}
                         >
-                          {ACTION_LABEL[order.status]}
+                          {t(ACTION_KEY[order.status]!)}
                         </button>
                       )}
                       <button
                         className="btn btn-ghost btn-xs"
                         onClick={e => handleEmailAction(order, e)}
-                        title="Resend email notification"
+                        title={t('detail.resendEmail')}
                         style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '4px 8px' }}
                       >
                         <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6">
@@ -291,9 +296,9 @@ export default function OrdersPage({ orders, setOrders }: Props) {
 
       {totalPages > 1 && (
         <div className="pagination">
-          <button className="btn btn-ghost btn-sm" onClick={() => setPage(p => p - 1)} disabled={page === 1}>← Prev</button>
-          <span className="pagination-info">Page {page} / {totalPages}</span>
-          <button className="btn btn-ghost btn-sm" onClick={() => setPage(p => p + 1)} disabled={page === totalPages}>Next →</button>
+          <button className="btn btn-ghost btn-sm" onClick={() => setPage(p => p - 1)} disabled={page === 1}>{t('orders.prev')}</button>
+          <span className="pagination-info">{t('orders.page', { page, total: totalPages })}</span>
+          <button className="btn btn-ghost btn-sm" onClick={() => setPage(p => p + 1)} disabled={page === totalPages}>{t('orders.next')}</button>
         </div>
       )}
 
@@ -301,9 +306,9 @@ export default function OrdersPage({ orders, setOrders }: Props) {
       {showExportModal && (
         <div className="modal-backdrop" onClick={() => setShowExportModal(false)}>
           <div className="modal" onClick={e => e.stopPropagation()}>
-            <div className="modal-title">Export for Printing</div>
+            <div className="modal-title">{t('exportModal.title')}</div>
             <div style={{ fontSize: 14, color: 'var(--text-50)', marginBottom: 16 }}>
-              {selectedOrders.length} order{selectedOrders.length !== 1 ? 's' : ''} selected — the following fields will be included in the Excel file:
+              {t('exportModal.desc', { n: selectedOrders.length, plural: selectedOrders.length !== 1 ? 's' : '' })}
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 7, marginBottom: 20 }}>
               {EXPORT_FIELDS.map(field => (
@@ -319,8 +324,8 @@ export default function OrdersPage({ orders, setOrders }: Props) {
               </div>
             </div>
             <div className="modal-footer">
-              <button className="btn btn-ghost btn-sm" onClick={() => setShowExportModal(false)}>Cancel</button>
-              <button className="btn btn-primary btn-sm" onClick={() => setShowExportModal(false)}>Download Excel</button>
+              <button className="btn btn-ghost btn-sm" onClick={() => setShowExportModal(false)}>{t('common.cancel')}</button>
+              <button className="btn btn-primary btn-sm" onClick={() => setShowExportModal(false)}>{t('exportModal.download')}</button>
             </div>
           </div>
         </div>
@@ -330,18 +335,18 @@ export default function OrdersPage({ orders, setOrders }: Props) {
       {activeModal === 'on_chain' && (
         <div className="modal-backdrop" onClick={closeModal}>
           <div className="modal" onClick={e => e.stopPropagation()}>
-            <div className="modal-title">Mark On-chain — {actionOrder?.referenceNumber}</div>
+            <div className="modal-title">{t('onChainModal.title', { ref: actionOrder?.referenceNumber ?? '' })}</div>
             <div className="modal-field">
-              <label className="modal-label">Token ID <span className="modal-required">*</span></label>
+              <label className="modal-label">{t('onChainModal.tokenId')} <span className="modal-required">*</span></label>
               <input className="modal-input" placeholder="0x000000…" value={tokenId} onChange={e => setTokenId(e.target.value)} />
             </div>
             <div className="modal-field">
-              <label className="modal-label">Issuer Address <span className="modal-required">*</span></label>
+              <label className="modal-label">{t('onChainModal.issuerAddress')} <span className="modal-required">*</span></label>
               <input className="modal-input" placeholder="0xd8dA6B…" value={issuerAddress} onChange={e => setIssuerAddress(e.target.value)} />
             </div>
             <div className="modal-footer">
-              <button className="btn btn-ghost btn-sm" onClick={closeModal}>Cancel</button>
-              <button className="btn btn-primary btn-sm" disabled={!tokenId.trim() || !issuerAddress.trim()} onClick={confirmOnChain}>Confirm</button>
+              <button className="btn btn-ghost btn-sm" onClick={closeModal}>{t('common.cancel')}</button>
+              <button className="btn btn-primary btn-sm" disabled={!tokenId.trim() || !issuerAddress.trim()} onClick={confirmOnChain}>{t('common.confirm')}</button>
             </div>
           </div>
         </div>
@@ -351,9 +356,9 @@ export default function OrdersPage({ orders, setOrders }: Props) {
       {activeModal === 'shipping' && (
         <div className="modal-backdrop" onClick={closeModal}>
           <div className="modal" onClick={e => e.stopPropagation()}>
-            <div className="modal-title">Mark Shipped — {actionOrder?.referenceNumber}</div>
+            <div className="modal-title">{t('shippingModal.title', { ref: actionOrder?.referenceNumber ?? '' })}</div>
             <div className="modal-field">
-              <label className="modal-label">Shipping Method <span className="modal-required">*</span></label>
+              <label className="modal-label">{t('shippingModal.method')} <span className="modal-required">*</span></label>
               <select className="modal-input" value={shippingMethod} onChange={e => setShippingMethod(e.target.value)}>
                 <option value="DHL">DHL</option>
                 <option value="FedEx">FedEx</option>
@@ -365,12 +370,12 @@ export default function OrdersPage({ orders, setOrders }: Props) {
               </select>
             </div>
             <div className="modal-field">
-              <label className="modal-label">Tracking Number <span className="modal-required">*</span></label>
+              <label className="modal-label">{t('shippingModal.tracking')} <span className="modal-required">*</span></label>
               <input className="modal-input" placeholder="e.g. SF1234567890" value={trackingNumber} onChange={e => setTrackingNumber(e.target.value)} />
             </div>
             <div className="modal-footer">
-              <button className="btn btn-ghost btn-sm" onClick={closeModal}>Cancel</button>
-              <button className="btn btn-primary btn-sm" disabled={!trackingNumber.trim()} onClick={confirmShipping}>Confirm</button>
+              <button className="btn btn-ghost btn-sm" onClick={closeModal}>{t('common.cancel')}</button>
+              <button className="btn btn-primary btn-sm" disabled={!trackingNumber.trim()} onClick={confirmShipping}>{t('common.confirm')}</button>
             </div>
           </div>
         </div>
@@ -380,9 +385,9 @@ export default function OrdersPage({ orders, setOrders }: Props) {
       {activeModal === 'email' && (
         <div className="modal-backdrop" onClick={closeModal}>
           <div className="modal" onClick={e => e.stopPropagation()}>
-            <div className="modal-title">Resend Email Notification</div>
+            <div className="modal-title">{t('emailModal.title')}</div>
             <p style={{ fontSize: 14, color: 'var(--text-50)', marginBottom: 16 }}>
-              Send to: <span style={{ color: 'var(--text)' }}>{actionOrder?.customerEmail}</span>
+              {t('emailModal.sendTo')} <span style={{ color: 'var(--text)' }}>{actionOrder?.customerEmail}</span>
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 20 }}>
               {([1, 2] as const).map(n => (
@@ -390,18 +395,18 @@ export default function OrdersPage({ orders, setOrders }: Props) {
                   <input type="radio" name="email-template" checked={emailTemplate === n} onChange={() => setEmailTemplate(n)} style={{ accentColor: 'var(--gold)' }} />
                   <div>
                     <div style={{ fontSize: 14, color: 'var(--text)', fontWeight: 400 }}>
-                      {n === 1 ? 'Template 1 — Payment & submission confirmation' : 'Template 2 — Delivery & digital certificate'}
+                      {t(n === 1 ? 'emailModal.t1name' : 'emailModal.t2name')}
                     </div>
                     <div style={{ fontSize: 13, color: 'var(--text-50)', marginTop: 2 }}>
-                      {n === 1 ? 'Sent after payment confirmed + video received' : 'Sent when physical + digital package is dispatched'}
+                      {t(n === 1 ? 'emailModal.t1desc' : 'emailModal.t2desc')}
                     </div>
                   </div>
                 </label>
               ))}
             </div>
             <div className="modal-footer">
-              <button className="btn btn-ghost btn-sm" onClick={closeModal}>Cancel</button>
-              <button className="btn btn-primary btn-sm" onClick={sendEmail}>Send</button>
+              <button className="btn btn-ghost btn-sm" onClick={closeModal}>{t('common.cancel')}</button>
+              <button className="btn btn-primary btn-sm" onClick={sendEmail}>{t('emailModal.send')}</button>
             </div>
           </div>
         </div>

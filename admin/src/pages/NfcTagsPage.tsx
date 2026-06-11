@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import StatusBadge from '../components/StatusBadge'
 import type { NfcTag } from '../types'
+import { useLang } from '../context/LangContext'
 
 interface Props {
   nfcTags: NfcTag[]
@@ -18,6 +19,7 @@ function formatDatetime(iso: string) {
 }
 
 export default function NfcTagsPage({ nfcTags, setNfcTags }: Props) {
+  const { t } = useLang()
   const [csvInput, setCsvInput] = useState('')
   const [importError, setImportError] = useState<string | null>(null)
   const [importSuccess, setImportSuccess] = useState<string | null>(null)
@@ -56,24 +58,24 @@ export default function NfcTagsPage({ nfcTags, setNfcTags }: Props) {
     }
 
     setNfcTags(prev => [...prev, ...newTags])
-    setImportSuccess(`Successfully imported ${newTags.length} NFC chip(s)`)
+    setImportSuccess(t('nfc.importSuccess', { n: newTags.length }))
     setCsvInput('')
   }
 
   return (
     <>
       <div className="page-header">
-        <h1 className="page-title">NFC Tags</h1>
+        <h1 className="page-title">{t('nfc.title')}</h1>
         <div style={{ display: 'flex', gap: 10 }}>
-          <span className="stat-chip">Available <span className="count">{available}</span></span>
-          <span className="stat-chip">Assigned <span className="count">{assigned}</span></span>
-          <span className="stat-chip">Total <span className="count">{nfcTags.length}</span></span>
+          <span className="stat-chip">{t('nfc.available')} <span className="count">{available}</span></span>
+          <span className="stat-chip">{t('nfc.assigned')} <span className="count">{assigned}</span></span>
+          <span className="stat-chip">{t('nfc.total')} <span className="count">{nfcTags.length}</span></span>
         </div>
       </div>
 
       <div className="import-area">
-        <div className="import-title">Import NFC Chips</div>
-        <div className="import-hint">Format: Sequence,TagID,EncryptionKey — one per line, from supplier file</div>
+        <div className="import-title">{t('nfc.importTitle')}</div>
+        <div className="import-hint">{t('nfc.importHint')}</div>
 
         {importError && (
           <div style={{
@@ -104,7 +106,7 @@ export default function NfcTagsPage({ nfcTags, setNfcTags }: Props) {
           onClick={handleImport}
           disabled={!csvInput.trim()}
         >
-          Import
+          {t('nfc.importBtn')}
         </button>
       </div>
 
@@ -112,18 +114,18 @@ export default function NfcTagsPage({ nfcTags, setNfcTags }: Props) {
         <table>
           <thead>
             <tr>
-              <th>Sequence</th>
-              <th>Tag ID</th>
-              <th>Status</th>
-              <th>Assigned Cert</th>
-              <th>Assigned At</th>
+              <th>{t('nfc.col.sequence')}</th>
+              <th>{t('nfc.col.tagId')}</th>
+              <th>{t('nfc.col.status')}</th>
+              <th>{t('nfc.col.assignedCert')}</th>
+              <th>{t('nfc.col.assignedAt')}</th>
             </tr>
           </thead>
           <tbody>
             {nfcTags.length === 0 ? (
               <tr>
                 <td colSpan={5}>
-                  <div className="empty-state">No NFC chips on record</div>
+                  <div className="empty-state">{t('nfc.empty')}</div>
                 </td>
               </tr>
             ) : (
@@ -140,7 +142,7 @@ export default function NfcTagsPage({ nfcTags, setNfcTags }: Props) {
                   <td>
                     <StatusBadge
                       status={tag.status}
-                      label={tag.status === 'available' ? 'Available' : 'Assigned'}
+                      label={tag.status === 'available' ? t('nfc.available') : t('nfc.assigned')}
                     />
                   </td>
                   <td>

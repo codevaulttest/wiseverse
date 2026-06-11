@@ -72,6 +72,15 @@ export interface AdminUser {
   email: string;
   name: string;
   permissions: Permission[];
+  password?: string;
+}
+
+export interface EmailTemplate {
+  id: number;
+  label: string;
+  subject: string;
+  body: string;
+  desc: string;
 }
 
 export type Page =

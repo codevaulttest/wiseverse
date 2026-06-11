@@ -38,7 +38,7 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: var(--sans);
-  font-weight: 400;
+  font-weight: 450;
   font-size: 14px;
   -webkit-font-smoothing: antialiased;
 }
@@ -113,7 +113,7 @@ body {
   padding: 9px 12px;
   border-radius: 6px;
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 450;
   color: var(--text-50);
   text-decoration: none;
   transition: background .15s, color .15s;
@@ -141,17 +141,185 @@ body {
 }
 
 .sidebar-footer {
-  padding: 12px 20px 0;
+  padding: 8px 10px 10px;
   border-top: 1px solid var(--text-12);
-  font-size: 14px;
-  color: var(--text-50);
+  position: relative;
+}
+
+/* ── Profile chip (trigger) ── */
+.sidebar-profile-chip {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  transition: background .15s;
+  color: inherit;
+}
+
+.sidebar-profile-chip:hover {
+  background: var(--gold-06);
+}
+
+.sidebar-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--gold-18);
+  color: var(--gold);
+  font-size: 12px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  letter-spacing: .04em;
+}
+
+.sidebar-profile-info {
+  flex: 1;
+  min-width: 0;
 }
 
 .sidebar-user-email {
-  font-size: 14px;
+  font-size: 12px;
+  color: var(--text-50);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.3;
+  display: block;
+}
+
+.sidebar-chevron {
+  color: var(--text-28);
+  flex-shrink: 0;
+  transition: transform .2s;
+}
+
+.sidebar-chevron.open {
+  transform: rotate(90deg);
+}
+
+/* ── Profile popover ── */
+.sidebar-popover {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 10px;
+  right: 10px;
+  background: var(--card);
+  border: 1px solid var(--text-12);
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(26,20,14,.10), 0 2px 6px rgba(26,20,14,.06);
+  overflow: hidden;
+  z-index: 100;
+  animation: popover-in .12s ease;
+}
+
+@keyframes popover-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.sidebar-popover-header {
+  padding: 12px 14px 10px;
+  border-bottom: 1px solid var(--text-12);
+}
+
+.sidebar-popover-email {
+  font-size: 12px;
+  color: var(--text-50);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-popover-section {
+  padding: 4px;
+}
+
+.sidebar-popover-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 10px;
+}
+
+.sidebar-lang-toggle {
+  display: inline-flex;
+  gap: 2px;
+  background: var(--gold-06);
+  border-radius: 6px;
+  padding: 2px;
+}
+
+.sidebar-lang-btn {
+  background: none;
+  border: none;
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 450;
+  color: var(--text-50);
+  cursor: pointer;
+  transition: all .15s;
+}
+
+.sidebar-lang-btn[data-active='true'] {
+  background: var(--card);
+  color: var(--gold);
+  font-weight: 500;
+  box-shadow: 0 1px 3px rgba(26,20,14,.08);
+}
+
+
+.sidebar-popover-action {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: none;
+  background: none;
+  font-size: 13px;
+  font-weight: 450;
+  color: var(--text-50);
+  cursor: pointer;
+  text-align: left;
+  transition: background .12s, color .12s;
+}
+
+.sidebar-popover-action:hover {
+  background: var(--gold-06);
   color: var(--text);
-  margin-top: 2px;
-  word-break: break-all;
+}
+
+.sidebar-popover-action svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  opacity: .6;
+}
+
+.sidebar-popover-action.danger {
+  color: var(--text-28);
+}
+
+.sidebar-popover-action.danger:hover {
+  background: var(--error-10);
+  color: var(--error);
+}
+
+.sidebar-popover-sep {
+  height: 1px;
+  background: var(--text-12);
+  margin: 0 4px;
 }
 
 /* ─── Main Content ─── */
@@ -254,7 +422,7 @@ body {
   padding: 6px 16px;
   border-radius: 100px;
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 500;
   border: 1px solid var(--text-12);
   color: var(--text-50);
   cursor: pointer;
@@ -345,7 +513,7 @@ tbody tr:hover td {
 }
 
 .td-amount {
-  font-weight: 400;
+  font-weight: 450;
   color: var(--text);
 }
 
@@ -398,7 +566,7 @@ tbody tr.row-selected td {
   color: var(--text);
   font-family: var(--sans);
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 450;
   padding: 7px 14px 7px 34px;
   width: 100%;
   outline: none;
@@ -429,7 +597,7 @@ tbody tr.row-selected td {
   color: var(--text-50);
   font-family: var(--sans);
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 450;
   padding: 7px 12px;
   appearance: none;
   cursor: pointer;
@@ -509,7 +677,7 @@ tbody tr.row-selected td {
   color: var(--text);
   font-family: var(--sans);
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 450;
   padding: 10px 12px;
   transition: border-color .15s;
 }
@@ -631,7 +799,7 @@ tbody tr.row-selected td {
 .detail-field-value {
   font-size: 14px;
   color: var(--text);
-  font-weight: 400;
+  font-weight: 450;
 }
 
 .detail-field-value.mono {
@@ -674,7 +842,7 @@ tbody tr.row-selected td {
 
 .work-title {
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 450;
   color: var(--text);
 }
 
@@ -869,7 +1037,7 @@ select.modal-input {
 .timeline-action {
   font-size: 14px;
   color: var(--text);
-  font-weight: 400;
+  font-weight: 450;
 }
 
 .timeline-actor {
@@ -915,7 +1083,7 @@ select.modal-input {
   color: var(--text);
   font-family: 'Jost', monospace;
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 450;
   padding: 10px 12px;
   resize: vertical;
   min-height: 100px;
@@ -939,7 +1107,7 @@ select.modal-input {
 .email-tab {
   padding: 10px 20px;
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 450;
   color: var(--text-50);
   cursor: pointer;
   border: none;
@@ -986,7 +1154,7 @@ select.modal-input {
   color: var(--text-50);
   white-space: pre-wrap;
   font-family: 'Jost', monospace;
-  font-weight: 400;
+  font-weight: 450;
 }
 
 .email-body .highlight {
@@ -1158,7 +1326,7 @@ select.modal-input {
   color: #4ade80;
   font-family: var(--sans);
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 450;
   padding: 5px 10px;
   border-radius: 5px;
   cursor: pointer;

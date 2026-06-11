@@ -1,14 +1,16 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useLang } from '../context/LangContext'
 
-export default function LoginPage({ onLogin }: { onLogin: () => void }) {
+export default function LoginPage({ onLogin }: { onLogin: (email: string) => void }) {
   const [email, setEmail] = useState('admin@wiseverse.net')
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
+  const { t } = useLang()
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    onLogin()
+    onLogin(email)
     navigate('/orders')
   }
 
@@ -18,12 +20,12 @@ export default function LoginPage({ onLogin }: { onLogin: () => void }) {
         <div className="login-logo-wrap">
           <img src="/wiseverse-logo.svg" alt="Wiseverse" />
           <span className="brand">WISEVERSE</span>
-          <span className="sub">Admin Console</span>
+          <span className="sub">{t('login.sub')}</span>
         </div>
 
         <form onSubmit={handleSubmit}>
           <div className="form-field">
-            <label className="form-label">Email</label>
+            <label className="form-label">{t('login.email')}</label>
             <input
               type="email"
               className="form-input"
@@ -33,7 +35,7 @@ export default function LoginPage({ onLogin }: { onLogin: () => void }) {
             />
           </div>
           <div className="form-field">
-            <label className="form-label">Password</label>
+            <label className="form-label">{t('login.password')}</label>
             <input
               type="password"
               className="form-input"
@@ -44,7 +46,7 @@ export default function LoginPage({ onLogin }: { onLogin: () => void }) {
           </div>
           <div style={{ marginTop: 20 }}>
             <button type="submit" className="btn btn-primary btn-full">
-              Sign in
+              {t('login.submit')}
             </button>
           </div>
         </form>

@@ -1,4 +1,106 @@
-import type { Order, NfcTag, AdminUser } from '../types';
+import type { Order, NfcTag, AdminUser, EmailTemplate } from '../types';
+
+const TEMPLATE_1_BODY = `Dear {{CLIENT_NAME}},
+
+Thank you for your order and for submitting your video work(s) for authentication.
+We confirm that payment has been received and your file(s) have been successfully
+uploaded. Please refer to your invoice as attached. Your certification is now
+in progress.
+
+Please retain this email as your official service confirmation. The reference
+number above should be quoted in all future correspondence regarding this order.
+
+────────────────────────────────────────────────────────────────────────────────
+ORDER SUMMARY
+────────────────────────────────────────────────────────────────────────────────
+
+  Service Reference:        {{CERT_REF}}
+  Client / Entity:          {{COMPANY_NAME}}
+  Submission Date:          {{SUBMISSION_DATE}}
+  Number of Works:          {{NUM_WORKS}}
+  Total Paid:               USD {{ORDER_TOTAL}}
+  Estimated Delivery:       {{DELIVERY_DATE}}
+
+  Works submitted for certification:
+{{WORKS_LIST}}
+
+────────────────────────────────────────────────────────────────────────────────
+WHAT HAPPENS NEXT
+────────────────────────────────────────────────────────────────────────────────
+
+  Step 1 — Authentication processing
+  Our team will establish correspondence mapping, complete on-chain registration,
+  produce the physical chip certificate(s), and compile the authentication report(s).
+
+  Step 2 — Delivery
+  Your complete authentication package will be dispatched by the estimated
+  delivery date above. Physical certificates are sent via international courier
+  to your registered address.
+
+  For any queries regarding your order, please contact us at:
+  contact@wiseverse.net — quoting your reference number {{CERT_REF}}.
+
+© 2026  WISEVERSE PTE. LTD.  |  UEN: 202429365C`
+
+const TEMPLATE_2_BODY = `Dear {{CLIENT_NAME}},
+
+Thank you for your order and for submitting your video work(s) for authentication.
+We confirm that payment has been received and your file(s) have been successfully
+uploaded. Please refer to your invoice as attached. Your certification is now
+in progress.
+
+Please retain this email as your official service confirmation. The reference
+number above should be quoted in all future correspondence regarding this order.
+
+────────────────────────────────────────────────────────────────────────────────
+ORDER SUMMARY
+────────────────────────────────────────────────────────────────────────────────
+
+  Service Reference:        {{CERT_REF}}
+  Client / Entity:          {{COMPANY_NAME}}
+  Submission Date:          {{SUBMISSION_DATE}}
+  Number of Works:          {{NUM_WORKS}}
+  Total Paid:               USD {{ORDER_TOTAL}}
+  Estimated Delivery:       {{DELIVERY_DATE}}
+
+  Works submitted for certification:
+{{WORKS_LIST}}
+
+────────────────────────────────────────────────────────────────────────────────
+WHAT HAPPENS NEXT
+────────────────────────────────────────────────────────────────────────────────
+
+  Step 1 — Authentication processing
+  Our team will establish correspondence mapping, complete on-chain registration,
+  produce the physical chip certificate(s), and compile the authentication report(s).
+
+  Step 2 — Delivery
+  Your complete authentication package will be dispatched by the estimated
+  delivery date above. Physical certificates are sent via international courier
+  to your registered address. Digital deliverables (on-chain identifier,
+  authentication report, verification materials) are sent to this email address.
+
+  For any queries regarding your order, please contact us at:
+  contact@wiseverse.net — quoting your reference number {{CERT_REF}}.
+
+© 2026  WISEVERSE PTE. LTD.  |  UEN: 202429365C`
+
+export const INITIAL_EMAIL_TEMPLATES: EmailTemplate[] = [
+  {
+    id: 1,
+    label: 'Template 1 — Physical delivery only',
+    subject: '[{{CERT_REF}}] Your Authentication Service is Confirmed — WISEVERSE PTE. LTD.',
+    body: TEMPLATE_1_BODY,
+    desc: 'Trigger: payment confirmed + video received. Physical certificate dispatched by courier only.',
+  },
+  {
+    id: 2,
+    label: 'Template 2 — Physical + digital delivery',
+    subject: '[{{CERT_REF}}] Your Authentication Service is Confirmed — WISEVERSE PTE. LTD.',
+    body: TEMPLATE_2_BODY,
+    desc: 'Same as Template 1, but Step 2 adds: digital deliverables (on-chain ID, auth report, verification materials) sent to client email.',
+  },
+]
 
 export const MOCK_ORDERS: Order[] = [
   {
@@ -884,18 +986,21 @@ export const MOCK_ADMIN_USERS: AdminUser[] = [
     email: 'admin@wiseverse.net',
     name: '张伟',
     permissions: ['nfc_manage', 'admin_manage', 'email_templates', 'edit_order', 'change_order_status'],
+    password: 'admin123',
   },
   {
     id: 'admin-2',
     email: 'ops@wiseverse.net',
     name: '李娜',
     permissions: ['nfc_manage', 'change_order_status'],
+    password: 'admin123',
   },
   {
     id: 'admin-3',
     email: 'support@wiseverse.net',
     name: '王芳',
     permissions: ['edit_order'],
+    password: 'admin123',
   },
 ]
 

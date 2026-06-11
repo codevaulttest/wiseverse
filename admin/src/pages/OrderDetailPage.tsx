@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import StatusBadge from '../components/StatusBadge'
 import type { Order, OrderStatus } from '../types'
+import { useLang } from '../context/LangContext'
+import type { TransKey } from '../i18n'
 
 interface Props {
   orders: Order[]
@@ -23,12 +25,12 @@ const NEXT_STATUS: Partial<Record<OrderStatus, OrderStatus>> = {
   shipped:    'completed',
 }
 
-const ACTION_LABEL: Partial<Record<OrderStatus, string>> = {
-  paid:       'Start Processing',
-  processing: 'Mark On-chain',
-  on_chain:   'Mark Printed',
-  printing:   'Mark Shipped',
-  shipped:    'Mark Completed',
+const ACTION_KEY: Partial<Record<OrderStatus, TransKey>> = {
+  paid:       'action.startProcessing',
+  processing: 'action.markOnChain',
+  on_chain:   'action.markPrinted',
+  printing:   'action.markShipped',
+  shipped:    'action.markCompleted',
 }
 
 type ModalType = 'on_chain' | 'shipping' | 'confirm' | 'email' | null
@@ -36,6 +38,7 @@ type ModalType = 'on_chain' | 'shipping' | 'confirm' | 'email' | null
 export default function OrderDetailPage({ orders, setOrders }: Props) {
   const { id } = useParams()
   const navigate = useNavigate()
+  const { t } = useLang()
 
   const [modal, setModal] = useState<ModalType>(null)
   const [tokenId, setTokenId] = useState('')
@@ -48,14 +51,15 @@ export default function OrderDetailPage({ orders, setOrders }: Props) {
   const order = orders.find(o => o.id === id)
   if (!order) return (
     <div>
-      <button className="back-link" onClick={() => navigate('/orders')}>← Back to orders</button>
-      <p style={{ color: 'var(--text-50)' }}>Order not found.</p>
+      <button className="back-link" onClick={() => navigate('/orders')}>{t('detail.back')}</button>
+      <p style={{ color: 'var(--text-50)' }}>{t('detail.notFound')}</p>
     </div>
   )
 
   const work = order.works[0]
   const nextStatus = NEXT_STATUS[order.status]
-  const actionLabel = ACTION_LABEL[order.status]
+  const actionKey = ACTION_KEY[order.status]
+  const actionLabel = actionKey ? t(actionKey) : undefined
 
   function showToast(msg: string) {
     setToastMsg(msg)
@@ -116,7 +120,7 @@ export default function OrderDetailPage({ orders, setOrders }: Props) {
 
   return (
     <>
-      <button className="back-link" onClick={() => navigate('/orders')}>← Back to orders</button>
+      <button className="back-link" onClick={() => navigate('/orders')}>{t('detail.back')}</button>
 
       <div className="page-header">
         <h1 className="page-title">{order.referenceNumber}</h1>
@@ -135,69 +139,69 @@ export default function OrderDetailPage({ orders, setOrders }: Props) {
             <rect x="1" y="3" width="14" height="10" rx="1.5" />
             <polyline points="1,3 8,9.5 15,3" />
           </svg>
-          Resend email notification
+          {t('detail.resendEmail')}
         </button>
       </div>
 
       <div className="detail-grid">
         <div className="detail-card">
-          <div className="detail-card-title">Customer</div>
+          <div className="detail-card-title">{t('detail.customer')}</div>
           <div className="detail-field">
-            <span className="detail-field-label">Contact</span>
+            <span className="detail-field-label">{t('detail.contact')}</span>
             <span className="detail-field-value">{order.customerName}</span>
           </div>
           <div className="detail-field">
-            <span className="detail-field-label">Email</span>
+            <span className="detail-field-label">{t('detail.email')}</span>
             <span className="detail-field-value">{order.customerEmail}</span>
           </div>
           <div className="detail-field">
-            <span className="detail-field-label">Address</span>
+            <span className="detail-field-label">{t('detail.address')}</span>
             <span className="detail-field-value">{order.address}, {order.country}</span>
           </div>
         </div>
 
         <div className="detail-card">
-          <div className="detail-card-title">Order</div>
+          <div className="detail-card-title">{t('detail.order')}</div>
           <div className="detail-field">
-            <span className="detail-field-label">Reference</span>
+            <span className="detail-field-label">{t('detail.reference')}</span>
             <span className="detail-field-value mono">{order.referenceNumber}</span>
           </div>
           <div className="detail-field">
-            <span className="detail-field-label">Total</span>
+            <span className="detail-field-label">{t('detail.total')}</span>
             <span className="detail-field-value">USD {order.totalAmount.toLocaleString()}</span>
           </div>
           <div className="detail-field">
-            <span className="detail-field-label">Submitted</span>
+            <span className="detail-field-label">{t('detail.submitted')}</span>
             <span className="detail-field-value">{formatDatetime(order.submittedAt)}</span>
           </div>
         </div>
       </div>
 
       <div className="work-item" style={{ marginBottom: 24 }}>
-        <div className="detail-card-title" style={{ marginBottom: 14 }}>Work</div>
+        <div className="detail-card-title" style={{ marginBottom: 14 }}>{t('detail.work')}</div>
         <div className="work-item-header">
           <div className="work-title">{work.title}</div>
         </div>
         <div className="detail-field" style={{ marginTop: 10 }}>
-          <span className="detail-field-label">SHA-256</span>
+          <span className="detail-field-label">{t('detail.sha256')}</span>
           <span className="work-hash">{work.videoHash}</span>
         </div>
         <div style={{ display: 'flex', gap: 32, marginTop: 8, flexWrap: 'wrap' }}>
           <div className="detail-field">
-            <span className="detail-field-label">Duration</span>
+            <span className="detail-field-label">{t('detail.duration')}</span>
             <span className="detail-field-value">{work.videoDuration}</span>
           </div>
           <div className="detail-field">
-            <span className="detail-field-label">Size</span>
+            <span className="detail-field-label">{t('detail.size')}</span>
             <span className="detail-field-value">{work.videoSize}</span>
           </div>
           <div className="detail-field">
-            <span className="detail-field-label">Codec</span>
+            <span className="detail-field-label">{t('detail.codec')}</span>
             <span className="detail-field-value">{work.videoCodec}</span>
           </div>
           {work.certNumber && (
             <div className="detail-field">
-              <span className="detail-field-label">Cert No.</span>
+              <span className="detail-field-label">{t('detail.certNo')}</span>
               <span className="detail-field-value mono" style={{ color: 'var(--gold)' }}>{work.certNumber}</span>
             </div>
           )}
@@ -206,19 +210,19 @@ export default function OrderDetailPage({ orders, setOrders }: Props) {
           <div style={{ display: 'flex', gap: 32, marginTop: 8, flexWrap: 'wrap' }}>
             {work.onChainTokenId && (
               <div className="detail-field">
-                <span className="detail-field-label">Token ID</span>
+                <span className="detail-field-label">{t('detail.tokenId')}</span>
                 <span className="detail-field-value" style={{ fontFamily: 'monospace' }}>{work.onChainTokenId}</span>
               </div>
             )}
             {work.nfcTagId && (
               <div className="detail-field">
-                <span className="detail-field-label">NFC Chip</span>
+                <span className="detail-field-label">{t('detail.nfcChip')}</span>
                 <span className="detail-field-value">{work.nfcTagId}</span>
               </div>
             )}
             {work.trackingNumber && (
               <div className="detail-field">
-                <span className="detail-field-label">Tracking</span>
+                <span className="detail-field-label">{t('detail.tracking')}</span>
                 <span className="detail-field-value">{work.shippingMethod ? `${work.shippingMethod} — ${work.trackingNumber}` : work.trackingNumber}</span>
               </div>
             )}

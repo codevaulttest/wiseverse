@@ -1,17 +1,11 @@
 import { useState } from 'react'
 import type { AdminUser, Permission } from '../types'
+import { useLang } from '../context/LangContext'
+import type { TransKey } from '../i18n'
 
 interface Props {
   users: AdminUser[]
   setUsers: React.Dispatch<React.SetStateAction<AdminUser[]>>
-}
-
-const PERMISSION_LABELS: Record<Permission, string> = {
-  nfc_manage: 'NFC Tags',
-  admin_manage: 'Admin Management',
-  email_templates: 'Email Templates',
-  edit_order: 'Edit Order',
-  change_order_status: 'Change Order Status',
 }
 
 const ALL_PERMISSIONS: Permission[] = [
@@ -22,7 +16,16 @@ const ALL_PERMISSIONS: Permission[] = [
   'change_order_status',
 ]
 
+const PERM_KEY: Record<Permission, TransKey> = {
+  nfc_manage: 'perms.nfc',
+  admin_manage: 'perms.admin',
+  email_templates: 'perms.email',
+  edit_order: 'perms.editOrder',
+  change_order_status: 'perms.changeStatus',
+}
+
 export default function AdminUsersPage({ users, setUsers }: Props) {
+  const { t } = useLang()
   const [editingUser, setEditingUser] = useState<AdminUser | null>(null)
   const [editPermissions, setEditPermissions] = useState<Set<Permission>>(new Set())
   const [toastMsg, setToastMsg] = useState<string | null>(null)
@@ -53,7 +56,7 @@ export default function AdminUsersPage({ users, setUsers }: Props) {
         : u
     ))
     setEditingUser(null)
-    showToast(`Permissions updated for ${editingUser.email}`)
+    showToast(t('perms.updated', { email: editingUser.email }))
   }
 
   function cancelEdit() {
@@ -63,17 +66,17 @@ export default function AdminUsersPage({ users, setUsers }: Props) {
   return (
     <>
       <div className="page-header">
-        <h1 className="page-title">Permissions</h1>
+        <h1 className="page-title">{t('perms.title')}</h1>
       </div>
 
       <div className="table-wrap">
         <table>
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Permissions</th>
-              <th>Actions</th>
+              <th>{t('perms.col.name')}</th>
+              <th>{t('perms.col.email')}</th>
+              <th>{t('perms.col.permissions')}</th>
+              <th>{t('perms.col.actions')}</th>
             </tr>
           </thead>
           <tbody>
@@ -93,14 +96,14 @@ export default function AdminUsersPage({ users, setUsers }: Props) {
                         className={`status-badge ${user.permissions.includes(perm) ? 'completed' : 'assigned'}`}
                         style={{ fontSize: 12, padding: '2px 8px' }}
                       >
-                        {PERMISSION_LABELS[perm]}
+                        {t(PERM_KEY[perm])}
                       </span>
                     ))}
                   </div>
                 </td>
                 <td onClick={e => e.stopPropagation()}>
                   <button className="btn btn-primary btn-xs" onClick={() => openEdit(user)}>
-                    Edit Permissions
+                    {t('perms.editBtn')}
                   </button>
                 </td>
               </tr>
@@ -109,11 +112,10 @@ export default function AdminUsersPage({ users, setUsers }: Props) {
         </table>
       </div>
 
-      {/* ── Edit permissions modal ── */}
       {editingUser && (
         <div className="modal-backdrop" onClick={cancelEdit}>
           <div className="modal" onClick={e => e.stopPropagation()}>
-            <div className="modal-title">Edit Permissions — {editingUser.email}</div>
+            <div className="modal-title">{t('perms.editTitle', { email: editingUser.email })}</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 20 }}>
               {ALL_PERMISSIONS.map(perm => (
                 <label
@@ -129,14 +131,14 @@ export default function AdminUsersPage({ users, setUsers }: Props) {
                     style={{ accentColor: 'var(--gold)', width: 16, height: 16 }}
                   />
                   <div style={{ fontSize: 14, color: 'var(--text)', fontWeight: 400 }}>
-                    {PERMISSION_LABELS[perm]}
+                    {t(PERM_KEY[perm])}
                   </div>
                 </label>
               ))}
             </div>
             <div className="modal-footer">
-              <button className="btn btn-ghost btn-sm" onClick={cancelEdit}>Cancel</button>
-              <button className="btn btn-primary btn-sm" onClick={savePermissions}>Save</button>
+              <button className="btn btn-ghost btn-sm" onClick={cancelEdit}>{t('common.cancel')}</button>
+              <button className="btn btn-primary btn-sm" onClick={savePermissions}>{t('common.save')}</button>
             </div>
           </div>
         </div>

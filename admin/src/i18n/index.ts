@@ -1,0 +1,333 @@
+export const translations = {
+  en: {
+    // Sidebar
+    'nav.menu': 'Menu',
+    'nav.orders': 'Orders',
+    'nav.nfcTags': 'NFC Tags',
+    'nav.emailTemplates': 'Email Templates',
+    'nav.permissions': 'Permissions',
+    'sidebar.signedInAs': 'Signed in as',
+    'sidebar.signOut': 'Sign out',
+
+    // Status
+    'status.paid': 'Paid',
+    'status.processing': 'Processing',
+    'status.on_chain': 'On-chain',
+    'status.printing': 'Printed',
+    'status.shipped': 'Shipped',
+    'status.completed': 'Completed',
+    'status.available': 'Available',
+    'status.assigned': 'Assigned',
+
+    // Action labels
+    'action.startProcessing': 'Start Processing',
+    'action.markOnChain': 'Mark On-chain',
+    'action.markPrinted': 'Mark Printed',
+    'action.markShipped': 'Mark Shipped',
+    'action.markCompleted': 'Mark Completed',
+
+    // Common
+    'common.cancel': 'Cancel',
+    'common.confirm': 'Confirm',
+    'common.save': 'Save',
+
+    // Login
+    'login.email': 'Email',
+    'login.password': 'Password',
+    'login.submit': 'Sign in',
+    'login.sub': 'Admin Console',
+
+    // Orders page
+    'orders.title': 'Orders',
+    'orders.search': 'Search reference, name, video…',
+    'orders.all': 'All',
+    'orders.exportSelected': 'Export selected ({n})',
+    'orders.col.orderId': 'Order ID',
+    'orders.col.name': 'Name',
+    'orders.col.videoFile': 'Video file name',
+    'orders.col.status': 'Status',
+    'orders.col.actions': 'Actions',
+    'orders.empty': 'No orders',
+    'orders.prev': '← Prev',
+    'orders.next': 'Next →',
+    'orders.page': 'Page {page} / {total}',
+
+    // Export modal
+    'exportModal.title': 'Export for Printing',
+    'exportModal.desc': '{n} order{plural} selected — the following fields will be included in the Excel file:',
+    'exportModal.download': 'Download Excel',
+
+    // On-chain modal
+    'onChainModal.title': 'Mark On-chain — {ref}',
+    'onChainModal.tokenId': 'Token ID',
+    'onChainModal.issuerAddress': 'Issuer Address',
+
+    // Shipping modal
+    'shippingModal.title': 'Mark Shipped — {ref}',
+    'shippingModal.method': 'Shipping Method',
+    'shippingModal.tracking': 'Tracking Number',
+
+    // Email modal
+    'emailModal.title': 'Resend Email Notification',
+    'emailModal.sendTo': 'Send to:',
+    'emailModal.t1name': 'Template 1 — Payment & submission confirmation',
+    'emailModal.t1desc': 'Sent after payment confirmed + video received',
+    'emailModal.t2name': 'Template 2 — Delivery & digital certificate',
+    'emailModal.t2desc': 'Sent when physical + digital package is dispatched',
+    'emailModal.send': 'Send',
+
+    // Order detail
+    'detail.back': '← Back to orders',
+    'detail.resendEmail': 'Resend email notification',
+    'detail.customer': 'Customer',
+    'detail.order': 'Order',
+    'detail.work': 'Work',
+    'detail.activityLog': 'Activity Log',
+    'detail.contact': 'Contact',
+    'detail.email': 'Email',
+    'detail.address': 'Address',
+    'detail.reference': 'Reference',
+    'detail.total': 'Total',
+    'detail.submitted': 'Submitted',
+    'detail.sha256': 'SHA-256',
+    'detail.duration': 'Duration',
+    'detail.size': 'Size',
+    'detail.codec': 'Codec',
+    'detail.certNo': 'Cert No.',
+    'detail.tokenId': 'Token ID',
+    'detail.nfcChip': 'NFC Chip',
+    'detail.tracking': 'Tracking',
+    'detail.notFound': 'Order not found.',
+    'detail.moveTo': 'Move this order from {from} to {to}?',
+    'detail.onChainTitle': 'Mark On-chain',
+    'detail.shippingTitle': 'Mark Shipped',
+
+    // NFC Tags
+    'nfc.title': 'NFC Tags',
+    'nfc.available': 'Available',
+    'nfc.assigned': 'Assigned',
+    'nfc.total': 'Total',
+    'nfc.importTitle': 'Import NFC Chips',
+    'nfc.importHint': 'Format: Sequence,TagID,EncryptionKey — one per line, from supplier file',
+    'nfc.importBtn': 'Import',
+    'nfc.col.sequence': 'Sequence',
+    'nfc.col.tagId': 'Tag ID',
+    'nfc.col.status': 'Status',
+    'nfc.col.assignedCert': 'Assigned Cert',
+    'nfc.col.assignedAt': 'Assigned At',
+    'nfc.empty': 'No NFC chips on record',
+    'nfc.importSuccess': 'Successfully imported {n} NFC chip(s)',
+    'nfc.importResult': 'Import complete: {n} added, {skipped} skipped (duplicates)',
+    'nfc.importAllDuplicates': 'Nothing imported — all {skipped} row(s) already exist',
+
+    // Email Templates page (UI chrome only — email body stays in English)
+    'email.pageTitle': 'Email Templates',
+    'email.previewHint': 'Preview with mock data filled in. Merge variables are substituted automatically at send time.',
+    'email.tpl1.label': 'Template 1 — Physical delivery only',
+    'email.tpl1.desc': 'Trigger: payment confirmed + video received. Physical certificate dispatched by courier only.',
+    'email.tpl2.label': 'Template 2 — Physical + digital delivery',
+    'email.tpl2.desc': 'Trigger: certificate issued, NFC paired, ready to ship.',
+    'email.subject': 'SUBJECT',
+    'email.body': 'BODY',
+    'email.editBtn': 'Edit Template',
+    'email.mergeVars': 'MERGE VARIABLES',
+    'email.col.variable': 'Variable',
+    'email.col.mockVal': 'Mock value',
+    'email.col.source': 'Source',
+    'email.sourceVal': 'Order data',
+    'email.multiLine': '(multi-line)',
+
+    // Change password
+    'changePwd.btn': 'Change password',
+    'changePwd.title': 'Change Password',
+    'changePwd.current': 'Current password',
+    'changePwd.new': 'New password',
+    'changePwd.confirm': 'Confirm new password',
+    'changePwd.submit': 'Update password',
+    'changePwd.success': 'Password updated successfully',
+    'changePwd.errCurrent': 'Current password is incorrect',
+    'changePwd.errMatch': 'New passwords do not match',
+    'changePwd.errLength': 'New password must be at least 6 characters',
+
+    // Permissions
+    'perms.title': 'Permissions',
+    'perms.col.name': 'Name',
+    'perms.col.email': 'Email',
+    'perms.col.permissions': 'Permissions',
+    'perms.col.actions': 'Actions',
+    'perms.editBtn': 'Edit Permissions',
+    'perms.editTitle': 'Edit Permissions — {email}',
+    'perms.updated': 'Permissions updated for {email}',
+    'perms.nfc': 'NFC Tags',
+    'perms.admin': 'Admin Management',
+    'perms.email': 'Email Templates',
+    'perms.editOrder': 'Edit Order',
+    'perms.changeStatus': 'Change Order Status',
+  },
+  zh: {
+    // Sidebar
+    'nav.menu': '菜单',
+    'nav.orders': '订单',
+    'nav.nfcTags': 'NFC 标签',
+    'nav.emailTemplates': '邮件模板',
+    'nav.permissions': '权限管理',
+    'sidebar.signedInAs': '当前登录',
+    'sidebar.signOut': '退出登录',
+
+    // Status
+    'status.paid': '已付款',
+    'status.processing': '处理中',
+    'status.on_chain': '已上链',
+    'status.printing': '已打印',
+    'status.shipped': '已发货',
+    'status.completed': '已完成',
+    'status.available': '可用',
+    'status.assigned': '已分配',
+
+    // Action labels
+    'action.startProcessing': '开始处理',
+    'action.markOnChain': '标记上链',
+    'action.markPrinted': '标记已打印',
+    'action.markShipped': '标记已发货',
+    'action.markCompleted': '标记已完成',
+
+    // Common
+    'common.cancel': '取消',
+    'common.confirm': '确认',
+    'common.save': '保存',
+
+    // Login
+    'login.email': '邮箱',
+    'login.password': '密码',
+    'login.submit': '登录',
+    'login.sub': '管理后台',
+
+    // Orders page
+    'orders.title': '订单',
+    'orders.search': '搜索订单号、姓名、视频…',
+    'orders.all': '全部',
+    'orders.exportSelected': '导出已选 ({n})',
+    'orders.col.orderId': '订单号',
+    'orders.col.name': '姓名',
+    'orders.col.videoFile': '视频文件名',
+    'orders.col.status': '状态',
+    'orders.col.actions': '操作',
+    'orders.empty': '暂无订单',
+    'orders.prev': '← 上一页',
+    'orders.next': '下一页 →',
+    'orders.page': '第 {page} / {total} 页',
+
+    // Export modal
+    'exportModal.title': '导出打印',
+    'exportModal.desc': '已选 {n} 个订单{plural} — 以下字段将包含在 Excel 文件中：',
+    'exportModal.download': '下载 Excel',
+
+    // On-chain modal
+    'onChainModal.title': '标记上链 — {ref}',
+    'onChainModal.tokenId': 'Token ID',
+    'onChainModal.issuerAddress': '发行方地址',
+
+    // Shipping modal
+    'shippingModal.title': '标记已发货 — {ref}',
+    'shippingModal.method': '快递方式',
+    'shippingModal.tracking': '追踪号',
+
+    // Email modal
+    'emailModal.title': '重新发送邮件通知',
+    'emailModal.sendTo': '发送至：',
+    'emailModal.t1name': '模板 1 — 付款与提交确认',
+    'emailModal.t1desc': '付款确认及视频接收后发送',
+    'emailModal.t2name': '模板 2 — 实物与数字证书发货',
+    'emailModal.t2desc': '实物与数字套装发货时发送',
+    'emailModal.send': '发送',
+
+    // Order detail
+    'detail.back': '← 返回订单列表',
+    'detail.resendEmail': '重新发送邮件通知',
+    'detail.customer': '客户',
+    'detail.order': '订单',
+    'detail.work': '作品',
+    'detail.activityLog': '操作记录',
+    'detail.contact': '联系人',
+    'detail.email': '邮箱',
+    'detail.address': '地址',
+    'detail.reference': '订单号',
+    'detail.total': '总金额',
+    'detail.submitted': '提交时间',
+    'detail.sha256': 'SHA-256',
+    'detail.duration': '时长',
+    'detail.size': '大小',
+    'detail.codec': '编码',
+    'detail.certNo': '证书号',
+    'detail.tokenId': 'Token ID',
+    'detail.nfcChip': 'NFC 芯片',
+    'detail.tracking': '追踪号',
+    'detail.notFound': '订单不存在。',
+    'detail.moveTo': '将此订单从 {from} 移至 {to}？',
+    'detail.onChainTitle': '标记上链',
+    'detail.shippingTitle': '标记已发货',
+
+    // NFC Tags
+    'nfc.title': 'NFC 标签',
+    'nfc.available': '可用',
+    'nfc.assigned': '已分配',
+    'nfc.total': '总计',
+    'nfc.importTitle': '导入 NFC 芯片',
+    'nfc.importHint': '格式：序号,标签ID,加密密钥 — 每行一条，来自供应商文件',
+    'nfc.importBtn': '导入',
+    'nfc.col.sequence': '序号',
+    'nfc.col.tagId': '标签 ID',
+    'nfc.col.status': '状态',
+    'nfc.col.assignedCert': '关联证书',
+    'nfc.col.assignedAt': '分配时间',
+    'nfc.empty': '暂无 NFC 芯片记录',
+    'nfc.importSuccess': '成功导入 {n} 个 NFC 芯片',
+
+    // Email Templates page (邮件正文保持英文，仅翻译 UI 界面文字)
+    'email.pageTitle': '邮件模板',
+    'email.previewHint': '使用模拟数据预览。合并变量将在发送时自动替换。',
+    'email.tpl1.label': '模板 1 — 仅实物快递',
+    'email.tpl1.desc': '触发条件：付款确认 + 视频接收。仅快递实物证书。',
+    'email.tpl2.label': '模板 2 — 实物 + 数字发货',
+    'email.tpl2.desc': '触发条件：证书签发、NFC 配对、准备发货。',
+    'email.subject': '主题',
+    'email.body': '正文',
+    'email.editBtn': '编辑模板',
+    'email.mergeVars': '合并变量',
+    'email.col.variable': '变量',
+    'email.col.mockVal': '模拟值',
+    'email.col.source': '来源',
+    'email.sourceVal': '订单数据',
+    'email.multiLine': '（多行）',
+
+    // Change password
+    'changePwd.btn': '修改密码',
+    'changePwd.title': '修改密码',
+    'changePwd.current': '当前密码',
+    'changePwd.new': '新密码',
+    'changePwd.confirm': '确认新密码',
+    'changePwd.submit': '更新密码',
+    'changePwd.success': '密码已成功更新',
+    'changePwd.errCurrent': '当前密码不正确',
+    'changePwd.errMatch': '两次输入的新密码不一致',
+    'changePwd.errLength': '新密码至少需要 6 个字符',
+
+    // Permissions
+    'perms.title': '权限管理',
+    'perms.col.name': '用户名',
+    'perms.col.email': '邮箱',
+    'perms.col.permissions': '权限',
+    'perms.col.actions': '操作',
+    'perms.editBtn': '编辑权限',
+    'perms.editTitle': '编辑权限 — {email}',
+    'perms.updated': '已更新 {email} 的权限',
+    'perms.nfc': 'NFC 标签管理',
+    'perms.admin': '管理员管理',
+    'perms.email': '邮件模板管理',
+    'perms.editOrder': '修改订单资料',
+    'perms.changeStatus': '改变订单状态',
+  },
+}
+
+export type Lang = 'en' | 'zh'
+export type TransKey = keyof typeof translations.en
